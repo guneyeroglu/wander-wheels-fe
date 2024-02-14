@@ -1,0 +1,9 @@
+{
+  "translation": {
+    "common": {
+      "signUp": "Sign Up",
+      "login": "Login",
+      "logout": "Logout"
+    }
+  }
+}
