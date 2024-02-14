@@ -14,7 +14,7 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": "eslint --fix .",
-    "*.{js,ts,jsx,tsx,css,md,json}": "prettier --write"
+    "*.{js,ts,jsx,tsx,css,json}": "prettier --write"
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
