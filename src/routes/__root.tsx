@@ -12,7 +12,7 @@ function RouteComponent() {
         })
       }
     >
-      <div className='dark'>
+      <div className='dark text-foreground bg-background'>
         <div className='p-2 flex gap-2'>
           <Link href='/' color='foreground' className='[&.active]:font-bold'>
             Home
