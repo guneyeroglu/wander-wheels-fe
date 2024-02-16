@@ -1,7 +1,10 @@
+import { FC } from 'react';
 import { createRootRoute, Outlet, useNavigate } from '@tanstack/react-router';
-import { Link, NextUIProvider } from '@nextui-org/react';
+import { NextUIProvider } from '@nextui-org/react';
 
-function RouteComponent() {
+import Header from '../components/header/Header';
+
+const RouteComponent: FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -13,22 +16,14 @@ function RouteComponent() {
       }
     >
       <div className='dark text-foreground bg-background'>
-        <div className='p-2 flex gap-2'>
-          <Link href='/' color='foreground' className='[&.active]:font-bold'>
-            Home
-          </Link>
-          <Link href='/about' color='foreground' className='[&.active]:font-bold'>
-            About
-          </Link>
-        </div>
-        <hr />
-        <main className='w-full max-w-screen-2xl p-2 m-auto text-center'>
+        <Header />
+        <main className='w-full max-w-screen-2xl py-2 px-4 m-auto text-center'>
           <Outlet />
         </main>
       </div>
     </NextUIProvider>
   );
-}
+};
 
 export const Route = createRootRoute({
   component: RouteComponent,
