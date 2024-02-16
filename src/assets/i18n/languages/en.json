@@ -3,7 +3,15 @@
     "common": {
       "signUp": "Sign Up",
       "login": "Login",
-      "logout": "Logout"
+      "logout": "Logout",
+      "alreadySign": "Already have an account?",
+      "noAccountYet": "No account yet?"
+    },
+    "form": {
+      "username": "Username",
+      "email": "E-mail",
+      "password": "Password",
+      "confirmPassword": "Confirm Password"
     }
   }
 }

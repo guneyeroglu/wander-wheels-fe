@@ -3,7 +3,15 @@
     "common": {
       "signUp": "Üye Ol",
       "login": "Giriş Yap",
-      "logout": "Çıkış Yap"
+      "logout": "Çıkış Yap",
+      "alreadySign": "Zaten hesabın var mı?",
+      "noAccountYet": "Henüz hesabın yok mu?"
+    },
+    "form": {
+      "username": "Kullanıcı Adı",
+      "email": "E-mail",
+      "password": "Şifre",
+      "confirmPassword": "Şifre Tekrarı"
     }
   }
 }
