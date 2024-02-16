@@ -4,7 +4,7 @@ import i18n from 'i18next';
 import { tr, en } from './languages';
 
 i18n.use(initReactI18next).init({
-  fallbackLng: 'en',
+  fallbackLng: 'tr',
   debug: true,
   resources: { en, tr },
 });

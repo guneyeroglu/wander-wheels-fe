@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 
 import { routeTree } from './routeTree.gen';
@@ -12,7 +13,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
-const App = () => {
+const App: FC = () => {
   return <RouterProvider router={router} />;
 };
 
