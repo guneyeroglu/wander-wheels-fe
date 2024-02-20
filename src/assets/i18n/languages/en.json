@@ -9,9 +9,16 @@
     },
     "form": {
       "username": "Username",
+      "usernameRequiredMessage": "Please enter your username.",
+      "usernameMinMessage": "Username must be at least 3 characters.",
       "email": "E-mail",
+      "emailRequiredMessage": "Please enter your e-mail.",
+      "emailFormatMessage": "E-mail format is not valid.",
       "password": "Password",
-      "confirmPassword": "Confirm Password"
+      "passwordRequiredMessage": "Please enter your password.",
+      "passwordMinMessage": "Username must be at least 6 characters.",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordRequiredMessage": "Please enter your confirm password."
     }
   }
 }

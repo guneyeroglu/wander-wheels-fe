@@ -9,9 +9,16 @@
     },
     "form": {
       "username": "Kullanıcı Adı",
+      "usernameRequiredMessage": "Lütfen kullanıcı adınızı girin.",
+      "usernameMinMessage": "Kullanıcı adınız en az 3 karakter olmalıdır.",
       "email": "E-mail",
+      "emailRequiredMessage": "Lütfen e-mail adresinizi girin.",
+      "emailFormatMessage": "E-mail biçimi geçerli değil.",
       "password": "Şifre",
-      "confirmPassword": "Şifre Tekrarı"
+      "passwordRequiredMessage": "Lütfen şifre alanını boş bırakmayın.",
+      "passwordMinMessage": "Şifreniz en az 6 karakter olmalıdır.",
+      "confirmPassword": "Şifre Tekrarı",
+      "confirmPasswordRequiredMessage": "Lütfen şifre tekrar alanını boş bırakmayın."
     }
   }
 }
