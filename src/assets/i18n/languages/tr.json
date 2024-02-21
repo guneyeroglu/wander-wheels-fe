@@ -5,7 +5,9 @@
       "login": "Giriş Yap",
       "logout": "Çıkış Yap",
       "alreadySign": "Zaten hesabın var mı?",
-      "noAccountYet": "Henüz hesabın yok mu?"
+      "noAccountYet": "Henüz hesabın yok mu?",
+      "turkish": "Türkçe",
+      "english": "İngilizce"
     },
     "form": {
       "username": "Kullanıcı Adı",
@@ -19,6 +21,10 @@
       "passwordMinMessage": "Şifreniz en az 6 karakter olmalıdır.",
       "confirmPassword": "Şifre Tekrarı",
       "confirmPasswordRequiredMessage": "Lütfen şifre tekrar alanını boş bırakmayın."
+    },
+    "home": {
+      "title": "Başlık",
+      "subtitle": "Alt Başlık"
     }
   }
 }

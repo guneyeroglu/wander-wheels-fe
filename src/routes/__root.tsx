@@ -15,12 +15,10 @@ const RouteComponent: FC = () => {
         })
       }
     >
-      <div className='dark text-foreground bg-background'>
-        <Header />
-        <main className='w-full max-w-screen-2xl py-2 px-4 m-auto text-center'>
-          <Outlet />
-        </main>
-      </div>
+      <Header />
+      <main className='w-full max-w-screen-2xl py-2 px-4 m-auto text-center'>
+        <Outlet />
+      </main>
     </NextUIProvider>
   );
 };

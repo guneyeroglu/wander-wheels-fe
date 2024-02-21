@@ -5,7 +5,9 @@
       "login": "Login",
       "logout": "Logout",
       "alreadySign": "Already have an account?",
-      "noAccountYet": "No account yet?"
+      "noAccountYet": "No account yet?",
+      "turkish": "Turkish",
+      "english": "English"
     },
     "form": {
       "username": "Username",
@@ -19,6 +21,10 @@
       "passwordMinMessage": "Username must be at least 6 characters.",
       "confirmPassword": "Confirm Password",
       "confirmPasswordRequiredMessage": "Please enter your confirm password."
+    },
+    "home": {
+      "title": "Title",
+      "subtitle": "Subtitle"
     }
   }
 }

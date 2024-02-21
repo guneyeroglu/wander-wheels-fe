@@ -4,7 +4,8 @@ import i18n from 'i18next';
 import { tr, en } from './languages';
 
 i18n.use(initReactI18next).init({
-  fallbackLng: 'tr',
+  lng: localStorage.getItem('lang') ?? 'en',
+  fallbackLng: 'en',
   debug: true,
   resources: { en, tr },
 });
