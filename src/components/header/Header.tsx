@@ -45,8 +45,15 @@ const Header: FC = () => {
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        <Link href='/login' color='foreground'>
+        <Link href='/login' color='foreground' className='py-2 px-4'>
           {t('common.login')}
+        </Link>
+        <Link
+          href='/sign-up'
+          color='foreground'
+          className='border-solid border-1 border-foreground-100 py-2 px-4 rounded-md'
+        >
+          {t('common.signUp')}
         </Link>
       </nav>
     </header>
