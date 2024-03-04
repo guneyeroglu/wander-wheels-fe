@@ -23,10 +23,9 @@
       "confirmPasswordRequiredMessage": "Lütfen şifre tekrar alanını boş bırakmayın."
     },
     "home": {
-      "title": "Yola çıkmanın tam zamanı.",
-      "subtitle": "En güzel yolculuklarınız için buradayız. Yola çıkmaya hazır mısınız?",
+      "title": "En güzel yolculuklarınız için buradayız. Yola çıkmaya hazır mısınız?",
       "introduction": "Merhaba, <h1>Wander Wheels</h1>'e hoş geldiniz. Seyahat etmek artık daha kolay ve keyifli bir hâle geldi. Geniş araç seçeneklerimiz, rekabetçi fiyatlarımız ve güvenilir hizmet anlayışımızla, size unutulmaz bir yolculuk deneyimini sunmak için buradayız.",
-      "introduction_2": "Hemen <link_1>Giriş Yapın</link_1> veya <link_2>Üye Olun</link_2> ve geniş araç filomuz arasından istediğiniz aracı seçerek hayallerinizdeki yolculuğa adım atın. Yola çıkmaya hazır mısınız?"
+      "invite": "Hemen <link_1>Giriş Yapın</link_1> veya <link_2>Üye Olun</link_2> ve geniş araç filomuz arasından istediğiniz aracı seçerek hayallerinizdeki yolculuğa adım atın. Yola çıkmaya hazır mısınız?"
     }
   }
 }
