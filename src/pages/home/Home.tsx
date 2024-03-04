@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { Image, Input, Link } from '@nextui-org/react';
+import { Input, Link } from '@nextui-org/react';
 
 import { HomeCar } from '../../assets/images';
 
@@ -13,25 +13,20 @@ const HomePage: FC = () => {
   const nextYear: string = _nextYear.toISOString().split('T')[0];
 
   return (
-    <div className='w-full flex items-center justify-between py-4 gap-4'>
-      <div>
-        <article className='w-[60%] '>
-          <span className='block text-4xl font-semibold mb-4 text-left'>{t('home.title')}</span>
-          <span className='block text-sm text-left'>
-            <Trans
-              defaults={t('home.introduction')}
-              components={{ h1: <h1 className='inline font-bold' /> }}
-            />
-          </span>
-        </article>
-        <aside className='w-[40%] flex items-center justify-center'>
-          <Image src={HomeCar} alt='home-car' width={500} />
-        </aside>
-      </div>
-      <div className='flex items-center justify-center gap-4'>
-        <Input type='date' min={today} max={nextYear} />
-        <Input type='date' min={today} max={nextYear} />
-      </div>
+    <div className='w-full py-4 gap-4'>
+      <div
+        className='absolute inset-0 bg-no-repeat h-[100dvh] bg-cover opacity-35'
+        style={{ backgroundImage: `url('${HomeCar}')` }}
+      ></div>
+      <article className='w-full'>
+        <span className='block text-4xl font-semibold mb-4 text-center'>{t('home.title')}</span>
+        <span className='block text-sm text-left'>
+          <Trans
+            defaults={t('home.introduction')}
+            components={{ h1: <h1 className='inline font-bold' /> }}
+          />
+        </span>
+      </article>
       <span className='block text-xl mb-14'>
         <Trans
           defaults={t('home.invite')}
@@ -41,6 +36,10 @@ const HomePage: FC = () => {
           }}
         />
       </span>
+      <section className='flex items-center justify-center gap-4'>
+        <Input type='date' min={today} max={nextYear} label='aynen' labelPlacement='outside-left' />
+        <Input type='date' min={today} max={nextYear} />
+      </section>
     </div>
   );
 };

@@ -1,3 +1,3 @@
-import HomeCar from './img/home-car.png';
+import HomeCar from './img/home-car.jpeg';
 
 export { HomeCar };
