@@ -17,9 +17,10 @@ interface IProps {
   onClick?: () => void; //* Şu anlık optional.
 }
 
-const Form: FC<IProps> = () => {
+const SignUpForm: FC<IProps> = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const title: string = t('common.signUp');
 
   const schema = yup.object().shape({
@@ -41,7 +42,11 @@ const Form: FC<IProps> = () => {
       .min(6, t('form.passwordMinMessage')),
   });
 
-  const { register, handleSubmit, formState } = useForm<IForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, defaultValues },
+  } = useForm<IForm>({
     resolver: yupResolver(schema),
     defaultValues: {
       username: '',
@@ -52,10 +57,12 @@ const Form: FC<IProps> = () => {
     mode: 'onBlur',
   });
 
-  const { errors } = formState;
-
-  const toggleEyeIcon = (): void => {
+  const toggleEyeIconForPassword = (): void => {
     setShowPassword((preValue: boolean) => !preValue);
+  };
+
+  const toggleEyeIconForConfirmPassword = (): void => {
+    setShowConfirmPassword((preValue: boolean) => !preValue);
   };
 
   const onSubmit = (data: IForm): void => {
@@ -77,8 +84,7 @@ const Form: FC<IProps> = () => {
             label={t('form.username')}
             size='sm'
             variant='bordered'
-            defaultValue={formState.defaultValues?.username}
-            isRequired
+            defaultValue={defaultValues?.username}
             color={errors.username?.message ? 'danger' : 'default'}
             errorMessage={errors.username?.message}
             isInvalid={!!errors.username?.message}
@@ -91,8 +97,7 @@ const Form: FC<IProps> = () => {
             label={t('form.email')}
             size='sm'
             variant='bordered'
-            defaultValue={formState.defaultValues?.email}
-            isRequired
+            defaultValue={defaultValues?.email}
             color={errors.email?.message ? 'danger' : 'default'}
             errorMessage={errors.email?.message}
             isInvalid={!!errors.email?.message}
@@ -105,15 +110,14 @@ const Form: FC<IProps> = () => {
             label={t('form.password')}
             endContent={
               showPassword ? (
-                <EyeSlash className='hover:cursor-pointer' onClick={toggleEyeIcon} />
+                <EyeSlash className='cursor-pointer' onClick={toggleEyeIconForPassword} />
               ) : (
-                <Eye className='hover:cursor-pointer' onClick={toggleEyeIcon} />
+                <Eye className='cursor-pointer' onClick={toggleEyeIconForPassword} />
               )
             }
             size='sm'
             variant='bordered'
-            defaultValue={formState.defaultValues?.password}
-            isRequired
+            defaultValue={defaultValues?.password}
             color={errors.password?.message ? 'danger' : 'default'}
             errorMessage={errors.password?.message}
             isInvalid={!!errors.password?.message}
@@ -121,20 +125,19 @@ const Form: FC<IProps> = () => {
           <Input
             {...register('confirmPassword')}
             name='confirmPassword'
-            type={showPassword ? 'text' : 'password'}
+            type={showConfirmPassword ? 'text' : 'password'}
             className='mb-2'
             label={t('form.confirmPassword')}
             endContent={
-              showPassword ? (
-                <EyeSlash className='hover:cursor-pointer' onClick={toggleEyeIcon} />
+              showConfirmPassword ? (
+                <EyeSlash className='cursor-pointer' onClick={toggleEyeIconForConfirmPassword} />
               ) : (
-                <Eye className='hover:cursor-pointer' onClick={toggleEyeIcon} />
+                <Eye className='cursor-pointer' onClick={toggleEyeIconForConfirmPassword} />
               )
             }
             size={'sm'}
             variant='bordered'
-            defaultValue={formState.defaultValues?.confirmPassword}
-            isRequired
+            defaultValue={defaultValues?.confirmPassword}
             color={errors.confirmPassword?.message ? 'danger' : 'default'}
             errorMessage={errors.confirmPassword?.message}
             isInvalid={!!errors.confirmPassword?.message}
@@ -150,4 +153,4 @@ const Form: FC<IProps> = () => {
   );
 };
 
-export default Form;
+export default SignUpForm;
