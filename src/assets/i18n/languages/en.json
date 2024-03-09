@@ -7,7 +7,8 @@
       "alreadySign": "Already have an account?",
       "noAccountYet": "No account yet?",
       "turkish": "Turkish",
-      "english": "English"
+      "english": "English",
+      "search": "Search"
     },
     "form": {
       "username": "Username",
@@ -20,10 +21,14 @@
       "passwordRequiredMessage": "Please enter your password.",
       "passwordMinMessage": "Username must be at least 6 characters.",
       "confirmPassword": "Confirm Password",
-      "confirmPasswordRequiredMessage": "Please enter your confirm password."
+      "confirmPasswordRequiredMessage": "Please enter your confirm password.",
+      "inputDatePlaceholder": "dd.mm.yyyy",
+      "start": "Start",
+      "end": "End",
+      "location": "Location"
     },
     "home": {
-      "title": "We're here for your most beautiful journeys. Are you ready to hit the road?",
+      "title": "We're here for your most beautiful journeys.",
       "introduction": "Hello, welcome to <h1>Wander Wheels</h1>. Traveling has become easier and more enjoyable. With our wide range of vehicles, competitive prices, and reliable service, we're here to offer you the best travel experience possible.",
       "invite": "<link_1>Login</link_1> or <link_2>Sign Up</link_2> now and take the first step towards your dream journey by choosing from our extensive fleet of vehicles. Are you ready to hit the road?"
     }
