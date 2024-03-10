@@ -1,49 +1,48 @@
-import { FC, MutableRefObject, useRef } from 'react';
+import { FC, forwardRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Input, Select, SelectItem } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
 
 interface IForm {
   location: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
+}
+
+interface IEvent {
+  value?: string;
+  onClick?: () => null;
 }
 
 const RentForm: FC = () => {
   const { t } = useTranslation();
-  const startInputRef = useRef<HTMLInputElement | null>(null);
-  const endInputRef = useRef<HTMLInputElement | null>(null);
+  const [startDatePicker, setStartDatePicker] = useState<Date | null>(null);
 
-  const today: string = new Date().toISOString().split('T')[0];
+  const today: Date = new Date();
   const _nextYear: Date = new Date();
   _nextYear.setFullYear(_nextYear.getFullYear() + 1);
-  const nextYear: string = _nextYear.toISOString().split('T')[0];
-
-  const handleClickInput = (inputRef: MutableRefObject<HTMLInputElement | null>): void => {
-    if (inputRef.current) {
-      inputRef.current?.focus();
-      inputRef.current.showPicker();
-    }
-  };
+  const nextYear: Date = _nextYear;
 
   const schema = yup.object().shape({
     location: yup.string().required(),
-    startDate: yup.date().required(),
-    endDate: yup.date().required(),
+    startDate: yup.string().required(),
+    endDate: yup.string().required(),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<IForm>({
     resolver: yupResolver(schema),
     defaultValues: {
       location: '',
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: '',
+      endDate: '',
     },
     mode: 'onBlur',
   });
@@ -55,9 +54,44 @@ const RentForm: FC = () => {
     console.log(data);
   };
 
+  const handleCustomDatePickerChange = (e: Date): void => {
+    console.log(e.toLocaleDateString());
+
+    setStartDatePicker(e);
+    setValue('startDate', startDatePicker?.toLocaleDateString() ?? '');
+  };
+
+  const createCustomInput = (type: 'start' | 'end'): JSX.Element => {
+    const typeDate = `${type}Date` as const;
+
+    const CustomDatePickerInput = forwardRef<HTMLInputElement, IEvent>(({ onClick }, ref) => (
+      <Input
+        {...register(typeDate)}
+        ref={ref}
+        value={startDatePicker?.toLocaleDateString()}
+        onClick={onClick}
+        onFocus={onClick}
+        label={t(`form.${type}`)}
+        placeholder={t('form.inputDatePlaceholder')}
+        labelPlacement='inside'
+        variant='bordered'
+        color={errors[typeDate]?.message ? 'danger' : 'default'}
+        errorMessage={errors[typeDate]?.message}
+        isInvalid={!!errors[typeDate]?.message}
+        className={!errors[typeDate]?.message ? 'mb-6' : ''}
+        classNames={{
+          errorMessage: 'text-left',
+        }}
+        autoComplete='off'
+      />
+    ));
+
+    return <CustomDatePickerInput />;
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Card className='px-4 py-8 bg-neutral-900'>
+      <Card className='px-4 py-8 bg-neutral-900 overflow-visible'>
         <div className='flex items-center justify-center gap-4'>
           <Select
             {...register('location')}
@@ -76,46 +110,21 @@ const RentForm: FC = () => {
               {'İstanbul'}
             </SelectItem>
           </Select>
-          <Input
-            {...register('startDate')}
-            ref={startInputRef}
-            type='text'
-            min={today}
-            max={nextYear}
-            label={t('form.start')}
-            placeholder={t('form.inputDatePlaceholder')}
-            labelPlacement='inside'
-            variant='bordered'
-            onKeyDown={e => e.preventDefault()}
-            onFocus={() => handleClickInput(startInputRef)}
-            onClick={() => handleClickInput(startInputRef)}
-            color={errors.startDate?.message ? 'danger' : 'default'}
-            errorMessage={errors.startDate?.message}
-            isInvalid={!!errors.startDate?.message}
-            className={!errors.startDate?.message ? 'mb-6' : ''}
-            classNames={{
-              errorMessage: 'text-left',
-            }}
+          <CustomDatePicker
+            selected={startDatePicker}
+            onChange={handleCustomDatePickerChange}
+            // dateFormat='dd.mm.yyyy'
+            minDate={today}
+            maxDate={nextYear}
+            customInput={createCustomInput('start')}
           />
-          <Input
-            {...register('endDate')}
-            ref={endInputRef}
-            type='date'
-            min={today}
-            max={nextYear}
-            label={t('form.end')}
-            placeholder={t('form.inputDatePlaceholder')}
-            labelPlacement='inside'
-            variant='bordered'
-            onKeyDown={e => e.preventDefault()}
-            onFocus={() => handleClickInput(endInputRef)}
-            color={errors.endDate?.message ? 'danger' : 'default'}
-            errorMessage={errors.endDate?.message}
-            isInvalid={!!errors.endDate?.message}
-            className={!errors.endDate?.message ? 'mb-6' : ''}
-            classNames={{
-              errorMessage: 'text-left',
-            }}
+          <CustomDatePicker
+            selected={startDatePicker}
+            onChange={handleCustomDatePickerChange}
+            // dateFormat='dd.mm.yyyy'
+            minDate={today}
+            maxDate={nextYear}
+            customInput={createCustomInput('end')}
           />
         </div>
         <div className='w-full flex items-center justify-end mt-4'>

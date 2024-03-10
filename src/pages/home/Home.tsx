@@ -15,7 +15,7 @@ const HomePage: FC = () => {
         style={{ backgroundImage: `url('${HomeCar}')` }}
       ></div>
       <div className='w-full py-4 gap-4'>
-        <article className='w-full mt-40 mb-8'>
+        <article className='w-full mt-24 mb-8'>
           <span className='block text-5xl font-semibold mb-4 text-left w-2/5'>
             {t('home.title')}
           </span>
@@ -26,7 +26,7 @@ const HomePage: FC = () => {
             />
           </span>
         </article>
-        <span className='block text-xl mb-4 text-left'>
+        <span className='block text-xl mb-24 text-left'>
           <Trans
             defaults={t('home.invite')}
             components={{
