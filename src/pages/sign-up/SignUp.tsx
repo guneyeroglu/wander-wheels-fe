@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@nextui-org/react';
 
-import { SignUpFrom } from '../../components/forms';
+import { SignUpFrom } from '../../components/Forms';
 
 const SignUp: FC = () => {
   const { t } = useTranslation();

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { createRootRoute, Outlet, useNavigate } from '@tanstack/react-router';
 import { NextUIProvider } from '@nextui-org/react';
 
-import Header from '../components/header/Header';
+import Header from '../components/Header/Header';
 
 const RouteComponent: FC = () => {
   const navigate = useNavigate();

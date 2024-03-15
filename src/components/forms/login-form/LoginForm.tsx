@@ -1,10 +1,23 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { Button, Card, CardBody, CardFooter, CardHeader, Input } from '@nextui-org/react';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+} from '@nextui-org/react';
 import { Eye, EyeSlash } from '@phosphor-icons/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+import { LANGUAGES } from '../../../global/enums';
 
 interface IForm {
   username: string;
@@ -16,7 +29,7 @@ interface IProps {
 }
 
 const LoginForm: FC<IProps> = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const title: string = t('common.login');
 
@@ -46,6 +59,11 @@ const LoginForm: FC<IProps> = () => {
 
   const toggleEyeIcon = (): void => {
     setShowPassword((preValue: boolean) => !preValue);
+  };
+
+  const handleLanguage = (lang: keyof typeof LANGUAGES) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem('lang', lang);
   };
 
   const onSubmit = (data: IForm): void => {
@@ -92,6 +110,31 @@ const LoginForm: FC<IProps> = () => {
             errorMessage={errors.password?.message}
             isInvalid={!!errors.password?.message}
           />
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                variant='bordered'
+                radius='sm'
+                size='md'
+                disableAnimation
+                className='justify-start border-neutral-700 aria-expanded:scale-[1] h-12 hover:border-neutral-500 aria-expanded:border-neutral-500'
+              >
+                {i18n.language === LANGUAGES.tr ? t('common.turkish') : t('common.english')}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label='language menu'
+              selectionMode='single'
+              selectedKeys={[i18n.language]}
+            >
+              <DropdownItem key={LANGUAGES.tr} onClick={() => handleLanguage(LANGUAGES.tr)}>
+                {t('common.turkish')}
+              </DropdownItem>
+              <DropdownItem key={LANGUAGES.en} onClick={() => handleLanguage(LANGUAGES.en)}>
+                {t('common.english')}
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </CardBody>
         <CardFooter>
           <Button variant='faded' size='md' radius='sm' fullWidth type='submit'>

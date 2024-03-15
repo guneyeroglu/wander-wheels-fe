@@ -3,7 +3,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { Link } from '@nextui-org/react';
 
 import { HomeCar } from '../../assets/images';
-import { RentForm } from '../../components/forms';
+import { RentForm } from '../../components/Forms';
 
 const HomePage: FC = () => {
   const { t } = useTranslation();
