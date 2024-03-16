@@ -6,7 +6,7 @@ export interface ICar {
   hourPrice: number;
   color: IColor;
   image: string;
-  transmission: TTransmission;
+  transmission: TTransmissionType;
   fuelType: TFuelType;
   seat: number;
   avaliable: boolean;
@@ -20,5 +20,5 @@ interface IColor {
 }
 
 export type TColor = 'grey' | 'black' | 'white';
-export type TTransmission = 'Automatic' | 'Manual' | 'Hybrid';
+export type TTransmissionType = 'Automatic' | 'Manual' | 'Hybrid';
 export type TFuelType = 'Electric' | 'Petrol';

@@ -6,7 +6,7 @@ export const mockData: ICar[] = [
     brand: 'BMW',
     model: 'i5',
     year: 2024,
-    hourPrice: 1255.5,
+    hourPrice: 750.0,
     color: {
       text: 'grey',
       hex: '#404040',
@@ -25,7 +25,7 @@ export const mockData: ICar[] = [
     brand: 'Audi',
     model: 'A3',
     year: 2020,
-    hourPrice: 775.25,
+    hourPrice: 1250.0,
     color: {
       text: 'black',
       hex: '#262626',
@@ -43,7 +43,7 @@ export const mockData: ICar[] = [
     brand: 'Ferrari',
     model: 'Spider',
     year: 2017,
-    hourPrice: 3775.25,
+    hourPrice: 2500.0,
     color: {
       text: 'white',
       hex: '#e5e5e5',

@@ -8,7 +8,10 @@
       "noAccountYet": "Henüz hesabın yok mu?",
       "turkish": "Türkçe",
       "english": "İngilizce",
-      "search": "Ara"
+      "search": "Ara",
+      "filters": "Filtreler",
+      "resetAll": "Tümünü Sıfırla",
+      "any": "Herhangi Biri"
     },
     "form": {
       "username": "Kullanıcı Adı",
@@ -37,7 +40,15 @@
       "avaliable": "Uygun",
       "new": "Yeni",
       "searchResults": "Arama Sonuçları",
-      "hour": "saat"
+      "hour": "saat",
+      "brand": "Marka",
+      "model": "Model",
+      "priceRange": "Fiyat Aralığı",
+      "yearRange": "Yıl Aralığı",
+      "transmissionType": "Vites Tipi",
+      "fuelType": "Yakıt Tipi",
+      "color": "Renk",
+      "seat": "Koltuk Sayısı"
     }
   }
 }

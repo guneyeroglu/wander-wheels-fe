@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Card, CardBody, CardFooter, CardHeader, Image } from '@nextui-org/react';
+import { Card, CardBody, CardFooter, CardHeader, Chip, Image } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
 import {
   Heart,
@@ -40,9 +40,9 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
       <Card>
         <CardHeader className='flex flex-col items-start justify-center'>
           <div className='w-full flex items-center justify-between mb-4'>
-            <div className='flex items-center justify-start gap-4'>
-              {isNew && <div>{t('car.new')}</div>}
-              {avaliable && <div>{t('car.avaliable')}</div>}
+            <div className='flex items-center justify-start gap-2'>
+              {isNew && <Chip color='warning'>{t('car.new')}</Chip>}
+              {avaliable && <Chip color='success'>{t('car.avaliable')}</Chip>}
             </div>
             <div>
               <Heart
@@ -58,11 +58,12 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
         </CardHeader>
         <CardBody>
           <Image
+            isBlurred
             src={image}
             alt={`${brand}-${model}`}
-            className='hover:scale-105'
+            className='hover:scale-105 h-full'
             classNames={{
-              wrapper: 'overflow-hidden',
+              wrapper: 'overflow-hidden h-[250px]',
             }}
           />
         </CardBody>
@@ -89,7 +90,7 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
             <div className='flex items-center justify-center'>
               <CurrencyDollar size={24} />
               <span className='text-xl text-neutral-200'>
-                {hourPrice}
+                {hourPrice.toFixed(2)}
                 <span className='text-sm opacity-75'>/{t('car.hour')}</span>
               </span>
             </div>

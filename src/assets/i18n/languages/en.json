@@ -8,7 +8,10 @@
       "noAccountYet": "No account yet?",
       "turkish": "Turkish",
       "english": "English",
-      "search": "Search"
+      "search": "Search",
+      "filters": "Filters",
+      "resetAll": "Reset All",
+      "any": "Any"
     },
     "form": {
       "username": "Username",
@@ -37,7 +40,15 @@
       "avaliable": "Avaliable",
       "new": "New",
       "searchResults": "Search Results",
-      "hour": "hour"
+      "hour": "hour",
+      "brand": "Brand",
+      "model": "Modal",
+      "priceRange": "Price Range",
+      "yearRange": "Year Range",
+      "transmissionType": "Transmission Type",
+      "fuelType": "Fuel Type",
+      "color": "Color",
+      "seat": "Seat"
     }
   }
 }
