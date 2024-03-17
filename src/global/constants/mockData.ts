@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { ICar } from '../interfaces';
 
 export const mockData: ICar[] = [
@@ -8,7 +10,7 @@ export const mockData: ICar[] = [
     year: 2024,
     hourPrice: 750.0,
     color: {
-      text: 'grey',
+      text: 'Grey',
       hex: '#404040',
     },
     image:
@@ -16,7 +18,10 @@ export const mockData: ICar[] = [
     transmission: 'Automatic',
     fuelType: 'Electric',
     seat: 4,
-    avaliable: true,
+    avaliable: {
+      status: true,
+      date: new Date(),
+    },
     createdDate: new Date(),
     updatedDate: new Date(),
   },
@@ -27,15 +32,18 @@ export const mockData: ICar[] = [
     year: 2020,
     hourPrice: 1250.0,
     color: {
-      text: 'black',
+      text: 'Black',
       hex: '#262626',
     },
     image: 'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
     transmission: 'Manual',
     fuelType: 'Petrol',
     seat: 4,
-    avaliable: false,
-    createdDate: new Date(),
+    avaliable: {
+      status: false,
+      date: moment().add(10, 'day').toDate(),
+    },
+    createdDate: moment().add(-15, 'day').toDate(),
     updatedDate: new Date(),
   },
   {
@@ -45,14 +53,17 @@ export const mockData: ICar[] = [
     year: 2017,
     hourPrice: 2500.0,
     color: {
-      text: 'white',
+      text: 'White',
       hex: '#e5e5e5',
     },
     image: 'https://i.i-sgcm.com/news/article_reviews/2012/503_1_l.jpg',
     transmission: 'Hybrid',
     fuelType: 'Electric',
     seat: 2,
-    avaliable: true,
+    avaliable: {
+      status: true,
+      date: new Date(),
+    },
     createdDate: new Date(),
     updatedDate: new Date(),
   },

@@ -39,6 +39,7 @@
     },
     "car": {
       "avaliable": "Avaliable",
+      "onlyAvaliable": "Only Avaliable",
       "new": "New",
       "searchResults": "Search Results",
       "hour": "hour",
@@ -49,7 +50,8 @@
       "transmissionType": "Transmission Type",
       "fuelType": "Fuel Type",
       "color": "Color",
-      "seat": "Seat"
+      "seat": "Seat",
+      "blockedTill": "Blocked till {{ date }}"
     }
   }
 }

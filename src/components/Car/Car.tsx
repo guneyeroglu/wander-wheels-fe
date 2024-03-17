@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { Card, CardBody, CardFooter, CardHeader, Chip, Divider, Image } from '@nextui-org/react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Heart,
   User,
@@ -31,18 +31,27 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
   const isNew: boolean = moment(new Date()).diff(createdDate, 'day') <= 5;
-  const colorText: string = `${color.text.substring(0, 1).toUpperCase()}${color.text.substring(1)}`;
 
   const handleFavoriteStatus = (): void => setIsFavorite((preValue: boolean) => !preValue);
 
   return (
-    <div key={id} className='p-2 w-1/2'>
-      <Card shadow='sm'>
+    <div key={id} className='p-2 w-1/2 h-full'>
+      <Card shadow='sm' className='border-t-1.5 border-b-1.5 border-neutral-600 border-solid'>
         <CardHeader className='flex flex-col items-start justify-center'>
           <div className='w-full flex items-center justify-between mb-4'>
             <div className='flex items-center justify-start gap-2'>
               {isNew && <Chip color='warning'>{t('car.new')}</Chip>}
-              {avaliable && <Chip color='success'>{t('car.avaliable')}</Chip>}
+              <Chip color={avaliable.status ? 'success' : 'default'} isDisabled={!avaliable.status}>
+                {avaliable.status ? (
+                  t('car.avaliable')
+                ) : (
+                  <Trans
+                    defaults={t('car.blockedTill', {
+                      date: moment(avaliable.date).format('DD.MM.YYYY'),
+                    })}
+                  />
+                )}
+              </Chip>
             </div>
             <div>
               <Heart
@@ -63,12 +72,12 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
             alt={`${brand}-${model}`}
             className='hover:scale-105 h-full'
             classNames={{
-              wrapper: 'overflow-hidden max-h-[280px] rounded-large',
+              wrapper: 'overflow-hidden max-h-[280px] h-full rounded-large',
             }}
           />
         </CardBody>
-        <Divider className='h-[1.5px]' />
-        <CardFooter className='flex flex-col items-start justify-center border-neutral-600 border-b-1.5 border-solid'>
+        <Divider className='h-[1.5px] bg-neutral-600' />
+        <CardFooter className='flex flex-col items-start justify-center'>
           <div className='w-full'>
             <span className='block w-full text-left mb-2 opacity-75'>{t('common.features')}</span>
             <div className='flex flex-wrap items-center justify-start gap-4 overflow-visible mb-4'>
@@ -86,7 +95,7 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
               </div>
               <div className='flex items-center justify-center gap-2'>
                 <Circle size={24} weight='fill' fill={color.hex} />
-                <span>{colorText}</span>
+                <span>{color.text}</span>
               </div>
             </div>
             <div className='flex items-center justify-end '>

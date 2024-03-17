@@ -9,16 +9,19 @@ export interface ICar {
   transmission: TransmissionType;
   fuelType: FuelType;
   seat: number;
-  avaliable: boolean;
+  avaliable: {
+    status: boolean;
+    date: Date;
+  };
   createdDate: Date;
   updatedDate: Date;
 }
 
-interface IColor {
+export interface IColor {
   text: ColorType;
   hex: string;
 }
 
-export type ColorType = 'grey' | 'black' | 'white';
+export type ColorType = 'Grey' | 'Black' | 'White';
 export type TransmissionType = 'Automatic' | 'Manual' | 'Hybrid';
 export type FuelType = 'Electric' | 'Petrol';

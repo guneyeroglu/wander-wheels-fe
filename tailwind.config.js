@@ -33,8 +33,8 @@ export default {
               700: '#404040',
               800: '#262626',
               900: '#171717',
-              DEFAULT: '#262626',
-              foreground: '#e5e5e5',
+              DEFAULT: '#e5e5e5',
+              foreground: '#262626',
             },
             secondary: {
               50: '#f9fafb',
@@ -48,7 +48,7 @@ export default {
               800: '#1f2937',
               900: '#111827',
               DEFAULT: '#1f2937',
-              foreground: '#f3f4f6',
+              foreground: '#e5e7eb',
             },
             success: {
               50: '#ecfdf4',

@@ -137,7 +137,7 @@ const LoginForm: FC<IProps> = () => {
           </Dropdown>
         </CardBody>
         <CardFooter>
-          <Button variant='faded' size='md' radius='sm' fullWidth type='submit'>
+          <Button color='primary' size='md' radius='sm' fullWidth type='submit'>
             {title}
           </Button>
         </CardFooter>

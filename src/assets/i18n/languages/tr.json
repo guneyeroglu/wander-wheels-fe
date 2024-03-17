@@ -39,6 +39,7 @@
     },
     "car": {
       "avaliable": "Uygun",
+      "onlyAvaliable": "Sadece Uygun Olanlar",
       "new": "Yeni",
       "searchResults": "Arama Sonuçları",
       "hour": "saat",
@@ -49,7 +50,8 @@
       "transmissionType": "Vites Tipi",
       "fuelType": "Yakıt Tipi",
       "color": "Renk",
-      "seat": "Koltuk Sayısı"
+      "seat": "Koltuk Sayısı",
+      "blockedTill": "{{ date }} tarihine kadar bloke"
     }
   }
 }

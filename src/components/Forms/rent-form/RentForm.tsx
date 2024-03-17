@@ -114,7 +114,6 @@ const RentForm: FC = () => {
           <CustomDatePicker
             selected={startDatePicker}
             onChange={handleCustomDatePickerChange}
-            // dateFormat='dd.mm.yyyy'
             minDate={today}
             maxDate={nextYear}
             customInput={createCustomInput('start')}
@@ -122,7 +121,6 @@ const RentForm: FC = () => {
           <CustomDatePicker
             selected={startDatePicker}
             onChange={handleCustomDatePickerChange}
-            // dateFormat='dd.mm.yyyy'
             minDate={today}
             maxDate={nextYear}
             customInput={createCustomInput('end')}
@@ -130,7 +128,7 @@ const RentForm: FC = () => {
         </div>
         <div className='w-full flex items-center justify-end mt-4'>
           <div className='w-40'>
-            <Button className='bg-neutral-200 text-neutral-900' fullWidth type='submit'>
+            <Button color='primary' fullWidth type='submit'>
               {t('common.search')}
             </Button>
           </div>
