@@ -15,7 +15,7 @@ import {
 import { ArrowsCounterClockwise } from '@phosphor-icons/react';
 
 import { mockData } from '../../global/constants';
-import { ICar, TFuelType, TTransmissionType } from '../../global/interfaces';
+import { ICar, FuelType, TransmissionType } from '../../global/interfaces';
 import Car from '../../components/Car/Car';
 
 interface IBrand {
@@ -27,8 +27,8 @@ const CarList: FC = () => {
   const { t } = useTranslation();
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [selectedTransmissionType, setSelectedTransmissionType] =
-    useState<TTransmissionType | null>(null);
-  const [selectedFuelType, setSelectedFuelType] = useState<TFuelType | null>(null);
+    useState<Nullable<TransmissionType>>(null);
+  const [selectedFuelType, setSelectedFuelType] = useState<Nullable<FuelType>>(null);
   const filteredMockData: ICar[] = mockData.filter((car: ICar) => car);
 
   const brands: IBrand[] = [
@@ -50,8 +50,8 @@ const CarList: FC = () => {
     (brand: IBrand) => brand.name === selectedBrand,
   )?.model;
 
-  const transmissionTypes: TTransmissionType[] = ['Manual', 'Automatic', 'Hybrid'];
-  const fuelTypes: TFuelType[] = ['Electric', 'Petrol'];
+  const transmissionTypes: TransmissionType[] = ['Manual', 'Automatic', 'Hybrid'];
+  const fuelTypes: FuelType[] = ['Electric', 'Petrol'];
 
   const handleResetAllFilter = (): void => {
     console.log('cleared');
@@ -61,11 +61,11 @@ const CarList: FC = () => {
     setSelectedBrand(e.target.value);
   };
 
-  const handleTransmissionType = (e: TTransmissionType | null) => {
+  const handleTransmissionType = (e: Nullable<TransmissionType>) => {
     setSelectedTransmissionType(e);
   };
 
-  const handleFuelType = (e: TFuelType | null) => {
+  const handleFuelType = (e: Nullable<FuelType>) => {
     setSelectedFuelType(e);
   };
 
@@ -142,7 +142,7 @@ const CarList: FC = () => {
             >
               {t('common.any')}
             </Chip>
-            {transmissionTypes.map((transmissionType: TTransmissionType) => (
+            {transmissionTypes.map((transmissionType: TransmissionType) => (
               <Chip
                 key={transmissionType}
                 className='cursor-pointer'
@@ -163,7 +163,7 @@ const CarList: FC = () => {
             >
               {t('common.any')}
             </Chip>
-            {fuelTypes.map((fuelType: TFuelType) => (
+            {fuelTypes.map((fuelType: FuelType) => (
               <Chip
                 key={fuelType}
                 className='cursor-pointer'

@@ -1,9 +1,10 @@
 import { FC, forwardRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Input, Select, SelectItem } from '@nextui-org/react';
-import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
 
 interface IForm {
@@ -19,7 +20,7 @@ interface IEvent {
 
 const RentForm: FC = () => {
   const { t } = useTranslation();
-  const [startDatePicker, setStartDatePicker] = useState<Date | null>(null);
+  const [startDatePicker, setStartDatePicker] = useState<Nullable<Date>>(null);
 
   const today: Date = new Date();
   const _nextYear: Date = new Date();
