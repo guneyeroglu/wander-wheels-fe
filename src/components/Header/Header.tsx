@@ -21,8 +21,8 @@ const Header: FC = () => {
   };
 
   return (
-    <header className='border-b-1 border-solid border-neutral-200 sticky top-0 z-50 bg-neutral-900'>
-      <div className='max-w-screen-2xl m-auto py-2 px-4 w-full flex justify-between items-center'>
+    <header className='border-b-1 border-solid border-neutral-200 sticky top-0 z-50 bg-neutral-900 h-16'>
+      <div className='max-w-screen-2xl h-full m-auto py-2 px-4 w-full flex justify-between items-center'>
         <Link href='/' color='foreground'>
           Wander Wheels - WW
         </Link>

@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Card, CardBody, CardFooter, CardHeader, Chip, Image } from '@nextui-org/react';
+import { Card, CardBody, CardFooter, CardHeader, Chip, Divider, Image } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
 import {
   Heart,
@@ -56,20 +56,22 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
           <h3 className='text-3xl font-medium text-neutral-200'>{`${brand} ${model}`}</h3>
           <span className='text-xl font-normal text-neutral-200 opacity-75'>{year}</span>
         </CardHeader>
-        <CardBody>
+        <CardBody className='overflow-hidden'>
           <Image
             isBlurred
             src={image}
             alt={`${brand}-${model}`}
             className='hover:scale-105 h-full'
             classNames={{
-              wrapper: 'overflow-hidden h-[250px]',
+              wrapper: 'overflow-hidden max-h-[280px] rounded-large',
             }}
           />
         </CardBody>
-        <CardFooter className='flex flex-col items-start justify-center'>
-          <div className='w-full flex items-center justify-between'>
-            <div className='flex items-center justify-center gap-4 overflow-visible'>
+        <Divider className='h-[1.5px]' />
+        <CardFooter className='flex flex-col items-start justify-center border-neutral-600 border-b-1.5 border-solid'>
+          <div className='w-full'>
+            <span className='block w-full text-left mb-2 opacity-75'>{t('common.features')}</span>
+            <div className='flex flex-wrap items-center justify-start gap-4 overflow-visible mb-4'>
               <div className='flex items-center justify-center gap-2'>
                 <User size={24} />
                 <span>{seat}</span>
@@ -87,7 +89,7 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
                 <span>{colorText}</span>
               </div>
             </div>
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-end '>
               <CurrencyDollar size={24} />
               <span className='text-xl text-neutral-200'>
                 {hourPrice.toFixed(2)}

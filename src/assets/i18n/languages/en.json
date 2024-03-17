@@ -11,7 +11,8 @@
       "search": "Search",
       "filters": "Filters",
       "resetAll": "Reset All",
-      "any": "Any"
+      "any": "Any",
+      "features": "Features"
     },
     "form": {
       "username": "Username",

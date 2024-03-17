@@ -70,8 +70,8 @@ const CarList: FC = () => {
   };
 
   return (
-    <div className='w-full flex items-start justify-start gap-4'>
-      <Card className='w-2/5' shadow='sm'>
+    <div className='w-full h-full flex items-start justify-start gap-4'>
+      <Card className='w-1/3 sticky top-[80px]' shadow='sm'>
         <CardHeader>
           <div className='w-full flex items-center justify-between'>
             <span>{t('common.filters')}</span>
@@ -176,7 +176,7 @@ const CarList: FC = () => {
           </div>
         </CardBody>
       </Card>
-      <div className='w-3/5'>
+      <div className='w-2/3'>
         <div className='mb-4 text-left px-2'>
           <span className='font-normal text-xl'>{`${t('car.searchResults')} `}</span>
           <span className='font-semibold text-xl'>{`(${filteredMockData.length})`}</span>

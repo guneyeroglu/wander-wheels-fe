@@ -11,7 +11,8 @@
       "search": "Ara",
       "filters": "Filtreler",
       "resetAll": "Tümünü Sıfırla",
-      "any": "Herhangi Biri"
+      "any": "Herhangi Biri",
+      "features": "Özellikler"
     },
     "form": {
       "username": "Kullanıcı Adı",
