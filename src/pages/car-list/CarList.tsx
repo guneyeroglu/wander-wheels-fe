@@ -71,7 +71,7 @@ const CarList: FC = () => {
 
   return (
     <div className='w-full flex items-start justify-start gap-4'>
-      <Card className='w-2/5'>
+      <Card className='w-2/5' shadow='sm'>
         <CardHeader>
           <div className='w-full flex items-center justify-between'>
             <span>{t('common.filters')}</span>
@@ -82,26 +82,23 @@ const CarList: FC = () => {
           </div>
         </CardHeader>
         <CardBody className='gap-4'>
-          <Select label={t('car.brand')} onChange={onChangeBrand}>
+          <Select label={t('car.brand')} size='sm' onChange={onChangeBrand}>
             {brands.map((brand: IBrand) => (
               <SelectItem key={brand.name} value={brand.name}>
                 {brand.name}
               </SelectItem>
             ))}
           </Select>
-          <Divider />
-          {selectedBrand && models?.length && (
-            <>
-              <Select key={selectedBrand} label={t('car.model')} disabled={!!selectedBrand}>
-                {models?.map((model: string) => (
-                  <SelectItem key={model} value={model}>
-                    {model}
-                  </SelectItem>
-                ))}
-              </Select>
-              <Divider />
-            </>
+          {selectedBrand && !!models?.length && (
+            <Select key={selectedBrand} label={t('car.model')} size='sm' disabled={!!selectedBrand}>
+              {models?.map((model: string) => (
+                <SelectItem key={model} value={model}>
+                  {model}
+                </SelectItem>
+              ))}
+            </Select>
           )}
+          <Divider />
           <Slider
             label={t('car.priceRange')}
             step={50}

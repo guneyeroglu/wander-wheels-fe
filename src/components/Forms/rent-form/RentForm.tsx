@@ -91,7 +91,7 @@ const RentForm: FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Card className='px-4 py-8 bg-neutral-900 overflow-visible'>
+      <Card className='px-4 py-8 bg-neutral-900 overflow-visible' shadow='sm'>
         <div className='flex items-center justify-center gap-4'>
           <Select
             {...register('location')}

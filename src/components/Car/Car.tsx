@@ -37,7 +37,7 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
 
   return (
     <div key={id} className='p-2 w-1/2'>
-      <Card>
+      <Card shadow='sm'>
         <CardHeader className='flex flex-col items-start justify-center'>
           <div className='w-full flex items-center justify-between mb-4'>
             <div className='flex items-center justify-start gap-2'>
