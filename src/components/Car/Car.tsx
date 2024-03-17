@@ -40,8 +40,16 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
         <CardHeader className='flex flex-col items-start justify-center'>
           <div className='w-full flex items-center justify-between mb-4'>
             <div className='flex items-center justify-start gap-2'>
-              {isNew && <Chip color='warning'>{t('car.new')}</Chip>}
-              <Chip color={avaliable.status ? 'success' : 'default'} isDisabled={!avaliable.status}>
+              {isNew && (
+                <Chip className='cursor-default' color='warning'>
+                  {t('car.new')}
+                </Chip>
+              )}
+              <Chip
+                className='cursor-default'
+                color={avaliable.status ? 'success' : 'default'}
+                isDisabled={!avaliable.status}
+              >
                 {avaliable.status ? (
                   t('car.avaliable')
                 ) : (

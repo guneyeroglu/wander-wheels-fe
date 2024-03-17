@@ -14,7 +14,7 @@ import {
   SliderValue,
   Switch,
 } from '@nextui-org/react';
-import { ArrowsCounterClockwise } from '@phosphor-icons/react';
+import { ArrowsCounterClockwise, Circle } from '@phosphor-icons/react';
 
 import { mockData } from '../../global/constants';
 import { ICar, FuelType, TransmissionType, IColor } from '../../global/interfaces';
@@ -122,12 +122,16 @@ const CarList: FC = () => {
   };
 
   const handleColorValue = (e: ChangeEvent<HTMLSelectElement>): void => {
-    const colorValues: string[] = e.target.value.split(',');
-    const colorValue: IColor[] = colorValues.map(
-      (splitedColor: string) => colors.find((color: IColor) => color.text === splitedColor)!,
-    );
+    if (e.target.value) {
+      const colorValues: string[] = e.target.value.split(',');
+      const colorValue: IColor[] = colorValues.map(
+        (splitedColor: string) => colors.find((color: IColor) => color.text === splitedColor)!,
+      );
 
-    setSelectedColors(colorValue);
+      setSelectedColors(colorValue);
+    } else {
+      setSelectedColors([]);
+    }
   };
 
   const handleOnlyAvaliableValue = (): void => setOnlyAvaliable((preValue: boolean) => !preValue);
@@ -275,7 +279,11 @@ const CarList: FC = () => {
             onChange={handleColorValue}
           >
             {colors.map((color: IColor) => (
-              <SelectItem key={color.text} value={color.text}>
+              <SelectItem
+                key={color.text}
+                value={color.text}
+                startContent={<Circle size={24} weight='duotone' fill={color.hex} />}
+              >
                 {color.text}
               </SelectItem>
             ))}
