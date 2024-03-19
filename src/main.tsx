@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
 import './assets/i18n';
-import './index.css';
+import './index.scss';
 
 const rootElement = document.getElementById('app')!;
 
