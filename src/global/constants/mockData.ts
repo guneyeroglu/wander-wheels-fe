@@ -8,17 +8,20 @@ export const mockData: ICar[] = [
     brand: 'BMW',
     model: 'i5',
     year: 2024,
-    hourPrice: 750.0,
+    dayPrice: 750.0,
     color: {
       text: 'Grey',
       hex: '#404040',
     },
-    image:
-      'https://sedanaraba.com/wp-content/uploads/2023/06/yeni-bmw-i5-teknik-ozellikleri-cover-1024x576.jpg',
+    images: {
+      featured:
+        'https://sedanaraba.com/wp-content/uploads/2023/06/yeni-bmw-i5-teknik-ozellikleri-cover-1024x576.jpg',
+      others: [''],
+    },
     transmission: 'Automatic',
     fuelType: 'Electric',
     seat: 4,
-    avaliable: {
+    available: {
       status: true,
       date: new Date(),
     },
@@ -30,16 +33,20 @@ export const mockData: ICar[] = [
     brand: 'Audi',
     model: 'A3',
     year: 2020,
-    hourPrice: 1250.0,
+    dayPrice: 1250.0,
     color: {
       text: 'Black',
       hex: '#262626',
     },
-    image: 'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
+    images: {
+      featured:
+        'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
+      others: [''],
+    },
     transmission: 'Manual',
     fuelType: 'Petrol',
     seat: 4,
-    avaliable: {
+    available: {
       status: false,
       date: moment().add(10, 'day').toDate(),
     },
@@ -51,16 +58,19 @@ export const mockData: ICar[] = [
     brand: 'Ferrari',
     model: 'Spider',
     year: 2017,
-    hourPrice: 2500.0,
+    dayPrice: 2500.0,
     color: {
       text: 'White',
       hex: '#e5e5e5',
     },
-    image: 'https://i.i-sgcm.com/news/article_reviews/2012/503_1_l.jpg',
+    images: {
+      featured: 'https://i.i-sgcm.com/news/article_reviews/2012/503_1_l.jpg',
+      others: [''],
+    },
     transmission: 'Hybrid',
     fuelType: 'Electric',
     seat: 2,
-    avaliable: {
+    available: {
       status: true,
       date: new Date(),
     },

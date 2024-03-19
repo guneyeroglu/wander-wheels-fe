@@ -36,32 +36,23 @@ const CarList: FC = () => {
   const [selectedTransmissionType, setSelectedTransmissionType] =
     useState<Nullable<TransmissionType>>(null);
   const [selectedFuelType, setSelectedFuelType] = useState<Nullable<FuelType>>(null);
+  const [selectedSeat, setSelectedSeat] = useState<Nullable<number>>(null);
   const [selectedColors, setSelectedColors] = useState<IColor[]>([]);
-  const [onlyAvaliable, setOnlyAvaliable] = useState<boolean>(false);
+  const [onlyAvailable, setOnlyAvailable] = useState<boolean>(false);
 
   const filteredMockData: ICar[] = mockData.filter((car: ICar) => car);
 
   const brands: IBrand[] = [
-    {
-      name: 'BMW',
-      model: ['i5'],
-    },
-    {
-      name: 'Audi',
-      model: ['A3'],
-    },
-    {
-      name: 'Ferrari',
-      model: ['Spider'],
-    },
+    { name: 'BMW', model: ['i5'] },
+    { name: 'Audi', model: ['A3'] },
+    { name: 'Ferrari', model: ['Spider'] },
   ];
-
   const models: string[] | undefined = brands.find(
     (brand: IBrand) => brand.name === selectedBrand,
   )?.model;
-
   const transmissionTypes: TransmissionType[] = ['Manual', 'Automatic', 'Hybrid'];
   const fuelTypes: FuelType[] = ['Electric', 'Petrol'];
+  const seats: number[] = [2, 3, 4];
   const colors: IColor[] = [
     { text: 'Black', hex: '#262626' },
     { text: 'White', hex: '#e5e5e5' },
@@ -75,8 +66,9 @@ const CarList: FC = () => {
     setYearRange(defaultYearRange);
     setSelectedTransmissionType(null);
     setSelectedFuelType(null);
+    setSelectedSeat(null);
     setSelectedColors([]);
-    setOnlyAvaliable(false);
+    setOnlyAvailable(false);
   };
 
   const handleSearch = (): void => {
@@ -87,8 +79,9 @@ const CarList: FC = () => {
       yearRange,
       selectedTransmissionType,
       selectedFuelType,
+      selectedSeat,
       selectedColors,
-      onlyAvaliable,
+      onlyAvailable,
     });
   };
 
@@ -121,6 +114,10 @@ const CarList: FC = () => {
     setSelectedFuelType(e);
   };
 
+  const handleSeatValue = (e: Nullable<number>): void => {
+    setSelectedSeat(e);
+  };
+
   const handleColorValue = (e: ChangeEvent<HTMLSelectElement>): void => {
     if (e.target.value) {
       const colorValues: string[] = e.target.value.split(',');
@@ -134,7 +131,7 @@ const CarList: FC = () => {
     }
   };
 
-  const handleOnlyAvaliableValue = (): void => setOnlyAvaliable((preValue: boolean) => !preValue);
+  const handleOnlyAvailableValue = (): void => setOnlyAvailable((preValue: boolean) => !preValue);
 
   return (
     <div className='w-full h-full flex items-start justify-start gap-4'>
@@ -271,6 +268,29 @@ const CarList: FC = () => {
             </div>
           </div>
           <Divider />
+          <div className='w-full flex flex-col gap-2'>
+            <span className='text-md font-normal text-neutral-200'>{t('car.seat')}</span>
+            <div className='w-full flex flex-wrap items-center justify-start gap-2'>
+              <Chip
+                className='cursor-pointer'
+                color={selectedSeat ? 'default' : 'secondary'}
+                onClick={() => handleSeatValue(null)}
+              >
+                {t('common.any')}
+              </Chip>
+              {seats.map((seat: number) => (
+                <Chip
+                  key={seat}
+                  className='cursor-pointer'
+                  color={selectedSeat === seat ? 'secondary' : 'default'}
+                  onClick={() => handleSeatValue(seat)}
+                >
+                  {seat}
+                </Chip>
+              ))}
+            </div>
+          </div>
+          <Divider />
           <Select
             label={t('car.color')}
             size='sm'
@@ -282,15 +302,23 @@ const CarList: FC = () => {
               <SelectItem
                 key={color.text}
                 value={color.text}
-                startContent={<Circle size={24} weight='duotone' fill={color.hex} />}
+                startContent={
+                  <Circle
+                    size={20}
+                    weight='fill'
+                    fill={color.hex}
+                    className='border-1.5 border-solid border-neutral-200 rounded-full'
+                    style={{ backgroundColor: color.hex }}
+                  />
+                }
               >
                 {color.text}
               </SelectItem>
             ))}
           </Select>
           <Divider />
-          <Switch color='secondary' isSelected={onlyAvaliable} onChange={handleOnlyAvaliableValue}>
-            {t('car.onlyAvaliable')}
+          <Switch color='secondary' isSelected={onlyAvailable} onChange={handleOnlyAvailableValue}>
+            {t('car.onlyAvailableForRent')}
           </Switch>
         </CardBody>
         <CardFooter>

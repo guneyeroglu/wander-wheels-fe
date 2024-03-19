@@ -3,13 +3,16 @@ export interface ICar {
   brand: string;
   model: string;
   year: number;
-  hourPrice: number;
+  dayPrice: number;
   color: IColor;
-  image: string;
+  images: {
+    featured: string;
+    others: string[];
+  };
   transmission: TransmissionType;
   fuelType: FuelType;
   seat: number;
-  avaliable: {
+  available: {
     status: boolean;
     date: Date;
   };

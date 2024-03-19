@@ -38,11 +38,11 @@
       "invite": "Hemen <link_1>Giriş Yapın</link_1> veya <link_2>Üye Olun</link_2> ve geniş araç filomuz arasından istediğiniz aracı seçerek hayallerinizdeki yolculuğa adım atın. Yola çıkmaya hazır mısınız?"
     },
     "car": {
-      "avaliable": "Uygun",
-      "onlyAvaliable": "Sadece Uygun Olanlar",
+      "availableForRent": "Kiralanmaya Uygun",
+      "onlyAvailableForRent": "Sadece Kiralanabilir Olanlar",
       "new": "Yeni",
       "searchResults": "Arama Sonuçları",
-      "hour": "saat",
+      "day": "gün",
       "brand": "Marka",
       "model": "Model",
       "priceRange": "Fiyat Aralığı",

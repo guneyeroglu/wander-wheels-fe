@@ -27,13 +27,13 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
   brand,
   model,
   year,
-  hourPrice,
+  dayPrice,
   color,
-  image,
+  images,
   transmission,
   fuelType,
   seat,
-  avaliable,
+  available,
   createdDate,
 }) => {
   const { t } = useTranslation();
@@ -41,10 +41,14 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
   const [isHoveredFavorite, setIsHoveredFavorite] = useState<boolean>(false);
 
   const isNew: boolean = moment(new Date()).diff(createdDate, 'day') <= 5;
+  const featuredImages: string = images.featured;
+  const fixedDayPrice: string = dayPrice.toFixed(2);
 
   const handleFavoriteStatus = (): void => setIsFavorite((preValue: boolean) => !preValue);
   const handleMouseEnterFavorite = (): void => setIsHoveredFavorite(true);
   const handleMouseLeaveFavorite = (): void => setIsHoveredFavorite(false);
+
+  const cardAttribute = isHoveredFavorite ? { ['data-hover']: true } : {};
 
   return (
     <div key={id} className='p-2 w-1/2 h-full relative'>
@@ -56,31 +60,27 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
         onMouseEnter={handleMouseEnterFavorite}
         onMouseLeave={handleMouseLeaveFavorite}
       />
-      <Link className='w-full h-full cursor-pointer' href={`/car/${id}`}>
+      <Link className='w-full h-full cursor-pointer hover:opacity-100' href={`/car-details/${id}`}>
         <Card
           isHoverable
           shadow='sm'
-          className='border-t-1.5 border-b-1.5 border-neutral-600 border-solid hover:shadow-large hover:border-neutral-200'
+          className='w-full border-t-1.5 border-b-1.5 border-neutral-600 border-solid dark:data-[hover=true]:shadow-large dark:data-[hover=true]:border-neutral-200'
+          {...cardAttribute}
         >
           <CardHeader className='flex flex-col items-start justify-center'>
             <div className='w-full flex items-center justify-start mb-4'>
               <div className='flex items-center justify-start gap-2'>
-                {isNew && (
-                  <Chip className='cursor-default' color='warning'>
-                    {t('car.new')}
-                  </Chip>
-                )}
+                {isNew && <Chip color='warning'>{t('car.new')}</Chip>}
                 <Chip
-                  className='cursor-default'
-                  color={avaliable.status ? 'success' : 'default'}
-                  isDisabled={!avaliable.status}
+                  color={available.status ? 'success' : 'default'}
+                  isDisabled={!available.status}
                 >
-                  {avaliable.status ? (
-                    t('car.avaliable')
+                  {available.status ? (
+                    t('car.availableForRent')
                   ) : (
                     <Trans
                       defaults={t('car.blockedTill', {
-                        date: moment(avaliable.date).format('DD.MM.YYYY'),
+                        date: moment(available.date).format('DD.MM.YYYY'),
                       })}
                     />
                   )}
@@ -90,16 +90,28 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
             <h3 className='text-3xl font-medium text-neutral-200'>{`${brand} ${model}`}</h3>
             <span className='text-xl font-normal text-neutral-200 opacity-75'>{year}</span>
           </CardHeader>
-          <CardBody className='overflow-hidden'>
+          <CardBody className='overflow-hidden relative'>
             <Image
               isBlurred
-              src={image}
+              width={'100%'}
+              height={280}
+              src={featuredImages}
               alt={`${brand}-${model}`}
-              className='hover:scale-105 h-full'
+              className='hover:scale-105 h-[280px] object-cover object-center'
               classNames={{
-                wrapper: 'overflow-hidden max-h-[280px] w-full h-full rounded-large',
+                wrapper: 'overflow-hidden w-full h-full rounded-large',
               }}
             />
+            <div className='flex items-center justify-center gap-2 absolute top-3 right-3 z-10 bg-neutral-800 bg-opacity-95 rounded-tr-large rounded-bl-large p-2'>
+              <Circle
+                size={20}
+                weight='fill'
+                fill={color.hex}
+                className='border-1.5 border-solid border-neutral-200 rounded-full'
+                style={{ backgroundColor: color.hex }}
+              />
+              <span className='text-neutral-200'>{color.text}</span>
+            </div>
           </CardBody>
           <Divider className='h-[1.5px] bg-neutral-600' />
           <CardFooter className='flex flex-col items-start justify-center'>
@@ -118,16 +130,12 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
                   <GasPump size={24} />
                   <span>{fuelType}</span>
                 </div>
-                <div className='flex items-center justify-center gap-2'>
-                  <Circle size={24} weight='fill' fill={color.hex} />
-                  <span>{color.text}</span>
-                </div>
               </div>
-              <div className='flex items-center justify-end '>
-                <CurrencyDollar size={24} />
-                <span className='text-xl text-neutral-200'>
-                  {hourPrice.toFixed(2)}
-                  <span className='text-sm opacity-75'>/{t('car.hour')}</span>
+              <div className='flex items-center justify-left '>
+                <CurrencyDollar size={32} />
+                <span className='text-3xl text-neutral-100'>
+                  {fixedDayPrice}
+                  <span className='text-2xl opacity-75'>/{t('car.day')}</span>
                 </span>
               </div>
             </div>

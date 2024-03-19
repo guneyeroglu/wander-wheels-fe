@@ -38,11 +38,11 @@
       "invite": "<link_1>Login</link_1> or <link_2>Sign Up</link_2> now and take the first step towards your dream journey by choosing from our extensive fleet of vehicles. Are you ready to hit the road?"
     },
     "car": {
-      "avaliable": "Avaliable",
-      "onlyAvaliable": "Only Avaliable",
+      "availableForRent": "Available for Rent",
+      "onlyAvailableForRent": "Only Available for Rent",
       "new": "New",
       "searchResults": "Search Results",
-      "hour": "hour",
+      "day": "day",
       "brand": "Brand",
       "model": "Modal",
       "priceRange": "Price Range",
