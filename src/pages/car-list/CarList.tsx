@@ -17,7 +17,7 @@ import {
 import { ArrowsCounterClockwise, Circle } from '@phosphor-icons/react';
 
 import { mockData } from '../../global/constants';
-import { ICar, FuelType, TransmissionType, IColor } from '../../global/interfaces';
+import { ICar, FuelType, TransmissionType, IColor, IType } from '../../global/interfaces';
 import Car from '../../components/Car/Car';
 
 interface IBrand {
@@ -50,13 +50,20 @@ const CarList: FC = () => {
   const models: string[] | undefined = brands.find(
     (brand: IBrand) => brand.name === selectedBrand,
   )?.model;
-  const transmissionTypes: TransmissionType[] = ['Manual', 'Automatic', 'Hybrid'];
-  const fuelTypes: FuelType[] = ['Electric', 'Petrol'];
+  const transmissions: IType<TransmissionType>[] = [
+    { id: 1, type: 'Manual' },
+    { id: 2, type: 'Automatic' },
+    { id: 3, type: 'Hybrid' },
+  ];
+  const fuels: IType<FuelType>[] = [
+    { id: 1, type: 'Electric' },
+    { id: 2, type: 'Petrol' },
+  ];
   const seats: number[] = [2, 3, 4];
   const colors: IColor[] = [
-    { text: 'Black', hex: '#262626' },
-    { text: 'White', hex: '#e5e5e5' },
-    { text: 'Grey', hex: '#404040' },
+    { id: 1, text: 'Black', code: '#262626' },
+    { id: 2, text: 'White', code: '#e5e5e5' },
+    { id: 3, text: 'Grey', code: '#404040' },
   ];
 
   const handleResetAllFilter = (): void => {
@@ -232,14 +239,14 @@ const CarList: FC = () => {
               >
                 {t('common.any')}
               </Chip>
-              {transmissionTypes.map((transmissionType: TransmissionType) => (
+              {transmissions.map((transmission: IType<TransmissionType>) => (
                 <Chip
-                  key={transmissionType}
+                  key={transmission.id}
                   className='cursor-pointer'
-                  color={selectedTransmissionType === transmissionType ? 'secondary' : 'default'}
-                  onClick={() => handleTransmissionTypeValue(transmissionType)}
+                  color={selectedTransmissionType === transmission.type ? 'secondary' : 'default'}
+                  onClick={() => handleTransmissionTypeValue(transmission.type)}
                 >
-                  {transmissionType}
+                  {transmission.type}
                 </Chip>
               ))}
             </div>
@@ -255,14 +262,14 @@ const CarList: FC = () => {
               >
                 {t('common.any')}
               </Chip>
-              {fuelTypes.map((fuelType: FuelType) => (
+              {fuels.map((fuel: IType<FuelType>) => (
                 <Chip
-                  key={fuelType}
+                  key={fuel.id}
                   className='cursor-pointer'
-                  color={selectedFuelType === fuelType ? 'secondary' : 'default'}
-                  onClick={() => handleFuelTypeValue(fuelType)}
+                  color={selectedFuelType === fuel.type ? 'secondary' : 'default'}
+                  onClick={() => handleFuelTypeValue(fuel.type)}
                 >
-                  {fuelType}
+                  {fuel.type}
                 </Chip>
               ))}
             </div>
@@ -300,15 +307,15 @@ const CarList: FC = () => {
           >
             {colors.map((color: IColor) => (
               <SelectItem
-                key={color.text}
+                key={color.id}
                 value={color.text}
                 startContent={
                   <Circle
                     size={20}
                     weight='fill'
-                    fill={color.hex}
+                    fill={color.code}
                     className='border-1.5 border-solid border-neutral-200 rounded-full'
-                    style={{ backgroundColor: color.hex }}
+                    style={{ backgroundColor: color.code }}
                   />
                 }
               >

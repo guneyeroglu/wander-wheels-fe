@@ -12,7 +12,8 @@
       "filters": "Filtreler",
       "resetAll": "Tümünü Sıfırla",
       "any": "Herhangi Biri",
-      "features": "Özellikler"
+      "features": "Özellikler",
+      "back": "Geri"
     },
     "form": {
       "username": "Kullanıcı Adı",
@@ -47,6 +48,7 @@
       "model": "Model",
       "priceRange": "Fiyat Aralığı",
       "yearRange": "Yıl Aralığı",
+      "year": "Yıl",
       "transmissionType": "Vites Tipi",
       "fuelType": "Yakıt Tipi",
       "color": "Renk",

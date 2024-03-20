@@ -10,16 +10,28 @@ export const mockData: ICar[] = [
     year: 2024,
     dayPrice: 750.0,
     color: {
+      id: 1,
       text: 'Grey',
-      hex: '#404040',
+      code: '#404040',
     },
     images: {
       featured:
         'https://sedanaraba.com/wp-content/uploads/2023/06/yeni-bmw-i5-teknik-ozellikleri-cover-1024x576.jpg',
-      others: [''],
+      others: [
+        'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
+        'https://i.i-sgcm.com/news/article_reviews/2012/503_1_l.jpg',
+        'https://sedanaraba.com/wp-content/uploads/2023/06/yeni-bmw-i5-teknik-ozellikleri-cover-1024x576.jpg',
+        'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
+      ],
     },
-    transmission: 'Automatic',
-    fuelType: 'Electric',
+    transmission: {
+      id: 1,
+      type: 'Automatic',
+    },
+    fuel: {
+      id: 1,
+      type: 'Electric',
+    },
     seat: 4,
     available: {
       status: true,
@@ -35,16 +47,28 @@ export const mockData: ICar[] = [
     year: 2020,
     dayPrice: 1250.0,
     color: {
+      id: 2,
       text: 'Black',
-      hex: '#262626',
+      code: '#262626',
     },
     images: {
       featured:
         'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
-      others: [''],
+      others: [
+        'https://i.i-sgcm.com/news/article_reviews/2012/503_1_l.jpg',
+        'https://sedanaraba.com/wp-content/uploads/2023/06/yeni-bmw-i5-teknik-ozellikleri-cover-1024x576.jpg',
+        'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
+        'https://i.i-sgcm.com/news/article_reviews/2012/503_1_l.jpg',
+      ],
     },
-    transmission: 'Manual',
-    fuelType: 'Petrol',
+    transmission: {
+      id: 2,
+      type: 'Manual',
+    },
+    fuel: {
+      id: 2,
+      type: 'Petrol',
+    },
     seat: 4,
     available: {
       status: false,
@@ -60,15 +84,27 @@ export const mockData: ICar[] = [
     year: 2017,
     dayPrice: 2500.0,
     color: {
+      id: 3,
       text: 'White',
-      hex: '#e5e5e5',
+      code: '#e5e5e5',
     },
     images: {
       featured: 'https://i.i-sgcm.com/news/article_reviews/2012/503_1_l.jpg',
-      others: [''],
+      others: [
+        'https://sedanaraba.com/wp-content/uploads/2023/06/yeni-bmw-i5-teknik-ozellikleri-cover-1024x576.jpg',
+        'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
+        'https://i.i-sgcm.com/news/article_reviews/2012/503_1_l.jpg',
+        'https://arabam-blog.mncdn.com/wp-content/uploads/2020/12/New-Audi-A3-2020-UK-7.jpg',
+      ],
     },
-    transmission: 'Hybrid',
-    fuelType: 'Electric',
+    transmission: {
+      id: 3,
+      type: 'Hybrid',
+    },
+    fuel: {
+      id: 3,
+      type: 'Electric',
+    },
     seat: 2,
     available: {
       status: true,

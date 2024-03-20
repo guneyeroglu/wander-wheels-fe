@@ -12,7 +12,8 @@
       "filters": "Filters",
       "resetAll": "Reset All",
       "any": "Any",
-      "features": "Features"
+      "features": "Features",
+      "back": "Back"
     },
     "form": {
       "username": "Username",
@@ -47,6 +48,7 @@
       "model": "Modal",
       "priceRange": "Price Range",
       "yearRange": "Year Range",
+      "year": "Year",
       "transmissionType": "Transmission Type",
       "fuelType": "Fuel Type",
       "color": "Color",

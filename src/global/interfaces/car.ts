@@ -9,8 +9,8 @@ export interface ICar {
     featured: string;
     others: string[];
   };
-  transmission: TransmissionType;
-  fuelType: FuelType;
+  transmission: IType<TransmissionType>;
+  fuel: IType<FuelType>;
   seat: number;
   available: {
     status: boolean;
@@ -21,8 +21,14 @@ export interface ICar {
 }
 
 export interface IColor {
+  id: number;
   text: ColorType;
-  hex: string;
+  code: string;
+}
+
+export interface IType<T> {
+  id: number;
+  type: T;
 }
 
 export type ColorType = 'Grey' | 'Black' | 'White';
