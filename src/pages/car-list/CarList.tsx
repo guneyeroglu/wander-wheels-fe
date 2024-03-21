@@ -12,7 +12,6 @@ import {
   SelectItem,
   Slider,
   SliderValue,
-  Switch,
 } from '@nextui-org/react';
 import { ArrowsCounterClockwise, Circle } from '@phosphor-icons/react';
 
@@ -38,7 +37,6 @@ const CarList: FC = () => {
   const [selectedFuelType, setSelectedFuelType] = useState<Nullable<FuelType>>(null);
   const [selectedSeat, setSelectedSeat] = useState<Nullable<number>>(null);
   const [selectedColors, setSelectedColors] = useState<IColor[]>([]);
-  const [onlyAvailable, setOnlyAvailable] = useState<boolean>(false);
 
   const filteredMockData: ICar[] = mockData.filter((car: ICar) => car);
 
@@ -75,7 +73,6 @@ const CarList: FC = () => {
     setSelectedFuelType(null);
     setSelectedSeat(null);
     setSelectedColors([]);
-    setOnlyAvailable(false);
   };
 
   const handleSearch = (): void => {
@@ -88,7 +85,6 @@ const CarList: FC = () => {
       selectedFuelType,
       selectedSeat,
       selectedColors,
-      onlyAvailable,
     });
   };
 
@@ -137,8 +133,6 @@ const CarList: FC = () => {
       setSelectedColors([]);
     }
   };
-
-  const handleOnlyAvailableValue = (): void => setOnlyAvailable((preValue: boolean) => !preValue);
 
   return (
     <div className='w-full h-full flex items-start justify-start gap-4'>
@@ -323,10 +317,6 @@ const CarList: FC = () => {
               </SelectItem>
             ))}
           </Select>
-          <Divider />
-          <Switch color='secondary' isSelected={onlyAvailable} onChange={handleOnlyAvailableValue}>
-            {t('car.onlyAvailableForRent')}
-          </Switch>
         </CardBody>
         <CardFooter>
           <Button fullWidth color='primary' onClick={handleSearch}>

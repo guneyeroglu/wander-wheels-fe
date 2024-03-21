@@ -12,10 +12,6 @@ export interface ICar {
   transmission: IType<TransmissionType>;
   fuel: IType<FuelType>;
   seat: number;
-  available: {
-    status: boolean;
-    date: Date;
-  };
   createdDate: Date;
   updatedDate: Date;
 }

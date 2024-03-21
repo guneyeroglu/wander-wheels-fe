@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
+import moment from 'moment';
 
 interface IForm {
   location: string;
@@ -21,11 +22,12 @@ interface IEvent {
 const RentForm: FC = () => {
   const { t } = useTranslation();
   const [startDatePicker, setStartDatePicker] = useState<Nullable<Date>>(null);
+  const [endDatePicker, setEndDatePicker] = useState<Nullable<Date>>(null);
 
-  const today: Date = new Date();
-  const _nextYear: Date = new Date();
-  _nextYear.setFullYear(_nextYear.getFullYear() + 1);
-  const nextYear: Date = _nextYear;
+  const today: Date = moment().toDate();
+  const tomorrow: Date = moment(today).add(1, 'day').toDate();
+  const nextYear: Date = moment(today).add(1, 'year').toDate();
+  const nextYearForTomorrow: Date = moment(tomorrow).add(1, 'year').toDate();
 
   const schema = yup.object().shape({
     location: yup.string().required(),
@@ -55,21 +57,32 @@ const RentForm: FC = () => {
     console.log(data);
   };
 
-  const handleCustomDatePickerChange = (e: Date): void => {
+  const handleCustomDatePickerChangeStartValue = (e: Date): void => {
     console.log(e.toLocaleDateString());
 
     setStartDatePicker(e);
     setValue('startDate', startDatePicker?.toLocaleDateString() ?? '');
   };
 
+  const handleCustomDatePickerChangeEndValue = (e: Date): void => {
+    console.log(e.toLocaleDateString());
+
+    setEndDatePicker(e);
+    setValue('endDate', endDatePicker?.toLocaleDateString() ?? '');
+  };
+
   const createCustomInput = (type: 'start' | 'end'): JSX.Element => {
     const typeDate = `${type}Date` as const;
+    const value =
+      type === 'start'
+        ? startDatePicker?.toLocaleDateString()
+        : endDatePicker?.toLocaleDateString();
 
     const CustomDatePickerInput = forwardRef<HTMLInputElement, IEvent>(({ onClick }, ref) => (
       <Input
         {...register(typeDate)}
         ref={ref}
-        value={startDatePicker?.toLocaleDateString()}
+        value={value}
         onClick={onClick}
         onFocus={onClick}
         label={t(`form.${type}`)}
@@ -113,16 +126,16 @@ const RentForm: FC = () => {
           </Select>
           <CustomDatePicker
             selected={startDatePicker}
-            onChange={handleCustomDatePickerChange}
+            onChange={handleCustomDatePickerChangeStartValue}
             minDate={today}
             maxDate={nextYear}
             customInput={createCustomInput('start')}
           />
           <CustomDatePicker
-            selected={startDatePicker}
-            onChange={handleCustomDatePickerChange}
-            minDate={today}
-            maxDate={nextYear}
+            selected={endDatePicker}
+            onChange={handleCustomDatePickerChangeEndValue}
+            minDate={startDatePicker ? moment(startDatePicker).add(1, 'day').toDate() : tomorrow}
+            maxDate={nextYearForTomorrow}
             customInput={createCustomInput('end')}
           />
         </div>

@@ -33,12 +33,8 @@ export const mockData: ICar[] = [
       type: 'Electric',
     },
     seat: 4,
-    available: {
-      status: true,
-      date: new Date(),
-    },
-    createdDate: new Date(),
-    updatedDate: new Date(),
+    createdDate: moment().toDate(),
+    updatedDate: moment().toDate(),
   },
   {
     id: 'ZXCV-5678-ZXCV-7777',
@@ -70,12 +66,8 @@ export const mockData: ICar[] = [
       type: 'Petrol',
     },
     seat: 4,
-    available: {
-      status: false,
-      date: moment().add(10, 'day').toDate(),
-    },
     createdDate: moment().add(-15, 'day').toDate(),
-    updatedDate: new Date(),
+    updatedDate: moment().toDate(),
   },
   {
     id: 'AXDF-9975-XXSS-6666',
@@ -106,11 +98,7 @@ export const mockData: ICar[] = [
       type: 'Electric',
     },
     seat: 2,
-    available: {
-      status: true,
-      date: new Date(),
-    },
-    createdDate: new Date(),
-    updatedDate: new Date(),
+    createdDate: moment().toDate(),
+    updatedDate: moment().toDate(),
   },
 ];

@@ -1,4 +1,7 @@
 import { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
+import { Car as CarIcon, CurrencyDollar, GasPump, Circle, UsersThree } from '@phosphor-icons/react';
 import {
   Card,
   CardBody,
@@ -9,9 +12,6 @@ import {
   Image,
   Link,
 } from '@nextui-org/react';
-import { Trans, useTranslation } from 'react-i18next';
-import { Car as CarIcon, CurrencyDollar, GasPump, Circle, UsersThree } from '@phosphor-icons/react';
-import moment from 'moment';
 
 import { ICar } from '../../global/interfaces';
 import CustomFavoriteButton from '../CustomFavoriteButton/CustomFavoriteButton';
@@ -27,14 +27,13 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
   transmission,
   fuel,
   seat,
-  available,
   createdDate,
 }) => {
   const { t } = useTranslation();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isHoveredFavorite, setIsHoveredFavorite] = useState<boolean>(false);
 
-  const isNew: boolean = moment(new Date()).diff(createdDate, 'day') <= 5;
+  const isNew: boolean = moment().diff(createdDate, 'day') <= 5;
   const featuredImage: string = images.featured;
   const fixedDayPrice: string = dayPrice.toFixed(2);
 
@@ -63,22 +62,8 @@ const Car: FC<Omit<ICar, 'updatedDate'>> = ({
         >
           <CardHeader className='flex flex-col items-start justify-center'>
             <div className='w-full flex items-center justify-start mb-4'>
-              <div className='flex items-center justify-start gap-2'>
+              <div className='flex items-center justify-start gap-2 min-h-7'>
                 {isNew && <Chip color='warning'>{t('car.new')}</Chip>}
-                <Chip
-                  color={available.status ? 'success' : 'default'}
-                  isDisabled={!available.status}
-                >
-                  {available.status ? (
-                    t('car.availableForRent')
-                  ) : (
-                    <Trans
-                      defaults={t('car.blockedTill', {
-                        date: moment(available.date).format('DD.MM.YYYY'),
-                      })}
-                    />
-                  )}
-                </Chip>
               </div>
             </div>
             <h3 className='text-3xl font-medium text-neutral-200'>{`${brand} ${model}`}</h3>

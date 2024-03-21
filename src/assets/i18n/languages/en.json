@@ -39,21 +39,22 @@
       "invite": "<link_1>Login</link_1> or <link_2>Sign Up</link_2> now and take the first step towards your dream journey by choosing from our extensive fleet of vehicles. Are you ready to hit the road?"
     },
     "car": {
-      "availableForRent": "Available for Rent",
-      "onlyAvailableForRent": "Only Available for Rent",
       "new": "New",
       "searchResults": "Search Results",
       "day": "day",
       "brand": "Brand",
       "model": "Modal",
+      "price": "Price",
+      "totalPrice": "Total Price",
       "priceRange": "Price Range",
-      "yearRange": "Year Range",
       "year": "Year",
+      "yearRange": "Year Range",
       "transmissionType": "Transmission Type",
       "fuelType": "Fuel Type",
       "color": "Color",
       "seat": "Seat",
-      "blockedTill": "Blocked till {{ date }}"
+      "taxes": "Taxes",
+      "insurance": "Insurance"
     }
   }
 }
