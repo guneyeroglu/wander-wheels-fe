@@ -1,12 +1,12 @@
-import { FC, forwardRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FC } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Input, Select, SelectItem } from '@nextui-org/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import moment from 'moment';
 
 import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
-import moment from 'moment';
 
 interface IForm {
   location: string;
@@ -14,15 +14,8 @@ interface IForm {
   endDate: string;
 }
 
-interface IEvent {
-  value?: string;
-  onClick?: () => null;
-}
-
 const RentForm: FC = () => {
   const { t } = useTranslation();
-  const [startDatePicker, setStartDatePicker] = useState<Nullable<Date>>(null);
-  const [endDatePicker, setEndDatePicker] = useState<Nullable<Date>>(null);
 
   const today: Date = moment().toDate();
   const tomorrow: Date = moment(today).add(1, 'day').toDate();
@@ -38,8 +31,9 @@ const RentForm: FC = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
-    setValue,
+    control,
   } = useForm<IForm>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -47,60 +41,16 @@ const RentForm: FC = () => {
       startDate: '',
       endDate: '',
     },
-    mode: 'onBlur',
+    mode: 'all',
   });
+
+  const [startDate, endDate] = watch(['startDate', 'endDate']);
 
   const onSubmit = (data: IForm): void => {
     //* back-end bağlantısı ileride yapılacak.
     //* onClick();
 
     console.log(data);
-  };
-
-  const handleCustomDatePickerChangeStartValue = (e: Date): void => {
-    console.log(e.toLocaleDateString());
-
-    setStartDatePicker(e);
-    setValue('startDate', startDatePicker?.toLocaleDateString() ?? '');
-  };
-
-  const handleCustomDatePickerChangeEndValue = (e: Date): void => {
-    console.log(e.toLocaleDateString());
-
-    setEndDatePicker(e);
-    setValue('endDate', endDatePicker?.toLocaleDateString() ?? '');
-  };
-
-  const createCustomInput = (type: 'start' | 'end'): JSX.Element => {
-    const typeDate = `${type}Date` as const;
-    const value =
-      type === 'start'
-        ? startDatePicker?.toLocaleDateString()
-        : endDatePicker?.toLocaleDateString();
-
-    const CustomDatePickerInput = forwardRef<HTMLInputElement, IEvent>(({ onClick }, ref) => (
-      <Input
-        {...register(typeDate)}
-        ref={ref}
-        value={value}
-        onClick={onClick}
-        onFocus={onClick}
-        label={t(`form.${type}`)}
-        placeholder={t('form.inputDatePlaceholder')}
-        labelPlacement='inside'
-        variant='bordered'
-        color={errors[typeDate]?.message ? 'danger' : 'default'}
-        errorMessage={errors[typeDate]?.message}
-        isInvalid={!!errors[typeDate]?.message}
-        className={!errors[typeDate]?.message ? 'mb-6' : ''}
-        classNames={{
-          errorMessage: 'text-left',
-        }}
-        autoComplete='off'
-      />
-    ));
-
-    return <CustomDatePickerInput />;
   };
 
   return (
@@ -124,19 +74,68 @@ const RentForm: FC = () => {
               {'İstanbul'}
             </SelectItem>
           </Select>
-          <CustomDatePicker
-            selected={startDatePicker}
-            onChange={handleCustomDatePickerChangeStartValue}
-            minDate={today}
-            maxDate={nextYear}
-            customInput={createCustomInput('start')}
+          <Controller
+            control={control}
+            name='startDate'
+            render={({ field }) => (
+              <CustomDatePicker
+                name={field.name}
+                placeholderText={t('form.inputDatePlaceholder')}
+                minDate={today}
+                maxDate={endDate ? moment(endDate).add(-1, 'day').toDate() : nextYear}
+                value={field.value ? moment(field.value).format('DD.MM.YYYY') : ''}
+                selected={field.value ? moment(field.value).toDate() : null}
+                onChange={(date: Date) => field.onChange(date ? moment(date).toDate() : null)}
+                onBlur={field.onBlur}
+                autoComplete='off'
+                customInput={
+                  <Input
+                    labelPlacement='inside'
+                    label={t('form.start')}
+                    color={errors.startDate?.message ? 'danger' : 'default'}
+                    variant='bordered'
+                    errorMessage={errors.startDate?.message}
+                    isInvalid={!!errors.startDate?.message}
+                    className={!errors.startDate?.message ? 'mb-6' : ''}
+                    classNames={{
+                      errorMessage: 'text-left',
+                    }}
+                  />
+                }
+              />
+            )}
           />
-          <CustomDatePicker
-            selected={endDatePicker}
-            onChange={handleCustomDatePickerChangeEndValue}
-            minDate={startDatePicker ? moment(startDatePicker).add(1, 'day').toDate() : tomorrow}
-            maxDate={nextYearForTomorrow}
-            customInput={createCustomInput('end')}
+          <Controller
+            control={control}
+            name='endDate'
+            render={({ field }) => (
+              <CustomDatePicker
+                name={field.name}
+                placeholderText={t('form.inputDatePlaceholder')}
+                minDate={startDate ? moment(startDate).add(1, 'day').toDate() : tomorrow}
+                maxDate={nextYearForTomorrow}
+                value={field.value ? moment(field.value).format('DD.MM.YYYY') : ''}
+                selected={field.value ? moment(field.value).toDate() : null}
+                onChange={(date: Date) => field.onChange(date ? moment(date).toDate() : null)}
+                onBlur={field.onBlur}
+                autoComplete='off'
+                customInput={
+                  <Input
+                    labelPlacement='inside'
+                    label={t('form.end')}
+                    color={errors.endDate?.message ? 'danger' : 'default'}
+                    variant='bordered'
+                    errorMessage={errors.endDate?.message}
+                    isInvalid={!!errors.endDate?.message}
+                    className={!errors.endDate?.message ? 'mb-6' : ''}
+                    classNames={{
+                      errorMessage: 'text-left',
+                    }}
+                    autoComplete='off'
+                  />
+                }
+              />
+            )}
           />
         </div>
         <div className='w-full flex items-center justify-end mt-4'>
