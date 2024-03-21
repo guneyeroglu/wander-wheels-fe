@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import moment from 'moment';
 
 import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
+import { useNavigate } from '@tanstack/react-router';
 
 interface IForm {
   location: string;
@@ -16,6 +17,7 @@ interface IForm {
 
 const RentForm: FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const today: Date = moment().toDate();
   const tomorrow: Date = moment(today).add(1, 'day').toDate();
@@ -50,7 +52,18 @@ const RentForm: FC = () => {
     //* back-end bağlantısı ileride yapılacak.
     //* onClick();
 
-    console.log(data);
+    const _location: string = data.location;
+    const _startDate: string = moment(moment(data.startDate).toDate()).format('DD.MM.YYYY');
+    const _endDate: string = moment(moment(data.endDate).toDate()).format('DD.MM.YYYY');
+
+    navigate({
+      to: '/car-list',
+      search: {
+        location: _location,
+        startDate: _startDate,
+        endDate: _endDate,
+      },
+    });
   };
 
   return (
