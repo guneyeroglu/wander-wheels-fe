@@ -54,7 +54,8 @@
       "color": "Color",
       "seat": "Seat",
       "taxes": "Taxes",
-      "insurance": "Insurance"
+      "insurance": "Insurance",
+      "rent": "Rent"
     }
   }
 }

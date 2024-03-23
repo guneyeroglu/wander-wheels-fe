@@ -54,7 +54,8 @@
       "color": "Renk",
       "seat": "Koltuk Sayısı",
       "taxes": "Vergiler",
-      "insurance": "Sigorta"
+      "insurance": "Sigorta",
+      "rent": "Kirala"
     }
   }
 }

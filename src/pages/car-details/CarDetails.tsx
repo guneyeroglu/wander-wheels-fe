@@ -254,7 +254,7 @@ const CarDetails: FC = () => {
               </div>
               <div className='w-full flex items-center justify-end'>
                 <Button size='lg' color='primary'>
-                  Al
+                  {t('car.rent')}
                 </Button>
               </div>
             </CardFooter>
