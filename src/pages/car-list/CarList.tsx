@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLoaderData } from '@tanstack/react-router';
 import {
   Button,
   Card,
@@ -15,7 +16,6 @@ import {
 } from '@nextui-org/react';
 import { ArrowsCounterClockwise, Circle } from '@phosphor-icons/react';
 
-import { mockData } from '../../global/constants';
 import { ICar, FuelType, TransmissionType, IColor, IType } from '../../global/interfaces';
 import Car from '../../components/Car/Car';
 
@@ -25,6 +25,7 @@ interface IBrand {
 }
 
 const CarList: FC = () => {
+  const loaderData = useLoaderData({ strict: false }) as ICar[];
   const { t } = useTranslation();
   const defaultPriceRange: number[] = [0, 2500];
   const defaultYearRange: number[] = [2014, 2024];
@@ -38,7 +39,7 @@ const CarList: FC = () => {
   const [selectedSeat, setSelectedSeat] = useState<Nullable<number>>(null);
   const [selectedColors, setSelectedColors] = useState<IColor[]>([]);
 
-  const filteredMockData: ICar[] = mockData.filter((car: ICar) => car);
+  const filteredMockData: ICar[] = loaderData?.filter((car: ICar) => car);
 
   const brands: IBrand[] = [
     { name: 'BMW', model: ['i5'] },
