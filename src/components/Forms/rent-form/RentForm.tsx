@@ -53,8 +53,8 @@ const RentForm: FC = () => {
     //* onClick();
 
     const _location: string = data.location;
-    const _startDate: string = moment(moment(data.startDate).toDate()).format('DD.MM.YYYY');
-    const _endDate: string = moment(moment(data.endDate).toDate()).format('DD.MM.YYYY');
+    const _startDate: string = moment(new Date(data.startDate)).format('YYYY-MM-DD');
+    const _endDate: string = moment(new Date(data.endDate)).format('YYYY-MM-DD');
 
     navigate({
       to: '/car-list',
