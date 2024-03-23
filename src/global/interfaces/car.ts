@@ -17,7 +17,6 @@ export interface ICar {
 }
 
 export interface IColor {
-  id: number;
   text: ColorType;
   code: string;
 }

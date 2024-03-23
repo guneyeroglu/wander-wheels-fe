@@ -10,7 +10,6 @@ export const mockData: ICar[] = [
     year: 2024,
     dayPrice: 750.0,
     color: {
-      id: 1,
       text: 'Grey',
       code: '#404040',
     },
@@ -43,7 +42,6 @@ export const mockData: ICar[] = [
     year: 2020,
     dayPrice: 1250.0,
     color: {
-      id: 2,
       text: 'Black',
       code: '#262626',
     },
@@ -76,7 +74,6 @@ export const mockData: ICar[] = [
     year: 2017,
     dayPrice: 2500.0,
     color: {
-      id: 3,
       text: 'White',
       code: '#e5e5e5',
     },

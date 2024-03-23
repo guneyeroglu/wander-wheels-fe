@@ -34,8 +34,8 @@ const CarList: FC = () => {
   const [priceRange, setPriceRange] = useState<number[]>(defaultPriceRange);
   const [yearRange, setYearRange] = useState<number[]>(defaultYearRange);
   const [selectedTransmissionType, setSelectedTransmissionType] =
-    useState<Nullable<TransmissionType>>(null);
-  const [selectedFuelType, setSelectedFuelType] = useState<Nullable<FuelType>>(null);
+    useState<Nullable<IType<TransmissionType>>>(null);
+  const [selectedFuelType, setSelectedFuelType] = useState<Nullable<IType<FuelType>>>(null);
   const [selectedSeat, setSelectedSeat] = useState<Nullable<number>>(null);
   const [selectedColors, setSelectedColors] = useState<IColor[]>([]);
 
@@ -60,9 +60,9 @@ const CarList: FC = () => {
   ];
   const seats: number[] = [2, 3, 4];
   const colors: IColor[] = [
-    { id: 1, text: 'Black', code: '#262626' },
-    { id: 2, text: 'White', code: '#e5e5e5' },
-    { id: 3, text: 'Grey', code: '#404040' },
+    { text: 'Black', code: '#262626' },
+    { text: 'White', code: '#e5e5e5' },
+    { text: 'Grey', code: '#404040' },
   ];
 
   const handleResetAllFilter = (): void => {
@@ -110,11 +110,11 @@ const CarList: FC = () => {
     }
   };
 
-  const handleTransmissionTypeValue = (e: Nullable<TransmissionType>): void => {
+  const handleTransmissionTypeValue = (e: Nullable<IType<TransmissionType>>): void => {
     setSelectedTransmissionType(e);
   };
 
-  const handleFuelTypeValue = (e: Nullable<FuelType>): void => {
+  const handleFuelTypeValue = (e: Nullable<IType<FuelType>>): void => {
     setSelectedFuelType(e);
   };
 
@@ -238,8 +238,10 @@ const CarList: FC = () => {
                 <Chip
                   key={transmission.id}
                   className='cursor-pointer'
-                  color={selectedTransmissionType === transmission.type ? 'secondary' : 'default'}
-                  onClick={() => handleTransmissionTypeValue(transmission.type)}
+                  color={
+                    selectedTransmissionType?.type === transmission.type ? 'secondary' : 'default'
+                  }
+                  onClick={() => handleTransmissionTypeValue(transmission)}
                 >
                   {transmission.type}
                 </Chip>
@@ -261,8 +263,8 @@ const CarList: FC = () => {
                 <Chip
                   key={fuel.id}
                   className='cursor-pointer'
-                  color={selectedFuelType === fuel.type ? 'secondary' : 'default'}
-                  onClick={() => handleFuelTypeValue(fuel.type)}
+                  color={selectedFuelType?.type === fuel.type ? 'secondary' : 'default'}
+                  onClick={() => handleFuelTypeValue(fuel)}
                 >
                   {fuel.type}
                 </Chip>
@@ -302,7 +304,7 @@ const CarList: FC = () => {
           >
             {colors.map((color: IColor) => (
               <SelectItem
-                key={color.id}
+                key={color.text}
                 value={color.text}
                 startContent={
                   <Circle
