@@ -11,6 +11,7 @@ import {
 import { Globe } from '@phosphor-icons/react';
 
 import { LANGUAGES } from '../../global/enums';
+import { MainLogo } from '../../assets/images';
 
 const Header: FC = () => {
   const { t, i18n } = useTranslation();
@@ -23,8 +24,9 @@ const Header: FC = () => {
   return (
     <header className='border-b-1 border-solid border-neutral-200 sticky top-0 z-50 bg-neutral-900 h-16'>
       <div className='max-w-screen-2xl h-full m-auto py-2 px-4 w-full flex justify-between items-center'>
-        <Link href='/' color='foreground'>
-          Wander Wheels - WW
+        <Link href='/' color='foreground' className='flex items-center justify-start gap-2'>
+          <MainLogo className='w-8' />
+          <span className='text-2xl font-semibold'>Wander Wheels</span>
         </Link>
         <nav className='flex justify-between items-center gap-2'>
           <Dropdown>
