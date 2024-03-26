@@ -1,19 +1,14 @@
 import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from '@tanstack/react-router';
 import { Button, Card, Input, Select, SelectItem } from '@nextui-org/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import moment from 'moment';
 
+import { IRentForm } from '../../../global/interfaces';
 import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
-import { useNavigate } from '@tanstack/react-router';
-
-interface IForm {
-  location: string;
-  startDate: string;
-  endDate: string;
-}
 
 const RentForm: FC = () => {
   const { t } = useTranslation();
@@ -36,7 +31,7 @@ const RentForm: FC = () => {
     watch,
     formState: { errors },
     control,
-  } = useForm<IForm>({
+  } = useForm<IRentForm>({
     resolver: yupResolver(schema),
     defaultValues: {
       location: '',
@@ -48,7 +43,7 @@ const RentForm: FC = () => {
 
   const [startDate, endDate] = watch(['startDate', 'endDate']);
 
-  const onSubmit = (data: IForm): void => {
+  const onSubmit = (data: IRentForm): void => {
     //* back-end bağlantısı ileride yapılacak.
     //* onClick();
 
