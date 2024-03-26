@@ -172,7 +172,7 @@ const CarDetails: FC = () => {
                 name='location'
                 label={t('form.location')}
                 labelPlacement='outside'
-                value={'aynen'}
+                value={''}
                 size='lg'
                 radius='sm'
                 variant='bordered'
@@ -183,7 +183,7 @@ const CarDetails: FC = () => {
                 name='username'
                 label={t('form.start')}
                 labelPlacement='outside'
-                value={'aynen'}
+                value={''}
                 size='lg'
                 radius='sm'
                 variant='bordered'
@@ -194,7 +194,7 @@ const CarDetails: FC = () => {
                 name='username'
                 label={t('form.end')}
                 labelPlacement='outside'
-                value={'aynen'}
+                value={''}
                 size='lg'
                 radius='sm'
                 variant='bordered'

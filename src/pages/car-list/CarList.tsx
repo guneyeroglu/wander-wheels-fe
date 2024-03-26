@@ -144,7 +144,7 @@ const CarList: FC = () => {
     if (e.target.value) {
       const colorValues: string[] = e.target.value.split(',');
       const colorValue: IColor[] = colorValues.map(
-        (splitedColor: string) => colors.find((color: IColor) => color.text === splitedColor)!,
+        (splitColor: string) => colors.find((color: IColor) => color.text === splitColor)!,
       );
 
       setCarFilter((prevFilter: ICarFilter) => ({
