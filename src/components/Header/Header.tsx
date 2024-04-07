@@ -40,10 +40,10 @@ const Header: FC = () => {
               selectionMode='single'
               selectedKeys={[i18n.language]}
             >
-              <DropdownItem key={LANGUAGES.tr} onClick={() => handleLanguage(LANGUAGES.tr)}>
+              <DropdownItem key={LANGUAGES.tr_TR} onClick={() => handleLanguage(LANGUAGES.tr_TR)}>
                 {t('common.turkish')}
               </DropdownItem>
-              <DropdownItem key={LANGUAGES.en} onClick={() => handleLanguage(LANGUAGES.en)}>
+              <DropdownItem key={LANGUAGES.en_EN} onClick={() => handleLanguage(LANGUAGES.en_EN)}>
                 {t('common.english')}
               </DropdownItem>
             </DropdownMenu>

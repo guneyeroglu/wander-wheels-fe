@@ -1,5 +1,5 @@
-import LoginForm from './login-form/LoginForm';
-import SignUpFrom from './sign-up-form/SignUpForm';
-import RentForm from './rent-form/RentForm.tsx';
+import LoginForm from './LoginForm/LoginForm';
+import SignUpFrom from './SignUpForm/SignUpForm';
+import RentForm from './RentForm/RentForm.tsx';
 
 export { LoginForm, SignUpFrom, RentForm };

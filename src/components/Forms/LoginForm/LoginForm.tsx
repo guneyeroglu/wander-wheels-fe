@@ -119,7 +119,7 @@ const LoginForm: FC<IProps> = () => {
                 disableAnimation
                 className='justify-start border-neutral-700 aria-expanded:scale-[1] h-12 hover:border-neutral-500 aria-expanded:border-neutral-500'
               >
-                {i18n.language === LANGUAGES.tr ? t('common.turkish') : t('common.english')}
+                {i18n.language === LANGUAGES.tr_TR ? t('common.turkish') : t('common.english')}
               </Button>
             </DropdownTrigger>
             <DropdownMenu
@@ -127,10 +127,10 @@ const LoginForm: FC<IProps> = () => {
               selectionMode='single'
               selectedKeys={[i18n.language]}
             >
-              <DropdownItem key={LANGUAGES.tr} onClick={() => handleLanguage(LANGUAGES.tr)}>
+              <DropdownItem key={LANGUAGES.tr_TR} onClick={() => handleLanguage(LANGUAGES.tr_TR)}>
                 {t('common.turkish')}
               </DropdownItem>
-              <DropdownItem key={LANGUAGES.en} onClick={() => handleLanguage(LANGUAGES.en)}>
+              <DropdownItem key={LANGUAGES.en_EN} onClick={() => handleLanguage(LANGUAGES.en_EN)}>
                 {t('common.english')}
               </DropdownItem>
             </DropdownMenu>
