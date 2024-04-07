@@ -1,7 +1,7 @@
-import HomePage from './home/Home';
-import Login from './login/Login';
-import SignUp from './sign-up/SignUp';
-import CarList from './car-list/CarList';
-import CarDetails from './car-details/CarDetails';
+import HomePage from './Home/Home';
+import Login from './Login/Login';
+import SignUp from './SignUp/SignUp';
+import CarList from './CarList/CarList';
+import CarDetails from './CarDetails/CarDetails';
 
 export { HomePage, SignUp, Login, CarList, CarDetails };
