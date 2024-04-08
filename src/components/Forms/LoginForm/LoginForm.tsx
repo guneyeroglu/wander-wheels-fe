@@ -18,6 +18,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { LANGUAGES } from '../../../global/enums';
+import { Login } from '../../../global/services/users';
 
 interface IForm {
   username: string;
@@ -38,17 +39,18 @@ const LoginForm: FC<IProps> = () => {
       .string()
       .required(t('form.usernameRequiredMessage'))
       .min(3, t('form.usernameMinMessage'))
-      .min(20, t('form.usernameMaxMessage')),
+      .max(20, t('form.usernameMaxMessage')),
     password: yup
       .string()
       .required(t('form.passwordRequiredMessage'))
       .min(6, t('form.passwordMinMessage'))
-      .min(18, t('form.passwordMaxMessage')),
+      .max(18, t('form.passwordMaxMessage')),
   });
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, defaultValues },
   } = useForm<IForm>({
     resolver: yupResolver(schema),
@@ -59,6 +61,18 @@ const LoginForm: FC<IProps> = () => {
     mode: 'onBlur',
   });
 
+  const [username, password] = watch(['username', 'password']);
+
+  const { data: loggedData, refetch } = Login({
+    username,
+    password,
+    options: {
+      enabled: false,
+    },
+  });
+
+  console.log(loggedData);
+
   const toggleEyeIcon = (): void => {
     setShowPassword((preValue: boolean) => !preValue);
   };
@@ -68,11 +82,10 @@ const LoginForm: FC<IProps> = () => {
     localStorage.setItem('lang', lang);
   };
 
-  const onSubmit = (data: IForm): void => {
+  const onSubmit = (): void => {
     //* back-end bağlantısı ileride yapılacak.
     //* onClick();
-
-    console.log(data);
+    refetch();
   };
 
   return (
@@ -91,6 +104,7 @@ const LoginForm: FC<IProps> = () => {
             color={errors.username?.message ? 'danger' : 'default'}
             errorMessage={errors.username?.message}
             isInvalid={!!errors.username?.message}
+            autoComplete='off'
           />
           <Input
             {...register('password')}
@@ -111,6 +125,7 @@ const LoginForm: FC<IProps> = () => {
             color={errors.password?.message ? 'danger' : 'default'}
             errorMessage={errors.password?.message}
             isInvalid={!!errors.password?.message}
+            autoComplete='off'
           />
           <Dropdown>
             <DropdownTrigger>

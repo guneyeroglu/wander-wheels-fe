@@ -1,1 +1,2 @@
-export * from './getAllUsers';
+export * from './signUp';
+export * from './login';

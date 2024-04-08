@@ -19,5 +19,6 @@ module.exports = {
     'require-await': 'error',
     'no-duplicate-imports': 'warn',
     'default-case': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };

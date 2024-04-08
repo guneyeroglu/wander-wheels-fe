@@ -6,6 +6,8 @@ import { Eye, EyeSlash } from '@phosphor-icons/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { SignUp } from '../../../global/services/users';
+
 interface IForm {
   username: string;
   email: string;
@@ -21,6 +23,7 @@ const SignUpForm: FC<IProps> = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const { mutate } = SignUp();
   const title: string = t('common.signUp');
 
   const schema = yup.object().shape({
@@ -49,6 +52,7 @@ const SignUpForm: FC<IProps> = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, defaultValues },
   } = useForm<IForm>({
     resolver: yupResolver(schema),
@@ -73,6 +77,17 @@ const SignUpForm: FC<IProps> = () => {
     //* back-end bağlantısı ileride yapılacak.
     //* onClick();
 
+    mutate(
+      {
+        username: data.username,
+        mail: data.email,
+        password: data.password,
+      },
+      {
+        onSuccess: () => reset(),
+      },
+    );
+
     console.log(data);
   };
 
@@ -92,6 +107,7 @@ const SignUpForm: FC<IProps> = () => {
             color={errors.username?.message ? 'danger' : 'default'}
             errorMessage={errors.username?.message}
             isInvalid={!!errors.username?.message}
+            autoComplete='off'
           />
           <Input
             {...register('email')}
@@ -105,6 +121,7 @@ const SignUpForm: FC<IProps> = () => {
             color={errors.email?.message ? 'danger' : 'default'}
             errorMessage={errors.email?.message}
             isInvalid={!!errors.email?.message}
+            autoComplete='off'
           />
           <Input
             {...register('password')}
@@ -125,6 +142,7 @@ const SignUpForm: FC<IProps> = () => {
             color={errors.password?.message ? 'danger' : 'default'}
             errorMessage={errors.password?.message}
             isInvalid={!!errors.password?.message}
+            autoComplete='off'
           />
           <Input
             {...register('confirmPassword')}
@@ -145,6 +163,7 @@ const SignUpForm: FC<IProps> = () => {
             color={errors.confirmPassword?.message ? 'danger' : 'default'}
             errorMessage={errors.confirmPassword?.message}
             isInvalid={!!errors.confirmPassword?.message}
+            autoComplete='off'
           />
         </CardBody>
         <CardFooter>
