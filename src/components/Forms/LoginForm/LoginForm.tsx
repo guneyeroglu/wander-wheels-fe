@@ -37,11 +37,13 @@ const LoginForm: FC<IProps> = () => {
     username: yup
       .string()
       .required(t('form.usernameRequiredMessage'))
-      .min(3, t('form.usernameMinMessage')),
+      .min(3, t('form.usernameMinMessage'))
+      .min(20, t('form.usernameMaxMessage')),
     password: yup
       .string()
       .required(t('form.passwordRequiredMessage'))
-      .min(6, t('form.passwordMinMessage')),
+      .min(6, t('form.passwordMinMessage'))
+      .min(18, t('form.passwordMaxMessage')),
   });
 
   const {

@@ -8,11 +8,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import moment from 'moment';
 
 import { IRentForm } from '../../../global/interfaces';
+import { ICity } from '../../../global/interfaces/services/cities';
+import { GetAllCities } from '../../../global/services/cities';
 import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
 
 const RentForm: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { data, isFetching } = GetAllCities();
 
   const today: Date = moment().toDate();
   const tomorrow: Date = moment(today).add(1, 'day').toDate();
@@ -77,10 +80,20 @@ const RentForm: FC = () => {
             classNames={{
               errorMessage: 'text-left',
             }}
+            isLoading={isFetching}
+            isDisabled={isFetching}
           >
-            <SelectItem key={'İstanbul'} value={'İstanbul'}>
-              {'İstanbul'}
-            </SelectItem>
+            {data ? (
+              data.data.map((city: ICity) => (
+                <SelectItem key={city.name} value={city.name}>
+                  {city.name}
+                </SelectItem>
+              ))
+            ) : (
+              <SelectItem key={t('common.noData')} value={t('common.noData')}>
+                {t('common.noData')}
+              </SelectItem>
+            )}
           </Select>
           <Controller
             control={control}
