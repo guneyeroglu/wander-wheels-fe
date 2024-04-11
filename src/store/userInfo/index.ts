@@ -9,7 +9,7 @@ interface IUserState extends IUser {
 export const useUserInfo = create<IUserState>()(set => ({
   id: '',
   mail: '',
-  name: '',
+  username: '',
   role: {
     id: 0,
     name: '',
@@ -18,7 +18,7 @@ export const useUserInfo = create<IUserState>()(set => ({
     set(() => ({
       id: newState.id,
       mail: newState.mail,
-      name: newState.name,
+      username: newState.username,
       role: newState.role,
     })),
 }));

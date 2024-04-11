@@ -12,13 +12,16 @@ import { Globe } from '@phosphor-icons/react';
 
 import { LANGUAGES } from '../../global/enums';
 import { MainLogo } from '../../assets/images';
+import { useUserInfo } from '../../store';
+import UserAvatar from '../UserAvatar/UserAvatar';
 
 const Header: FC = () => {
   const { t, i18n } = useTranslation();
+  const { username } = useUserInfo();
 
   const handleLanguage = (lang: keyof typeof LANGUAGES) => {
     i18n.changeLanguage(lang);
-    localStorage.setItem('lang', lang);
+    localStorage.setItem('language', lang);
   };
 
   return (
@@ -48,16 +51,22 @@ const Header: FC = () => {
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
-          <Link href='/login' color='foreground' className='py-2 px-4'>
-            {t('common.login')}
-          </Link>
-          <Link
-            href='/sign-up'
-            color='foreground'
-            className='border-solid border-1 border-foreground-100 py-2 px-4 rounded-md'
-          >
-            {t('common.signUp')}
-          </Link>
+          {username ? (
+            <UserAvatar />
+          ) : (
+            <>
+              <Link href='/login' color='foreground' className='py-2 px-4'>
+                {t('common.login')}
+              </Link>
+              <Link
+                href='/sign-up'
+                color='foreground'
+                className='border-solid border-1 border-foreground-100 py-2 px-4 rounded-md'
+              >
+                {t('common.signUp')}
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>

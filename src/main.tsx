@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { LanguageDetector } from './global/interceptors';
+import { LanguageDetector, TokenDetector } from './components/Detectors';
 import App from './App.tsx';
 
 import './assets/i18n';
@@ -16,6 +16,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <QueryClientProvider client={queryClient}>
       <LanguageDetector />
+      <TokenDetector />
       <App />
     </QueryClientProvider>,
   );

@@ -13,6 +13,7 @@ import {
   DropdownTrigger,
   Input,
 } from '@nextui-org/react';
+import { useNavigate } from '@tanstack/react-router';
 import { Eye, EyeSlash } from '@phosphor-icons/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -32,6 +33,7 @@ interface IProps {
 const LoginForm: FC<IProps> = () => {
   const { t, i18n } = useTranslation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const navigate = useNavigate();
   const title: string = t('common.login');
 
   const schema = yup.object().shape({
@@ -52,7 +54,6 @@ const LoginForm: FC<IProps> = () => {
     register,
     handleSubmit,
     watch,
-    reset,
   } = useForm<IForm>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -82,7 +83,7 @@ const LoginForm: FC<IProps> = () => {
 
   const handleLanguage = (lang: keyof typeof LANGUAGES) => {
     i18n.changeLanguage(lang);
-    localStorage.setItem('lang', lang);
+    localStorage.setItem('language', lang);
   };
 
   const onSubmit = (): void => {
@@ -92,9 +93,9 @@ const LoginForm: FC<IProps> = () => {
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem('token', loggedData.data.token ?? '');
-      reset();
+      window.location.reload();
     }
-  }, [isSuccess, loggedData, reset]);
+  }, [isSuccess, loggedData, navigate]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
