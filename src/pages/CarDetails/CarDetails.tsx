@@ -46,7 +46,7 @@ const CarDetails: FC = () => {
   return (
     <div key={id} className='w-full h-full'>
       <div className='flex items-center justify-start mb-4'>
-        <Link className='self-start gap-2' href='/car-list'>
+        <Link className='self-start gap-2' href='/cars'>
           <CaretLeft size={32} />
           <span className='text-2xl'>{t('common.back')}</span>
         </Link>

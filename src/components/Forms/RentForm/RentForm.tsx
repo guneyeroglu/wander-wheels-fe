@@ -55,7 +55,7 @@ const RentForm: FC = () => {
     const _endDate: string = moment(new Date(data.endDate)).format('YYYY-MM-DD');
 
     navigate({
-      to: '/car-list',
+      to: '/cars',
       search: {
         location: _location,
         startDate: _startDate,
