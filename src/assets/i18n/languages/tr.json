@@ -33,8 +33,8 @@
       "confirmPasswordRequiredMessage": "Lütfen şifre tekrar alanını boş bırakmayın.",
       "confirmPasswordNoMatch": "Lütfen şifrelerin aynı olduğundan emin olun.",
       "inputDatePlaceholder": "gg.aa.yyyy",
-      "start": "Start",
-      "end": "End",
+      "start": "Başlangıç",
+      "end": "Bitiş",
       "location": "Lokasyon"
     },
     "home": {
