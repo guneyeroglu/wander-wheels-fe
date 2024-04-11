@@ -1,5 +1,5 @@
 export interface IRentForm {
-  location: string;
+  locationId: string;
   startDate: string;
   endDate: string;
 }

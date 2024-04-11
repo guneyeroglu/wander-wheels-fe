@@ -23,7 +23,7 @@ const RentForm: FC = () => {
   const nextYearForTomorrow: Date = moment(tomorrow).add(1, 'year').toDate();
 
   const schema = yup.object().shape({
-    location: yup.string().required(),
+    locationId: yup.string().required(),
     startDate: yup.string().required(),
     endDate: yup.string().required(),
   });
@@ -37,7 +37,7 @@ const RentForm: FC = () => {
   } = useForm<IRentForm>({
     resolver: yupResolver(schema),
     defaultValues: {
-      location: '',
+      locationId: '',
       startDate: '',
       endDate: '',
     },
@@ -50,14 +50,14 @@ const RentForm: FC = () => {
     //* back-end bağlantısı ileride yapılacak.
     //* onClick();
 
-    const _location: string = data.location;
+    const _locationId: number = Number(data.locationId);
     const _startDate: string = moment(new Date(data.startDate)).format('YYYY-MM-DD');
     const _endDate: string = moment(new Date(data.endDate)).format('YYYY-MM-DD');
 
     navigate({
       to: '/cars',
       search: {
-        location: _location,
+        locationId: _locationId,
         startDate: _startDate,
         endDate: _endDate,
       },
@@ -69,14 +69,14 @@ const RentForm: FC = () => {
       <Card className='px-4 py-8 bg-neutral-900 overflow-visible' shadow='sm'>
         <div className='flex items-center justify-center gap-4'>
           <Select
-            {...register('location')}
+            {...register('locationId')}
             labelPlacement='inside'
             label={t('form.location')}
-            color={errors.location?.message ? 'danger' : 'default'}
+            color={errors.locationId?.message ? 'danger' : 'default'}
             variant='bordered'
-            errorMessage={errors.location?.message}
-            isInvalid={!!errors.location?.message}
-            className={!errors.location?.message ? 'mb-6' : ''}
+            errorMessage={errors.locationId?.message}
+            isInvalid={!!errors.locationId?.message}
+            className={!errors.locationId?.message ? 'mb-6' : ''}
             classNames={{
               errorMessage: 'text-left',
             }}
@@ -85,7 +85,7 @@ const RentForm: FC = () => {
           >
             {data ? (
               data.data.map((city: ICity) => (
-                <SelectItem key={city.name} value={city.name}>
+                <SelectItem key={city.id} value={city.name}>
                   {city.name}
                 </SelectItem>
               ))
