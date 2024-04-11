@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import {
@@ -18,7 +18,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { LANGUAGES } from '../../../global/enums';
-import { Login } from '../../../global/services/users';
+import { services } from '../../../global/services';
 
 interface IForm {
   username: string;
@@ -48,10 +48,11 @@ const LoginForm: FC<IProps> = () => {
   });
 
   const {
+    formState: { errors, defaultValues },
     register,
     handleSubmit,
     watch,
-    formState: { errors, defaultValues },
+    reset,
   } = useForm<IForm>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -63,15 +64,17 @@ const LoginForm: FC<IProps> = () => {
 
   const [username, password] = watch(['username', 'password']);
 
-  const { data: loggedData, refetch } = Login({
+  const {
+    data: loggedData,
+    isSuccess,
+    refetch,
+  } = services.Login({
     username,
     password,
     options: {
       enabled: false,
     },
   });
-
-  console.log(loggedData);
 
   const toggleEyeIcon = (): void => {
     setShowPassword((preValue: boolean) => !preValue);
@@ -83,10 +86,15 @@ const LoginForm: FC<IProps> = () => {
   };
 
   const onSubmit = (): void => {
-    //* back-end bağlantısı ileride yapılacak.
-    //* onClick();
     refetch();
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      localStorage.setItem('token', loggedData.data.token ?? '');
+      reset();
+    }
+  }, [isSuccess, loggedData, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

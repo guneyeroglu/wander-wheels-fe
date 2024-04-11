@@ -28,6 +28,7 @@ export const useFetch = <T, F = unknown>(
     queryKey: [queryKey],
     queryFn: fetchData,
     ...options,
+    retry: 0,
   });
 
   return queryStates;

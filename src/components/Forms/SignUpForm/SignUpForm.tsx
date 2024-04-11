@@ -6,7 +6,7 @@ import { Eye, EyeSlash } from '@phosphor-icons/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { SignUp } from '../../../global/services/users';
+import { services } from '../../../global/services';
 
 interface IForm {
   username: string;
@@ -23,7 +23,7 @@ const SignUpForm: FC<IProps> = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-  const { mutate } = SignUp();
+  const { mutate } = services.SignUp();
   const title: string = t('common.signUp');
 
   const schema = yup.object().shape({

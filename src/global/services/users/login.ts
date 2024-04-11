@@ -1,6 +1,6 @@
 import { UseQueryResult } from '@tanstack/react-query';
 
-import { ISignUp, IUser } from '../../interfaces/services/users';
+import { ILogin, ISignUp } from '../../interfaces/services/users';
 import { useFetch } from '../../hooks';
 import { IGetResponse } from '../../interfaces';
 
@@ -9,8 +9,8 @@ interface IProps extends Data {
   options?: any;
 }
 
-export const Login = (props: IProps): UseQueryResult<IGetResponse<IUser>, Error> => {
-  const response = useFetch<IUser, Data>({
+export const Login = (props: IProps): UseQueryResult<IGetResponse<ILogin>, Error> => {
+  const response = useFetch<ILogin, Data>({
     queryKey: 'login',
     url: '/login',
     data: {
