@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useLoaderData } from '@tanstack/react-router';
+import { useParams, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { CaretLeft, Circle, CurrencyDollar } from '@phosphor-icons/react';
 import moment from 'moment';
@@ -13,25 +13,43 @@ import {
   Divider,
   Image,
   Input,
-  Link,
 } from '@nextui-org/react';
 
-import { ICar } from '../../global/interfaces';
 import CustomFavoriteButton from '../../components/CustomFavoriteButton/CustomFavoriteButton';
+import { ICar, ICarById } from '../../global/interfaces/services/cars';
+import { GetCarById } from '../../global/services/cars/getCarById';
 
 const CarDetails: FC = () => {
-  const { id, brand, model, year, dayPrice, color, images, transmission, fuel, seat, createdDate } =
-    useLoaderData({ strict: false }) as ICar;
+  const { carAndCityId } = useParams({ strict: false }) as ICarById;
+  const { data: carData, isFetching } = GetCarById({
+    carAndCityId,
+  });
   const { t } = useTranslation();
+  const router = useRouter();
 
+  const car: Undefinedable<ICar> = carData?.data.car;
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [imageIndex, setImageIndex] = useState<number>(0);
 
-  const isNew: boolean = moment().diff(createdDate, 'day') <= 5;
-  const allImages: string[] = [images.featured, ...images.others];
-  const fixedDayPrice: string = dayPrice.toFixed(2);
+  const goBack = (): void => router.history.back();
+
+  if (!isFetching) {
+    if (!car) {
+      goBack();
+      return;
+    }
+  }
+
+  const isNew: boolean = moment().diff(car?.createdDate, 'day') <= 5 || false;
+  const allImages: string[] = [
+    car?.images.featuredImage ?? '',
+    ...(car?.images.otherImages ?? ['']),
+  ];
+
+  const dailyPrice = car?.dailyPrice ?? 0;
+  const fixedDayPrice: string = dailyPrice.toFixed(2);
   const day: number = 3;
-  const totalDayPrice: number = dayPrice * day;
+  const totalDayPrice: number = dailyPrice * day;
   const fixedTotalDayPrice: string = totalDayPrice.toFixed(2);
   const taxes: number = totalDayPrice * 0.18;
   const fixedTaxes: string = taxes.toFixed(2);
@@ -44,12 +62,12 @@ const CarDetails: FC = () => {
   const handleImageIndexValue = (index: number) => setImageIndex(index);
 
   return (
-    <div key={id} className='w-full h-full'>
+    <div key={car?.id} className='w-full h-full'>
       <div className='flex items-center justify-start mb-4'>
-        <Link className='self-start gap-2' href='/cars'>
+        <Button variant='light' className='self-start gap-2' onClick={goBack}>
           <CaretLeft size={32} />
           <span className='text-2xl'>{t('common.back')}</span>
-        </Link>
+        </Button>
       </div>
       <div className='w-full h-full flex items-start justify-start gap-4'>
         <div className='w-1/2'>
@@ -76,7 +94,7 @@ const CarDetails: FC = () => {
                   width={'100%'}
                   height={'100%'}
                   src={allImages[imageIndex]}
-                  alt={`${brand}-${model}`}
+                  alt={`${car?.model.brand.name}-${car?.model.name}`}
                   className='hover:scale-105 h-[500px] object-cover object-center'
                   classNames={{
                     wrapper: 'overflow-hidden w-full h-full rounded-large',
@@ -91,7 +109,7 @@ const CarDetails: FC = () => {
               <div className='overflow-scroll w-full h-20 flex items-center justify-start mt-4 gap-0'>
                 {allImages.map((image: string, index: number) => (
                   <Button
-                    key={image}
+                    key={`${image}-${index}`}
                     className={`h-full border-1.5 border-solid mr-4 last:mr-0 ${imageIndex === index ? 'border-neutral-200' : 'border-transparent'}`.trim()}
                     style={{
                       width: '25%',
@@ -106,7 +124,7 @@ const CarDetails: FC = () => {
                       width={'100%'}
                       height={'100%'}
                       src={image}
-                      alt={`${brand}-${model}`}
+                      alt={`${car?.model.brand.name}-${car?.model.name}`}
                       className='w-full h-full object-cover object-center'
                       classNames={{
                         wrapper: 'overflow-hidden w-full h-full rounded-large',
@@ -117,32 +135,32 @@ const CarDetails: FC = () => {
               </div>
             </CardBody>
             <CardFooter className='flex flex-col items-start justify-center'>
-              <h3 className='text-3xl font-bold text-neutral-200 mb-4'>{`${brand} ${model}`}</h3>
+              <h3 className='text-3xl font-bold text-neutral-200 mb-4'>{`${car?.model.brand.name} ${car?.model.name}`}</h3>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-2xl font-medium'>{t('car.year')}</span>
-                  <span className='text-2xl font-medium'>{year}</span>
+                  <span className='text-2xl font-medium'>{car?.year}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-2xl font-medium'>{t('car.transmissionType')}</span>
-                  <span className='text-2xl font-medium'>{transmission.type}</span>
+                  <span className='text-2xl font-medium'>{car?.transmission.name}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-2xl font-medium'>{t('car.fuelType')}</span>
-                  <span className='text-2xl font-medium'>{fuel.type}</span>
+                  <span className='text-2xl font-medium'>{car?.fuel.name}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-2xl font-medium'>{t('car.seat')}</span>
-                  <span className='text-2xl font-medium'>{seat}</span>
+                  <span className='text-2xl font-medium'>{car?.seat}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
@@ -153,11 +171,11 @@ const CarDetails: FC = () => {
                     <Circle
                       size={20}
                       weight='fill'
-                      fill={color.code}
+                      fill={car?.color.code}
                       className='border-1.5 border-solid border-neutral-200 rounded-full'
-                      style={{ backgroundColor: color.code }}
+                      style={{ backgroundColor: car?.color.code }}
                     />
-                    <span className='text-2xl font-medium'>{color.text}</span>
+                    <span className='text-2xl font-medium'>{car?.color.name}</span>
                   </div>
                 </div>
                 <Divider className='h-[1.5px]' />
@@ -169,8 +187,8 @@ const CarDetails: FC = () => {
           <Card>
             <CardHeader className='gap-2'>
               <Input
-                name='location'
-                label={t('form.location')}
+                name='city'
+                label={t('form.city')}
                 labelPlacement='outside'
                 value={''}
                 size='lg'

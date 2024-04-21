@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLoaderData } from '@tanstack/react-router';
 import {
@@ -16,87 +16,115 @@ import {
 } from '@nextui-org/react';
 import { ArrowsCounterClockwise, Circle } from '@phosphor-icons/react';
 
-import {
-  ICar,
-  FuelType,
-  TransmissionType,
-  IColor,
-  IType,
-  ICarFilter,
-} from '../../global/interfaces';
 import Car from '../../components/Car/Car';
-
-interface IBrand {
-  name: string;
-  model: string[];
-}
+import { ICarFilter, IRentForm } from '../../global/interfaces';
+import { GetAllBrands } from '../../global/services/brands';
+import { IBrand } from '../../global/interfaces/services/brands';
+import { GetAllModels } from '../../global/services/models';
+import { IModel } from '../../global/interfaces/services/models';
+import { ITransmission } from '../../global/interfaces/services/transmissions';
+import { GetAllTransmissions } from '../../global/services/transmissions';
+import { GetAllFuels } from '../../global/services/fuels';
+import { IFuel } from '../../global/interfaces/services/fuels';
+import { GetAllColors } from '../../global/services/colors';
+import { IColor } from '../../global/interfaces/services/colors';
+import { GetAllCars } from '../../global/services/cars';
+import { ICarAndId } from '../../global/interfaces/services/cars';
 
 const defaultPriceRange: number[] = [0, 2500];
 const defaultYearRange: number[] = [2014, 2024];
 const getLocalStorageCarFilter: ICarFilter = JSON.parse(localStorage.getItem('carFilter') ?? '{}');
-const defaultCarFilter: ICarFilter = {
-  brands: null,
-  models: null,
-  transmissionTypes: null,
-  fuelTypes: null,
-  minPrice: defaultPriceRange[0],
-  maxPrice: defaultPriceRange[1],
-  minYear: defaultYearRange[0],
-  maxYear: defaultYearRange[1],
-  seat: null,
-  colors: null,
-};
 const startingCarFilter: ICarFilter = getLocalStorageCarFilter;
 
 const Cars: FC = () => {
-  const loaderData = useLoaderData({ strict: false }) as ICar[];
-  const { t } = useTranslation();
-  const [carFilter, setCarFilter] = useState<ICarFilter>(startingCarFilter);
+  const { t, i18n } = useTranslation();
+  const { cityId, startDate, endDate } = useLoaderData({ strict: false }) as IRentForm;
 
-  const filteredMockData: ICar[] = loaderData?.filter((car: ICar) => car);
-  const brands: IBrand[] = [
-    { name: 'BMW', model: ['i5'] },
-    { name: 'Audi', model: ['A3'] },
-    { name: 'Ferrari', model: ['Spider'] },
-  ];
-  const models: string[] | undefined = brands.find(
-    (brand: IBrand) => brand.name === carFilter.brands,
-  )?.model;
-  const transmissions: IType<TransmissionType>[] = [
-    { id: 1, type: 'Manual' },
-    { id: 2, type: 'Automatic' },
-    { id: 3, type: 'Hybrid' },
-  ];
-  const fuels: IType<FuelType>[] = [
-    { id: 1, type: 'Electric' },
-    { id: 2, type: 'Petrol' },
-  ];
+  const defaultCarFilter: ICarFilter = {
+    brandId: null,
+    modelId: null,
+    transmissionId: null,
+    fuelId: null,
+    minPrice: defaultPriceRange[0],
+    maxPrice: defaultPriceRange[1],
+    minYear: defaultYearRange[0],
+    maxYear: defaultYearRange[1],
+    seat: null,
+    colorIds: null,
+    cityId,
+    startDate,
+    endDate,
+  };
+  const [carFilter, setCarFilter] = useState<ICarFilter>({
+    ...startingCarFilter,
+    cityId,
+    startDate,
+    endDate,
+  });
+  const {
+    data: carsData,
+    isFetching: isFetchingForCars,
+    isRefetching: isRefetchingForCars,
+    refetch: refetchForCars,
+  } = GetAllCars({
+    ...carFilter,
+  });
+  const cars: Nullable<Undefinedable<ICarAndId[]>> = carsData?.data;
+  const isLoadingForCars: boolean = isFetchingForCars || isRefetchingForCars;
+  const {
+    data: brandsData,
+    isFetching: isFetchingForBrands,
+    isRefetching: isRefetchingForBrands,
+    isError: isErrorForBrands,
+    refetch: refetchForBrands,
+  } = GetAllBrands();
+  const brands: Undefinedable<IBrand[]> = brandsData?.data;
+  const isLoadingForBrands: boolean = isFetchingForBrands || isRefetchingForBrands;
+  const {
+    data: modelsData,
+    isFetching: isFetchingForModels,
+    isRefetching: isRefetchingForModels,
+    isError: isErrorForModels,
+    refetch: refetchForModels,
+  } = GetAllModels();
+  const models: Undefinedable<IModel[]> = modelsData?.data.filter(
+    (model: Undefinedable<IModel>) => model?.brand.id === carFilter.brandId,
+  );
+  const isLoadingForModels: boolean = isFetchingForModels || isRefetchingForModels;
+  const { data: transmissionsData, refetch: refetchForTransmissions } = GetAllTransmissions();
+  const transmissions: Undefinedable<ITransmission[]> = transmissionsData?.data;
+  const { data: fuelsData, refetch: refetchForFuels } = GetAllFuels();
+  const fuels: Undefinedable<IFuel[]> = fuelsData?.data;
+  const {
+    data: colorsData,
+    isFetching: isFetchingForColors,
+    isRefetching: isRefetchingForColors,
+    isError: isErrorForColors,
+    refetch: refetchForColors,
+  } = GetAllColors();
+  const colors: Undefinedable<IColor[]> = colorsData?.data;
+  const isLoadingForColors: boolean = isFetchingForColors || isRefetchingForColors;
   const seats: number[] = [2, 3, 4];
-  const colors: IColor[] = [
-    { text: 'Black', code: '#262626' },
-    { text: 'White', code: '#e5e5e5' },
-    { text: 'Grey', code: '#404040' },
-  ];
 
   const handleResetAllFilter = (): void => {
     setCarFilter(defaultCarFilter);
   };
 
   const handleSearch = (): void => {
-    console.log('searching...', carFilter);
     localStorage.setItem('carFilter', JSON.stringify(carFilter));
+    refetchForCars();
   };
 
   const handleBrandValue = (e: ChangeEvent<HTMLSelectElement>): void => {
     setCarFilter((prevFilter: ICarFilter) => ({
       ...prevFilter,
-      brands: e.target.value,
-      models: null,
+      brandId: Number(e.target.value),
+      modelId: null,
     }));
   };
 
   const handleModelValue = (e: ChangeEvent<HTMLSelectElement>): void => {
-    setCarFilter((prevFilter: ICarFilter) => ({ ...prevFilter, models: e.target.value }));
+    setCarFilter((prevFilter: ICarFilter) => ({ ...prevFilter, modelId: Number(e.target.value) }));
   };
 
   const handlePriceRangeValue = (e: number | number[]): void => {
@@ -119,17 +147,17 @@ const Cars: FC = () => {
     }
   };
 
-  const handleTransmissionTypeValue = (e: Nullable<IType<TransmissionType>>): void => {
+  const handleTransmissionValue = (e: Nullable<number>): void => {
     setCarFilter((prevFilter: ICarFilter) => ({
       ...prevFilter,
-      transmissionTypes: e?.type ?? null,
+      transmissionId: e ?? null,
     }));
   };
 
-  const handleFuelTypeValue = (e: Nullable<IType<FuelType>>): void => {
+  const handleFuelValue = (e: Nullable<number>): void => {
     setCarFilter((prevFilter: ICarFilter) => ({
       ...prevFilter,
-      fuelTypes: e?.type ?? null,
+      fuelId: e ?? null,
     }));
   };
 
@@ -142,22 +170,38 @@ const Cars: FC = () => {
 
   const handleColorValue = (e: ChangeEvent<HTMLSelectElement>): void => {
     if (e.target.value) {
-      const colorValues: string[] = e.target.value.split(',');
-      const colorValue: IColor[] = colorValues.map(
-        (splitColor: string) => colors.find((color: IColor) => color.text === splitColor)!,
-      );
+      const colorIdValues: number[] = e.target.value
+        .split(',')
+        .map((colorId: string) => Number(colorId));
 
       setCarFilter((prevFilter: ICarFilter) => ({
         ...prevFilter,
-        colors: colorValue.map((color: IColor) => color.text),
+        colorIds: colorIdValues,
       }));
     } else {
       setCarFilter((prevFilter: ICarFilter) => ({
         ...prevFilter,
-        colors: null,
+        colorIds: null,
       }));
     }
   };
+
+  useEffect(() => {
+    refetchForCars();
+    refetchForBrands();
+    refetchForModels();
+    refetchForColors();
+    refetchForFuels();
+    refetchForTransmissions();
+  }, [
+    refetchForBrands,
+    refetchForCars,
+    refetchForColors,
+    refetchForFuels,
+    refetchForModels,
+    refetchForTransmissions,
+    i18n.language,
+  ]);
 
   return (
     <div className='w-full h-full flex items-start justify-start gap-4'>
@@ -175,28 +219,56 @@ const Cars: FC = () => {
           <Select
             label={t('car.brand')}
             size='sm'
-            selectedKeys={carFilter.brands ? [carFilter.brands] : []}
+            selectedKeys={
+              isLoadingForBrands || isErrorForBrands
+                ? [t('common.noData')]
+                : carFilter.brandId
+                  ? [String(carFilter.brandId)]
+                  : []
+            }
             onChange={handleBrandValue}
+            isLoading={isLoadingForBrands}
+            isDisabled={isLoadingForBrands || isErrorForBrands}
           >
-            {brands.map((brand: IBrand) => (
-              <SelectItem key={brand.name} value={brand.name}>
-                {brand.name}
+            {brands && !isLoadingForBrands ? (
+              brands.map((brand: IBrand) => (
+                <SelectItem key={String(brand.id)} value={String(brand.id)}>
+                  {brand.name}
+                </SelectItem>
+              ))
+            ) : (
+              <SelectItem key={t('common.noData')} value={t('common.noData')}>
+                {t('common.noData')}
               </SelectItem>
-            ))}
+            )}
           </Select>
-          {carFilter.brands && !!models?.length && (
+          {carFilter.brandId && !!models?.length && (
             <Select
-              key={carFilter.brands}
+              key={String(carFilter.brandId)}
               label={t('car.model')}
               size='sm'
-              selectedKeys={carFilter.models ? [carFilter.models] : []}
+              selectedKeys={
+                isLoadingForModels || isErrorForModels
+                  ? [t('common.noData')]
+                  : carFilter.modelId
+                    ? [String(carFilter.modelId)]
+                    : []
+              }
               onChange={handleModelValue}
+              isLoading={isLoadingForModels}
+              isDisabled={isLoadingForModels || isErrorForModels}
             >
-              {models?.map((model: string) => (
-                <SelectItem key={model} value={model}>
-                  {model}
+              {models && !isLoadingForModels ? (
+                models.map((model: IModel) => (
+                  <SelectItem key={String(model.id)} value={String(model.id)}>
+                    {model.name}
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem key={t('common.noData')} value={t('common.noData')}>
+                  {t('common.noData')}
                 </SelectItem>
-              ))}
+              )}
             </Select>
           )}
           <Divider />
@@ -261,23 +333,22 @@ const Cars: FC = () => {
             <div className='w-full flex flex-wrap items-center justify-start gap-2'>
               <Chip
                 className='cursor-pointer'
-                color={carFilter.transmissionTypes ? 'default' : 'secondary'}
-                onClick={() => handleTransmissionTypeValue(null)}
+                color={carFilter.transmissionId ? 'default' : 'secondary'}
+                onClick={() => handleTransmissionValue(null)}
               >
                 {t('common.any')}
               </Chip>
-              {transmissions.map((transmission: IType<TransmissionType>) => (
-                <Chip
-                  key={transmission.id}
-                  className='cursor-pointer'
-                  color={
-                    carFilter.transmissionTypes === transmission.type ? 'secondary' : 'default'
-                  }
-                  onClick={() => handleTransmissionTypeValue(transmission)}
-                >
-                  {transmission.type}
-                </Chip>
-              ))}
+              {transmissions &&
+                transmissions.map((transmission: ITransmission) => (
+                  <Chip
+                    key={String(transmission.id)}
+                    className='cursor-pointer'
+                    color={carFilter.transmissionId === transmission?.id ? 'secondary' : 'default'}
+                    onClick={() => handleTransmissionValue(transmission.id)}
+                  >
+                    {transmission.name}
+                  </Chip>
+                ))}
             </div>
           </div>
           <Divider />
@@ -286,21 +357,22 @@ const Cars: FC = () => {
             <div className='w-full flex flex-wrap items-center justify-start gap-2'>
               <Chip
                 className='cursor-pointer'
-                color={carFilter.fuelTypes ? 'default' : 'secondary'}
-                onClick={() => handleFuelTypeValue(null)}
+                color={carFilter.fuelId ? 'default' : 'secondary'}
+                onClick={() => handleFuelValue(null)}
               >
                 {t('common.any')}
               </Chip>
-              {fuels.map((fuel: IType<FuelType>) => (
-                <Chip
-                  key={fuel.id}
-                  className='cursor-pointer'
-                  color={carFilter.fuelTypes === fuel.type ? 'secondary' : 'default'}
-                  onClick={() => handleFuelTypeValue(fuel)}
-                >
-                  {fuel.type}
-                </Chip>
-              ))}
+              {fuels &&
+                fuels.map((fuel: IFuel) => (
+                  <Chip
+                    key={fuel.id}
+                    className='cursor-pointer'
+                    color={carFilter.fuelId === fuel.id ? 'secondary' : 'default'}
+                    onClick={() => handleFuelValue(fuel.id)}
+                  >
+                    {fuel.name}
+                  </Chip>
+                ))}
             </div>
           </div>
           <Divider />
@@ -331,26 +403,40 @@ const Cars: FC = () => {
             label={t('car.color')}
             size='sm'
             selectionMode='multiple'
-            selectedKeys={carFilter.colors ?? []}
+            selectedKeys={
+              isLoadingForColors || isErrorForColors
+                ? [t('common.noData')]
+                : carFilter.colorIds
+                  ? carFilter.colorIds.map(colorId => String(colorId))
+                  : []
+            }
             onChange={handleColorValue}
+            isLoading={isLoadingForColors}
+            isDisabled={isLoadingForColors || isErrorForColors}
           >
-            {colors.map((color: IColor) => (
-              <SelectItem
-                key={color.text}
-                value={color.text}
-                startContent={
-                  <Circle
-                    size={20}
-                    weight='fill'
-                    fill={color.code}
-                    className='border-1.5 border-solid border-neutral-200 rounded-full'
-                    style={{ backgroundColor: color.code }}
-                  />
-                }
-              >
-                {color.text}
+            {colors && !isLoadingForColors ? (
+              colors.map((color: IColor) => (
+                <SelectItem
+                  key={String(color.id)}
+                  value={String(color.id)}
+                  startContent={
+                    <Circle
+                      size={20}
+                      weight='fill'
+                      fill={color.code}
+                      className='border-1.5 border-solid border-neutral-200 rounded-full'
+                      style={{ backgroundColor: color.code }}
+                    />
+                  }
+                >
+                  {color.name}
+                </SelectItem>
+              ))
+            ) : (
+              <SelectItem key={t('common.noData')} value={t('common.noData')}>
+                {t('common.noData')}
               </SelectItem>
-            ))}
+            )}
           </Select>
         </CardBody>
         <CardFooter>
@@ -362,12 +448,13 @@ const Cars: FC = () => {
       <div className='w-2/3'>
         <div className='mb-4 text-left px-2'>
           <span className='font-normal text-xl'>{`${t('car.searchResults')} `}</span>
-          <span className='font-semibold text-xl'>{`(${filteredMockData.length})`}</span>
+          <span className='font-semibold text-xl'>{`(${cars?.length ?? 0})`}</span>
         </div>
         <div className='flex flex-wrap items-stretch justify-start'>
-          {filteredMockData.map((car: ICar) => (
-            <Car key={car.id} {...car} />
-          ))}
+          {cars &&
+            cars?.map((car: ICarAndId) => (
+              <Car key={car.id} id={car.id} car={car.car} isLoaded={!isLoadingForCars} />
+            ))}
         </div>
       </div>
     </div>

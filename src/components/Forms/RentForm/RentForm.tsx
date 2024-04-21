@@ -23,9 +23,27 @@ const RentForm: FC = () => {
   const nextYearForTomorrow: Date = moment(tomorrow).add(1, 'year').toDate();
 
   const schema = yup.object().shape({
-    locationId: yup.string().required(),
-    startDate: yup.string().required(),
-    endDate: yup.string().required(),
+    cityId: yup
+      .number()
+      .transform(e => {
+        if (isNaN(e)) {
+          return 0;
+        }
+
+        return e;
+      })
+      .test(
+        'required-and-not-zero',
+        t('form.requiredMessage', { field: t('form.city').toLowerCase() }),
+        value => value !== 0,
+      )
+      .required(t('form.requiredMessage', { field: t('form.city').toLowerCase() })),
+    startDate: yup
+      .string()
+      .required(t('form.requiredMessage', { field: t('form.start').toLowerCase() })),
+    endDate: yup
+      .string()
+      .required(t('form.requiredMessage', { field: t('form.end').toLowerCase() })),
   });
 
   const {
@@ -37,7 +55,7 @@ const RentForm: FC = () => {
   } = useForm<IRentForm>({
     resolver: yupResolver(schema),
     defaultValues: {
-      locationId: '',
+      cityId: 0,
       startDate: '',
       endDate: '',
     },
@@ -47,17 +65,14 @@ const RentForm: FC = () => {
   const [startDate, endDate] = watch(['startDate', 'endDate']);
 
   const onSubmit = (data: IRentForm): void => {
-    //* back-end bağlantısı ileride yapılacak.
-    //* onClick();
-
-    const _locationId: number = Number(data.locationId);
-    const _startDate: string = moment(new Date(data.startDate)).format('YYYY-MM-DD');
-    const _endDate: string = moment(new Date(data.endDate)).format('YYYY-MM-DD');
+    const _cityId: number = Number(data.cityId);
+    const _startDate: moment.Moment = moment(new Date(data.startDate));
+    const _endDate: moment.Moment = moment(new Date(data.endDate));
 
     navigate({
       to: '/cars',
       search: {
-        locationId: _locationId,
+        cityId: _cityId,
         startDate: _startDate,
         endDate: _endDate,
       },
@@ -66,17 +81,17 @@ const RentForm: FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Card className='px-4 py-8 bg-neutral-900 overflow-visible' shadow='sm'>
+      <Card className='px-4 py-8 bg-neutral-900/95 overflow-visible' shadow='sm'>
         <div className='flex items-center justify-center gap-4'>
           <Select
-            {...register('locationId')}
+            {...register('cityId')}
             labelPlacement='inside'
-            label={t('form.location')}
-            color={errors.locationId?.message ? 'danger' : 'default'}
+            label={t('form.city')}
+            color={errors.cityId?.message ? 'danger' : 'default'}
             variant='bordered'
-            errorMessage={errors.locationId?.message}
-            isInvalid={!!errors.locationId?.message}
-            className={!errors.locationId?.message ? 'mb-6' : ''}
+            errorMessage={errors.cityId?.message}
+            isInvalid={!!errors.cityId?.message}
+            className={!errors.cityId?.message ? 'mb-6' : ''}
             classNames={{
               errorMessage: 'text-left',
             }}

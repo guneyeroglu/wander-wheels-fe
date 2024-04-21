@@ -11,11 +11,12 @@ interface IProps {
 export const GetUserInfo = (
   props: IProps = { options: {} },
 ): UseQueryResult<IGetResponse<IUser>, Error> => {
+  const { options } = props;
   const response = useFetch<IUser, ILogin>({
     queryKey: 'userInfo',
     url: '/user-info',
     method: 'GET',
-    options: props.options,
+    options,
   });
 
   return response;

@@ -15,7 +15,7 @@ import { Route as SignUpImport } from './routes/sign-up'
 import { Route as LoginImport } from './routes/login'
 import { Route as CarsImport } from './routes/cars'
 import { Route as IndexImport } from './routes/index'
-import { Route as CarDetailsCarIdImport } from './routes/car-details.$carId'
+import { Route as CarDetailsCarAndCityIdImport } from './routes/car-details.$carAndCityId'
 
 // Create/Update Routes
 
@@ -39,8 +39,8 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const CarDetailsCarIdRoute = CarDetailsCarIdImport.update({
-  path: '/car-details/$carId',
+const CarDetailsCarAndCityIdRoute = CarDetailsCarAndCityIdImport.update({
+  path: '/car-details/$carAndCityId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -64,8 +64,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpImport
       parentRoute: typeof rootRoute
     }
-    '/car-details/$carId': {
-      preLoaderRoute: typeof CarDetailsCarIdImport
+    '/car-details/$carAndCityId': {
+      preLoaderRoute: typeof CarDetailsCarAndCityIdImport
       parentRoute: typeof rootRoute
     }
   }
@@ -78,7 +78,7 @@ export const routeTree = rootRoute.addChildren([
   CarsRoute,
   LoginRoute,
   SignUpRoute,
-  CarDetailsCarIdRoute,
+  CarDetailsCarAndCityIdRoute,
 ])
 
 /* prettier-ignore-end */

@@ -35,7 +35,8 @@
       "inputDatePlaceholder": "gg.aa.yyyy",
       "start": "Başlangıç",
       "end": "Bitiş",
-      "location": "Lokasyon"
+      "city": "Şehir",
+      "requiredMessage": "Lütfen {{ field }} alanını boş bırakmayın."
     },
     "home": {
       "title": "En güzel yolculuklarınız için buradayız.",

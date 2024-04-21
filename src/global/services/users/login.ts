@@ -10,15 +10,15 @@ interface IProps extends Data {
 }
 
 export const Login = (props: IProps): UseQueryResult<IGetResponse<ILogin>, Error> => {
+  const { options, ...rest } = props;
   const response = useFetch<ILogin, Data>({
     queryKey: 'login',
     url: '/login',
     data: {
-      username: props.username,
-      password: props.password,
+      ...rest,
     },
     method: 'POST',
-    options: props.options,
+    options: options,
   });
 
   return response;

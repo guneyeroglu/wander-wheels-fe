@@ -35,7 +35,8 @@
       "inputDatePlaceholder": "dd.mm.yyyy",
       "start": "Start",
       "end": "End",
-      "location": "Location"
+      "city": "City",
+      "requiredMessage": "Please enter {{ field }} field."
     },
     "home": {
       "title": "We're here for your most beautiful journeys.",
