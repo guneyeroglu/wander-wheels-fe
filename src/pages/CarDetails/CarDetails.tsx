@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 import { useParams, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { CaretLeft, Circle, CurrencyDollar } from '@phosphor-icons/react';
-import moment from 'moment';
 import {
   Button,
   Card,
@@ -15,9 +14,9 @@ import {
   Input,
 } from '@nextui-org/react';
 
-import CustomFavoriteButton from '../../components/CustomFavoriteButton/CustomFavoriteButton';
+import { GetCarById } from '../../global/services/cars';
 import { ICar, ICarById } from '../../global/interfaces/services/cars';
-import { GetCarById } from '../../global/services/cars/getCarById';
+import { utils } from '../../global/functions';
 
 const CarDetails: FC = () => {
   const { carAndCityId } = useParams({ strict: false }) as ICarById;
@@ -28,7 +27,6 @@ const CarDetails: FC = () => {
   const router = useRouter();
 
   const car: Undefinedable<ICar> = carData?.data.car;
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [imageIndex, setImageIndex] = useState<number>(0);
 
   const goBack = (): void => router.history.back();
@@ -39,8 +37,7 @@ const CarDetails: FC = () => {
       return;
     }
   }
-
-  const isNew: boolean = moment().diff(car?.createdDate, 'day') <= 5 || false;
+  const isNew: boolean = utils.isNew(car?.createdDate);
   const allImages: string[] = [
     car?.images.featuredImage ?? '',
     ...(car?.images.otherImages ?? ['']),
@@ -58,7 +55,6 @@ const CarDetails: FC = () => {
   const totalPrice: number = totalDayPrice + taxes + insurance;
   const fixedTotalPrice: string = totalPrice.toFixed(2);
 
-  const handleFavoriteStatus = (): void => setIsFavorite((preValue: boolean) => !preValue);
   const handleImageIndexValue = (index: number) => setImageIndex(index);
 
   return (
@@ -99,11 +95,6 @@ const CarDetails: FC = () => {
                   classNames={{
                     wrapper: 'overflow-hidden w-full h-full rounded-large',
                   }}
-                />
-                <CustomFavoriteButton
-                  onClick={handleFavoriteStatus}
-                  filled={isFavorite}
-                  className='absolute top-3 right-3 z-10'
                 />
               </div>
               <div className='overflow-scroll w-full h-20 flex items-center justify-start mt-4 gap-0'>

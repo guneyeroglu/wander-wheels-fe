@@ -17,7 +17,7 @@ export const GetAllCars = (props: IProps): UseQueryResult<IGetResponse<ICarAndId
       ...rest,
     },
     method: 'POST',
-    options: options,
+    options,
   });
 
   return response;

@@ -23,6 +23,6 @@ export interface ICar {
   };
   seat: number;
   city: ICity;
-  createdDate: string;
-  updatedDate: string;
+  createdDate: Date;
+  updatedDate: Date;
 }

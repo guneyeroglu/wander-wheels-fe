@@ -1,4 +1,5 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
+
 import { instance } from '../interceptors';
 import { IGetResponse } from '../interfaces';
 

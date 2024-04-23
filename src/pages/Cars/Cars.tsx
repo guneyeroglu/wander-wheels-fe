@@ -28,18 +28,25 @@ import { GetAllFuels } from '../../global/services/fuels';
 import { IFuel } from '../../global/interfaces/services/fuels';
 import { GetAllColors } from '../../global/services/colors';
 import { IColor } from '../../global/interfaces/services/colors';
-import { GetAllCars } from '../../global/services/cars';
+import { GetAllCars, GetPriceRange, GetYearRange } from '../../global/services/cars';
 import { ICarAndId } from '../../global/interfaces/services/cars';
+import { GetSeats } from '../../global/services/cars/getSeats';
 
-const defaultPriceRange: number[] = [0, 2500];
-const defaultYearRange: number[] = [2014, 2024];
 const getLocalStorageCarFilter: ICarFilter = JSON.parse(localStorage.getItem('carFilter') ?? '{}');
 const startingCarFilter: ICarFilter = getLocalStorageCarFilter;
 
 const Cars: FC = () => {
   const { t, i18n } = useTranslation();
   const { cityId, startDate, endDate } = useLoaderData({ strict: false }) as IRentForm;
-
+  const { data: pricesData } = GetPriceRange();
+  const defaultPriceRange: number[] = [
+    pricesData?.data.minPrice ?? 0,
+    pricesData?.data.maxPrice ?? 0,
+  ];
+  const { data: yearsData } = GetYearRange();
+  const defaultYearRange: number[] = [yearsData?.data.minYear ?? 0, yearsData?.data.maxYear ?? 0];
+  const { data: seatsData } = GetSeats();
+  const seats: number[] | undefined = seatsData?.data.seats;
   const defaultCarFilter: ICarFilter = {
     brandId: null,
     modelId: null,
@@ -104,7 +111,6 @@ const Cars: FC = () => {
   } = GetAllColors();
   const colors: Undefinedable<IColor[]> = colorsData?.data;
   const isLoadingForColors: boolean = isFetchingForColors || isRefetchingForColors;
-  const seats: number[] = [2, 3, 4];
 
   const handleResetAllFilter = (): void => {
     setCarFilter(defaultCarFilter);
@@ -278,7 +284,7 @@ const Cars: FC = () => {
               base: 'gap-2',
             }}
             label={t('car.priceRange')}
-            step={50}
+            step={10}
             minValue={defaultPriceRange[0]}
             maxValue={defaultPriceRange[1]}
             value={
@@ -386,16 +392,17 @@ const Cars: FC = () => {
               >
                 {t('common.any')}
               </Chip>
-              {seats.map((seat: number) => (
-                <Chip
-                  key={seat}
-                  className='cursor-pointer'
-                  color={carFilter.seat === seat ? 'secondary' : 'default'}
-                  onClick={() => handleSeatValue(seat)}
-                >
-                  {seat}
-                </Chip>
-              ))}
+              {seats &&
+                seats.map((seat: number) => (
+                  <Chip
+                    key={seat}
+                    className='cursor-pointer'
+                    color={carFilter.seat === seat ? 'secondary' : 'default'}
+                    onClick={() => handleSeatValue(seat)}
+                  >
+                    {seat}
+                  </Chip>
+                ))}
             </div>
           </div>
           <Divider />

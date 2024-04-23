@@ -14,7 +14,7 @@ export const GetCarById = (props: IProps): UseQueryResult<IGetResponse<ICarAndId
     queryKey: 'carById',
     url: `/cars/${carAndCityId}`,
     method: 'GET',
-    options: options,
+    options,
   });
 
   return response;
