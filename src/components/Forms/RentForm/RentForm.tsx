@@ -15,8 +15,8 @@ import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
 const RentForm: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data, isFetching } = GetAllCities();
-
+  const { data: citiesData, isFetching: isFetchingForCities } = GetAllCities();
+  const cities: ICity[] | undefined = citiesData?.data;
   const today: Date = moment().toDate();
   const tomorrow: Date = moment(today).add(1, 'day').toDate();
   const nextYear: Date = moment(today).add(1, 'year').toDate();
@@ -66,8 +66,8 @@ const RentForm: FC = () => {
 
   const onSubmit = (data: IRentForm): void => {
     const _cityId: number = Number(data.cityId);
-    const _startDate: moment.Moment = moment(new Date(data.startDate));
-    const _endDate: moment.Moment = moment(new Date(data.endDate));
+    const _startDate: string = moment(new Date(data.startDate)).toDate().toISOString();
+    const _endDate: string = moment(new Date(data.endDate)).toDate().toISOString();
 
     navigate({
       to: '/cars',
@@ -95,11 +95,11 @@ const RentForm: FC = () => {
             classNames={{
               errorMessage: 'text-left',
             }}
-            isLoading={isFetching}
-            isDisabled={isFetching}
+            isLoading={isFetchingForCities}
+            isDisabled={isFetchingForCities}
           >
-            {data ? (
-              data.data.map((city: ICity) => (
+            {cities ? (
+              cities.map((city: ICity) => (
                 <SelectItem key={city.id} value={city.name}>
                   {city.name}
                 </SelectItem>
