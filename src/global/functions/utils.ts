@@ -5,7 +5,7 @@ const isNumber = (param: any): boolean => {
 };
 
 const isDate = (param: string): boolean => {
-  return !isNaN(Date.parse(param)) && param.includes('T') && param.includes('Z');
+  return !isNaN(Date.parse(param)) && param.includes('T');
 };
 
 const isNew = (param: Date | undefined): boolean => {

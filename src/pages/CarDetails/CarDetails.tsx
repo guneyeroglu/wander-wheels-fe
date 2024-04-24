@@ -13,23 +13,33 @@ import {
   Image,
   Input,
 } from '@nextui-org/react';
+import moment from 'moment';
 
 import { GetCarById } from '../../global/services/cars';
 import { ICar, ICarById } from '../../global/interfaces/services/cars';
 import { utils } from '../../global/functions';
 import { ICarFilter } from '../../global/interfaces';
+import { GetCityById } from '../../global/services/cities';
+import { ICity } from '../../global/interfaces/services/cities';
 
 const CarDetails: FC = () => {
   const { carAndCityId } = useParams({ strict: false }) as ICarById;
-  const { data: carData, isFetching } = GetCarById({
-    carAndCityId,
-  });
   const { t } = useTranslation();
   const router = useRouter();
   const { cityId, startDate, endDate }: ICarFilter = JSON.parse(
     localStorage.getItem('carFilter') ?? '{}',
   );
+  const { data: carData, isFetching } = GetCarById({
+    carAndCityId,
+  });
   const car: Undefinedable<ICar> = carData?.data.car;
+  const { data: cityData } = GetCityById({
+    cityId: cityId.toString(),
+  });
+  const city: Undefinedable<ICity> = cityData?.data;
+  const _cityName: string = city?.name ?? '';
+  const _startDate: string = moment(startDate).format('DD.MM.YYYY');
+  const _endDate: string = moment(endDate).format('DD.MM.YYYY');
   const [imageIndex, setImageIndex] = useState<number>(0);
 
   const goBack = (): void => router.history.back();
@@ -184,7 +194,7 @@ const CarDetails: FC = () => {
                 name='city'
                 label={t('form.city')}
                 labelPlacement='outside'
-                value={cityId}
+                value={_cityName}
                 size='lg'
                 radius='sm'
                 variant='bordered'
@@ -195,7 +205,7 @@ const CarDetails: FC = () => {
                 name='username'
                 label={t('form.start')}
                 labelPlacement='outside'
-                value={startDate}
+                value={_startDate}
                 size='lg'
                 radius='sm'
                 variant='bordered'
@@ -206,7 +216,7 @@ const CarDetails: FC = () => {
                 name='username'
                 label={t('form.end')}
                 labelPlacement='outside'
-                value={endDate}
+                value={_endDate}
                 size='lg'
                 radius='sm'
                 variant='bordered'

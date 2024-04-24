@@ -66,8 +66,8 @@ const RentForm: FC = () => {
 
   const onSubmit = (data: IRentForm): void => {
     const _cityId: number = Number(data.cityId);
-    const _startDate: string = moment(new Date(data.startDate)).toDate().toISOString();
-    const _endDate: string = moment(new Date(data.endDate)).toDate().toISOString();
+    const _startDate: string = moment(new Date(data.startDate)).format();
+    const _endDate: string = moment(new Date(data.endDate)).format();
 
     navigate({
       to: '/cars',
