@@ -209,6 +209,10 @@ const Cars: FC = () => {
     i18n.language,
   ]);
 
+  useEffect(() => {
+    localStorage.setItem('carFilter', JSON.stringify(carFilter));
+  }, [carFilter]);
+
   return (
     <div className='w-full h-full flex items-start justify-start gap-4'>
       <Card className='w-1/3 sticky top-[80px]' shadow='sm'>

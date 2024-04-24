@@ -17,6 +17,7 @@ import {
 import { GetCarById } from '../../global/services/cars';
 import { ICar, ICarById } from '../../global/interfaces/services/cars';
 import { utils } from '../../global/functions';
+import { ICarFilter } from '../../global/interfaces';
 
 const CarDetails: FC = () => {
   const { carAndCityId } = useParams({ strict: false }) as ICarById;
@@ -25,7 +26,9 @@ const CarDetails: FC = () => {
   });
   const { t } = useTranslation();
   const router = useRouter();
-
+  const { cityId, startDate, endDate }: ICarFilter = JSON.parse(
+    localStorage.getItem('carFilter') ?? '{}',
+  );
   const car: Undefinedable<ICar> = carData?.data.car;
   const [imageIndex, setImageIndex] = useState<number>(0);
 
@@ -181,7 +184,7 @@ const CarDetails: FC = () => {
                 name='city'
                 label={t('form.city')}
                 labelPlacement='outside'
-                value={''}
+                value={cityId}
                 size='lg'
                 radius='sm'
                 variant='bordered'
@@ -192,7 +195,7 @@ const CarDetails: FC = () => {
                 name='username'
                 label={t('form.start')}
                 labelPlacement='outside'
-                value={''}
+                value={startDate}
                 size='lg'
                 radius='sm'
                 variant='bordered'
@@ -203,7 +206,7 @@ const CarDetails: FC = () => {
                 name='username'
                 label={t('form.end')}
                 labelPlacement='outside'
-                value={''}
+                value={endDate}
                 size='lg'
                 radius='sm'
                 variant='bordered'
