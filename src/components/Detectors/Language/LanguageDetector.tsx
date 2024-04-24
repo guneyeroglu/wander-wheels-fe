@@ -7,7 +7,10 @@ const LanguageDetector: FC = (): null => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    instance.defaults.headers['Accept-Language'] = i18n.language ?? 'en_EN';
+    const language: string = i18n.language ?? 'en_EN';
+
+    instance.defaults.headers['Accept-Language'] = language;
+    localStorage.setItem('language', language);
   }, [i18n.language]);
 
   return null;
