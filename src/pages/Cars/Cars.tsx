@@ -15,8 +15,10 @@ import {
   SliderValue,
 } from '@nextui-org/react';
 import { ArrowsCounterClockwise, Circle } from '@phosphor-icons/react';
+import clsx from 'clsx';
 
 import Car from '../../components/Car/Car';
+import NoData from '../../components/NoData/NoData';
 import { ICarFilter, IRentForm } from '../../global/interfaces';
 import { GetAllBrands } from '../../global/services/brands';
 import { IBrand } from '../../global/interfaces/services/brands';
@@ -33,7 +35,6 @@ import { ICarAndId } from '../../global/interfaces/services/cars';
 import { GetSeats } from '../../global/services/cars/getSeats';
 
 const getLocalStorageCarFilter: ICarFilter = JSON.parse(localStorage.getItem('carFilter') ?? '{}');
-const startingCarFilter: ICarFilter = getLocalStorageCarFilter;
 
 const Cars: FC = () => {
   const { t, i18n } = useTranslation();
@@ -63,7 +64,7 @@ const Cars: FC = () => {
     endDate,
   };
   const [carFilter, setCarFilter] = useState<ICarFilter>({
-    ...startingCarFilter,
+    ...getLocalStorageCarFilter,
     cityId,
     startDate,
     endDate,
@@ -214,7 +215,12 @@ const Cars: FC = () => {
   }, [carFilter]);
 
   return (
-    <div className='w-full h-full flex items-start justify-start gap-4'>
+    <div
+      className={clsx('w-full h-full flex justify-start gap-4', {
+        'items-start': cars && cars?.length > 0,
+        'items-stretch': (cars && cars?.length === 0) || !cars,
+      })}
+    >
       <Card className='w-1/3 sticky top-[80px]' shadow='sm'>
         <CardHeader>
           <div className='w-full flex items-center justify-between'>
@@ -456,17 +462,20 @@ const Cars: FC = () => {
           </Button>
         </CardFooter>
       </Card>
-      <div className='w-2/3'>
+      <div className='w-2/3 flex flex-col'>
         <div className='mb-4 text-left px-2'>
           <span className='font-normal text-xl'>{`${t('car.searchResults')} `}</span>
           <span className='font-semibold text-xl'>{`(${cars?.length ?? 0})`}</span>
         </div>
-        <div className='flex flex-wrap items-stretch justify-start'>
-          {cars &&
-            cars?.map((car: ICarAndId) => (
+        {cars && cars.length > 0 ? (
+          <div className='flex flex-wrap items-stretch justify-start'>
+            {cars?.map((car: ICarAndId) => (
               <Car key={car.id} id={car.id} car={car.car} isLoaded={!isLoadingForCars} />
             ))}
-        </div>
+          </div>
+        ) : (
+          <NoData text={t('common.noData')} />
+        )}
       </div>
     </div>
   );

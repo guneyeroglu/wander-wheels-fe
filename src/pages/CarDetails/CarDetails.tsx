@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useParams, useRouter } from '@tanstack/react-router';
+import { useNavigate, useParams, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { CaretLeft, Circle, CurrencyDollar } from '@phosphor-icons/react';
 import {
@@ -15,17 +15,20 @@ import {
 } from '@nextui-org/react';
 import moment from 'moment';
 
-import { GetCarById } from '../../global/services/cars';
+import { CreateRental, GetCarById } from '../../global/services/cars';
 import { ICar, ICarById } from '../../global/interfaces/services/cars';
 import { utils } from '../../global/functions';
 import { ICarFilter } from '../../global/interfaces';
 import { GetCityById } from '../../global/services/cities';
 import { ICity } from '../../global/interfaces/services/cities';
+import { useUserInfo } from '../../store';
 
 const CarDetails: FC = () => {
   const { carAndCityId } = useParams({ strict: false }) as ICarById;
+  const { id } = useUserInfo();
   const { t } = useTranslation();
   const router = useRouter();
+  const navigate = useNavigate();
   const { cityId, startDate, endDate }: ICarFilter = JSON.parse(
     localStorage.getItem('carFilter') ?? '{}',
   );
@@ -41,6 +44,7 @@ const CarDetails: FC = () => {
   const _startDate: string = moment(startDate).format('DD.MM.YYYY');
   const _endDate: string = moment(endDate).format('DD.MM.YYYY');
   const [imageIndex, setImageIndex] = useState<number>(0);
+  const { mutate: mutateForRental } = CreateRental();
 
   const goBack = (): void => router.history.back();
 
@@ -56,19 +60,35 @@ const CarDetails: FC = () => {
     ...(car?.images.otherImages ?? ['']),
   ];
 
-  const dailyPrice = car?.dailyPrice ?? 0;
+  const dailyPrice: number = car?.dailyPrice ?? 0;
   const fixedDayPrice: string = dailyPrice.toFixed(2);
-  const day: number = 3;
+  const day: number = utils.dayCount(moment(endDate).toDate(), moment(startDate).toDate());
   const totalDayPrice: number = dailyPrice * day;
   const fixedTotalDayPrice: string = totalDayPrice.toFixed(2);
-  const taxes: number = totalDayPrice * 0.18;
+  const taxes: number = totalDayPrice * 0.18; // 18% tax
   const fixedTaxes: string = taxes.toFixed(2);
-  const insurance: number = totalDayPrice * 0.12;
+  const insurance: number = totalDayPrice * 0.12; // 12% insurance
   const fixedInsurance: string = insurance.toFixed(2);
   const totalPrice: number = totalDayPrice + taxes + insurance;
   const fixedTotalPrice: string = totalPrice.toFixed(2);
 
   const handleImageIndexValue = (index: number) => setImageIndex(index);
+
+  const handleSubmitForRent = (): void => {
+    mutateForRental(
+      {
+        userId: id,
+        carAndCityId,
+        startDate: moment(startDate).add(1, 'day').toDate(),
+        endDate: moment(endDate).add(1, 'day').toDate(),
+      },
+      {
+        onSuccess: (): void => {
+          navigate({ to: '/' });
+        },
+      },
+    );
+  };
 
   return (
     <div key={car?.id} className='w-full h-full'>
@@ -275,7 +295,7 @@ const CarDetails: FC = () => {
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full flex items-center justify-end'>
-                <Button size='lg' color='primary'>
+                <Button size='lg' color='primary' onClick={handleSubmitForRent}>
                   {t('car.rent')}
                 </Button>
               </div>

@@ -1,23 +1,32 @@
 import moment from 'moment';
 
-const isNumber = (param: any): boolean => {
-  return typeof param === 'number' && !isNaN(param);
+const isNumber = (num: any): boolean => {
+  return typeof num === 'number' && !isNaN(num);
 };
 
-const isDate = (param: string): boolean => {
-  return !isNaN(Date.parse(param)) && param.includes('T');
+const isDate = (stringDate: string): boolean => {
+  return !isNaN(Date.parse(stringDate)) && stringDate.includes('T');
 };
 
-const isNew = (param: Date | undefined): boolean => {
-  if (!param) {
+const isNew = (date: Undefinedable<Date>): boolean => {
+  if (!date) {
     return false;
   }
 
-  return moment().diff(param, 'day') <= 10;
+  return moment().diff(date, 'day') <= 10;
+};
+
+const dayCount = (firstDate: Undefinedable<Date>, secondDate: Undefinedable<Date>): number => {
+  if (!firstDate || !secondDate) {
+    return 1;
+  }
+
+  return moment(firstDate).diff(secondDate, 'day');
 };
 
 export const utils = {
   isNumber,
   isDate,
   isNew,
+  dayCount,
 };
