@@ -15,9 +15,7 @@ interface IForm {
   confirmPassword: string;
 }
 
-interface IProps {
-  onClick?: () => void; //* Şu anlık optional.
-}
+interface IProps {}
 
 const SignUpForm: FC<IProps> = () => {
   const { t } = useTranslation();
@@ -74,9 +72,6 @@ const SignUpForm: FC<IProps> = () => {
   };
 
   const onSubmit = (data: IForm): void => {
-    //* back-end bağlantısı ileride yapılacak.
-    //* onClick();
-
     mutate(
       {
         username: data.username,
@@ -87,8 +82,6 @@ const SignUpForm: FC<IProps> = () => {
         onSuccess: () => reset(),
       },
     );
-
-    console.log(data);
   };
 
   return (

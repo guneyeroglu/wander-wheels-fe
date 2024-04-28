@@ -1,4 +1,6 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query';
+import { useSnackbarInfo } from '../../store';
+import { IError, IMessage } from '../interfaces';
 import { instance } from '../interceptors';
 
 interface IProps {
@@ -6,8 +8,9 @@ interface IProps {
   url: string;
 }
 
-export const useMutate = <T>(props: IProps): UseMutationResult<unknown, Error, T, unknown> => {
+export const useMutate = <T>(props: IProps): UseMutationResult<IMessage, IError, T, unknown> => {
   const { method = 'POST', url } = props;
+  const { setSnackbar } = useSnackbarInfo();
 
   const setData = async (data: T) => {
     const res = await instance(url, {
@@ -20,6 +23,20 @@ export const useMutate = <T>(props: IProps): UseMutationResult<unknown, Error, T
 
   const queryStates = useMutation({
     mutationFn: (data: T) => setData(data),
+    onSuccess: (e: IMessage) => {
+      setSnackbar({
+        open: true,
+        title: e.message,
+        state: 'success',
+      });
+    },
+    onError: (e: IError) => {
+      setSnackbar({
+        open: true,
+        title: e.response.data.message,
+        state: 'danger',
+      });
+    },
   });
 
   return queryStates;

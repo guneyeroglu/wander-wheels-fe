@@ -20,20 +20,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { LANGUAGES } from '../../../global/enums';
 import { services } from '../../../global/services';
+import { useSnackbarInfo } from '../../../store';
 
 interface IForm {
   username: string;
   password: string;
 }
 
-interface IProps {
-  onClick?: () => void; //* Şu anlık optional.
-}
+interface IProps {}
 
 const LoginForm: FC<IProps> = () => {
   const { t, i18n } = useTranslation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { setSnackbar } = useSnackbarInfo();
   const title: string = t('common.login');
 
   const schema = yup.object().shape({
@@ -68,6 +68,8 @@ const LoginForm: FC<IProps> = () => {
   const {
     data: loggedData,
     isSuccess,
+    isError,
+    error,
     refetch,
   } = services.Login({
     username,
@@ -96,6 +98,18 @@ const LoginForm: FC<IProps> = () => {
       window.location.reload();
     }
   }, [isSuccess, loggedData, navigate]);
+
+  useEffect(() => {
+    if (isError) {
+      setSnackbar({
+        open: true,
+        title: error.response.data.message,
+        state: 'danger',
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isError]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

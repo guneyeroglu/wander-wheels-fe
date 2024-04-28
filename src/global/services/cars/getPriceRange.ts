@@ -1,7 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query';
 
 import { useFetch } from '../../hooks';
-import { IGetResponse } from '../../interfaces';
+import { IError, IGetResponse } from '../../interfaces';
 import { IPrices } from '../../interfaces/services/cars';
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
 
 export const GetPriceRange = (
   props: IProps = { options: {} },
-): UseQueryResult<IGetResponse<IPrices>, Error> => {
+): UseQueryResult<IGetResponse<IPrices>, IError> => {
   const { options } = props;
   const response = useFetch<IPrices>({
     queryKey: 'priceRange',

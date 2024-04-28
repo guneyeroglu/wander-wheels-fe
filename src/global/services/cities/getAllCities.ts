@@ -1,10 +1,10 @@
 import { UseQueryResult } from '@tanstack/react-query';
 
 import { useFetch } from '../../hooks/useFetch';
-import { IGetResponse } from '../../interfaces';
+import { IError, IGetResponse } from '../../interfaces';
 import { ICity } from '../../interfaces/services/cities';
 
-export const GetAllCities = (): UseQueryResult<IGetResponse<ICity[]>, Error> => {
+export const GetAllCities = (): UseQueryResult<IGetResponse<ICity[]>, IError> => {
   const response = useFetch<ICity[]>({
     queryKey: 'cities',
     url: '/cities',

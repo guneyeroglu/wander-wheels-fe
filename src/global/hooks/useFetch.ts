@@ -1,7 +1,7 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 
 import { instance } from '../interceptors';
-import { IGetResponse } from '../interfaces';
+import { IError, IGetResponse } from '../interfaces';
 
 interface IProps<T> {
   method?: 'GET' | 'POST';
@@ -13,7 +13,7 @@ interface IProps<T> {
 
 export const useFetch = <T, F = unknown>(
   props: IProps<F>,
-): UseQueryResult<IGetResponse<T>, Error> => {
+): UseQueryResult<IGetResponse<T>, IError> => {
   const { method = 'GET', queryKey, url, data, options } = props;
 
   const fetchData = async () => {
@@ -21,15 +21,14 @@ export const useFetch = <T, F = unknown>(
       method,
       data,
     }).then(res => res.data);
-
     return res;
   };
 
-  const queryStates = useQuery<IGetResponse<T>>({
+  const queryStates = useQuery<IGetResponse<T>, IError>({
     queryKey: [queryKey],
     queryFn: fetchData,
-    ...options,
     retry: 0,
+    ...options,
   });
 
   return queryStates;

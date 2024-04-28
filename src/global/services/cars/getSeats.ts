@@ -1,7 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query';
 
 import { useFetch } from '../../hooks';
-import { IGetResponse } from '../../interfaces';
+import { IError, IGetResponse } from '../../interfaces';
 import { ISeats } from '../../interfaces/services/cars';
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
 
 export const GetSeats = (
   props: IProps = { options: {} },
-): UseQueryResult<IGetResponse<ISeats>, Error> => {
+): UseQueryResult<IGetResponse<ISeats>, IError> => {
   const { options } = props;
   const response = useFetch<ISeats>({
     queryKey: 'seats',

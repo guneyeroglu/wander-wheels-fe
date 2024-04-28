@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { CaretLeft, Circle, CurrencyDollar } from '@phosphor-icons/react';
@@ -26,13 +26,17 @@ import { useUserInfo } from '../../store';
 const CarDetails: FC = () => {
   const { carAndCityId } = useParams({ strict: false }) as ICarById;
   const { id } = useUserInfo();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const navigate = useNavigate();
   const { cityId, startDate, endDate }: ICarFilter = JSON.parse(
     localStorage.getItem('carFilter') ?? '{}',
   );
-  const { data: carData, isFetching } = GetCarById({
+  const {
+    data: carData,
+    isFetching,
+    refetch,
+  } = GetCarById({
     carAndCityId,
   });
   const car: Undefinedable<ICar> = carData?.data.car;
@@ -47,6 +51,10 @@ const CarDetails: FC = () => {
   const { mutate: mutateForRental } = CreateRental();
 
   const goBack = (): void => router.history.back();
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language, refetch]);
 
   if (!isFetching) {
     if (!car) {

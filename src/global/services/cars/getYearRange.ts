@@ -1,7 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query';
 
 import { useFetch } from '../../hooks';
-import { IGetResponse } from '../../interfaces';
+import { IError, IGetResponse } from '../../interfaces';
 import { IYears } from '../../interfaces/services/cars';
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
 
 export const GetYearRange = (
   props: IProps = { options: {} },
-): UseQueryResult<IGetResponse<IYears>, Error> => {
+): UseQueryResult<IGetResponse<IYears>, IError> => {
   const { options } = props;
   const response = useFetch<IYears>({
     queryKey: 'yearRange',

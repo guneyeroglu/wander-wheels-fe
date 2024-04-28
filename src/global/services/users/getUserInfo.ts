@@ -2,7 +2,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 
 import { ILogin, IUser } from '../../interfaces/services/users';
 import { useFetch } from '../../hooks';
-import { IGetResponse } from '../../interfaces';
+import { IError, IGetResponse } from '../../interfaces';
 import { AxiosError } from 'axios';
 
 interface IProps {
@@ -11,8 +11,9 @@ interface IProps {
 
 export const GetUserInfo = (
   props: IProps = { options: {} },
-): UseQueryResult<IGetResponse<IUser>, Error> => {
+): UseQueryResult<IGetResponse<IUser>, IError> => {
   const { options } = props;
+
   const response = useFetch<IUser, ILogin>({
     queryKey: 'userInfo',
     url: '/user-info',
