@@ -4,10 +4,19 @@ import { useFetch } from '../../hooks/useFetch';
 import { IError, IGetResponse } from '../../interfaces';
 import { IColor } from '../../interfaces/services/colors';
 
-export const GetAllColors = (): UseQueryResult<IGetResponse<IColor[]>, IError> => {
+interface IProps {
+  options?: any;
+}
+
+export const GetAllColors = (
+  props: IProps = { options: {} },
+): UseQueryResult<IGetResponse<IColor[]>, IError> => {
+  const { options } = props;
+
   const response = useFetch<IColor[]>({
     queryKey: 'colors',
     url: '/colors',
+    options,
   });
 
   return response;

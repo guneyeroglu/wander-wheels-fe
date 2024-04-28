@@ -69,13 +69,20 @@ const Cars: FC = () => {
     startDate,
     endDate,
   });
+
   const {
     data: carsData,
     isFetching: isFetchingForCars,
     isRefetching: isRefetchingForCars,
     refetch: refetchForCars,
   } = GetAllCars({
-    ...carFilter,
+    ...getLocalStorageCarFilter,
+    cityId,
+    startDate,
+    endDate,
+    options: {
+      enabled: false,
+    },
   });
   const cars: Nullable<Undefinedable<ICarAndId[]>> = carsData?.data;
   const isLoadingForCars: boolean = isFetchingForCars || isRefetchingForCars;
@@ -85,7 +92,11 @@ const Cars: FC = () => {
     isRefetching: isRefetchingForBrands,
     isError: isErrorForBrands,
     refetch: refetchForBrands,
-  } = GetAllBrands();
+  } = GetAllBrands({
+    options: {
+      enabled: false,
+    },
+  });
   const brands: Undefinedable<IBrand[]> = brandsData?.data;
   const isLoadingForBrands: boolean = isFetchingForBrands || isRefetchingForBrands;
   const {
@@ -94,14 +105,26 @@ const Cars: FC = () => {
     isRefetching: isRefetchingForModels,
     isError: isErrorForModels,
     refetch: refetchForModels,
-  } = GetAllModels();
+  } = GetAllModels({
+    options: {
+      enabled: false,
+    },
+  });
   const models: Undefinedable<IModel[]> = modelsData?.data.filter(
     (model: Undefinedable<IModel>) => model?.brand.id === carFilter.brandId,
   );
   const isLoadingForModels: boolean = isFetchingForModels || isRefetchingForModels;
-  const { data: transmissionsData, refetch: refetchForTransmissions } = GetAllTransmissions();
+  const { data: transmissionsData, refetch: refetchForTransmissions } = GetAllTransmissions({
+    options: {
+      enabled: false,
+    },
+  });
   const transmissions: Undefinedable<ITransmission[]> = transmissionsData?.data;
-  const { data: fuelsData, refetch: refetchForFuels } = GetAllFuels();
+  const { data: fuelsData, refetch: refetchForFuels } = GetAllFuels({
+    options: {
+      enabled: false,
+    },
+  });
   const fuels: Undefinedable<IFuel[]> = fuelsData?.data;
   const {
     data: colorsData,
@@ -109,7 +132,11 @@ const Cars: FC = () => {
     isRefetching: isRefetchingForColors,
     isError: isErrorForColors,
     refetch: refetchForColors,
-  } = GetAllColors();
+  } = GetAllColors({
+    options: {
+      enabled: false,
+    },
+  });
   const colors: Undefinedable<IColor[]> = colorsData?.data;
   const isLoadingForColors: boolean = isFetchingForColors || isRefetchingForColors;
 
@@ -201,11 +228,11 @@ const Cars: FC = () => {
     refetchForFuels();
     refetchForTransmissions();
   }, [
-    refetchForBrands,
     refetchForCars,
+    refetchForBrands,
+    refetchForModels,
     refetchForColors,
     refetchForFuels,
-    refetchForModels,
     refetchForTransmissions,
     i18n.language,
   ]);
@@ -213,6 +240,10 @@ const Cars: FC = () => {
   useEffect(() => {
     localStorage.setItem('carFilter', JSON.stringify(carFilter));
   }, [carFilter]);
+
+  useEffect(() => {
+    refetchForCars();
+  }, [cityId, startDate, endDate, refetchForCars]);
 
   return (
     <div
