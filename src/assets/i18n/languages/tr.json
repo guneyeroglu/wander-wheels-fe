@@ -14,7 +14,8 @@
       "any": "Herhangi Biri",
       "features": "Özellikler",
       "back": "Geri",
-      "noData": "Veri Yok"
+      "noData": "Veri Yok",
+      "noAccountNoRental": "Aracı kiralayabilmek için lütfen giriş yapın."
     },
     "form": {
       "username": "Kullanıcı Adı",

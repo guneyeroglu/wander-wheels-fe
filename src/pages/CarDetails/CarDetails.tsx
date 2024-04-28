@@ -21,11 +21,12 @@ import { utils } from '../../global/functions';
 import { ICarFilter } from '../../global/interfaces';
 import { GetCityById } from '../../global/services/cities';
 import { ICity } from '../../global/interfaces/services/cities';
-import { useUserInfo } from '../../store';
+import { useSnackbarInfo, useUserInfo } from '../../store';
 
 const CarDetails: FC = () => {
   const { carAndCityId } = useParams({ strict: false }) as ICarById;
   const { id } = useUserInfo();
+  const { setSnackbar } = useSnackbarInfo();
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const navigate = useNavigate();
@@ -83,6 +84,13 @@ const CarDetails: FC = () => {
   const handleImageIndexValue = (index: number) => setImageIndex(index);
 
   const handleSubmitForRent = (): void => {
+    if (!id) {
+      return setSnackbar({
+        open: true,
+        title: t('common.noAccountNoRental'),
+        state: 'warning',
+      });
+    }
     mutateForRental(
       {
         userId: id,

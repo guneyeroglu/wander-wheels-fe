@@ -14,7 +14,8 @@
       "any": "Any",
       "features": "Features",
       "back": "Back",
-      "noData": "No Data"
+      "noData": "No Data",
+      "noAccountNoRental": "Please login to rent a car."
     },
     "form": {
       "username": "Username",
