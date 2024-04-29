@@ -49,7 +49,7 @@ const Snackbar: FC = () => {
   return (
     <motion.div
       className={clsx(
-        'fixed bottom-8 right-8 py-4 px-2 rounded-lg flex items-center justify-between gap-4',
+        'fixed top-20 right-8 py-4 px-2 rounded-lg flex items-center justify-between gap-4 z-[9999] max-sm:left-8',
         {
           'bg-success-800': state === 'success',
           'bg-danger-800': state === 'danger',

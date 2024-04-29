@@ -7,6 +7,10 @@
     width: 100%;
   }
 
+  &-popper {
+    z-index: 99;
+  }
+
   &__tab-loop {
     position: absolute;
   }

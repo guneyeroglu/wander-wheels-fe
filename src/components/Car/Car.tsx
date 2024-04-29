@@ -42,7 +42,7 @@ const Car: FC<IProps> = ({ id, car, isLoaded }) => {
   const fixedDayPrice: string = dailyPrice.toFixed(2);
 
   return (
-    <div key={`${id}-${carId}`} className='p-2 w-1/2 h-full relative'>
+    <div key={`${id}-${carId}`} className='p-2 w-1/2 h-full relative max-sm:w-full'>
       <Link className='w-full h-full cursor-pointer hover:opacity-100' href={`/car-details/${id}`}>
         <Card
           isHoverable

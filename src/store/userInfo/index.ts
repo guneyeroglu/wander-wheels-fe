@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { IUser } from '../../global/interfaces/services/users';
 
 interface IUserState extends IUser {
-  setUserInfo: (state: IUser) => void;
+  setUserInfo: (state: Omit<IUserState, 'setUserInfo'>) => void;
 }
 
 export const useUserInfo = create<IUserState>()(set => ({
@@ -14,7 +14,8 @@ export const useUserInfo = create<IUserState>()(set => ({
     id: 0,
     name: '',
   },
-  setUserInfo: (newState: IUser) =>
+  fetchStatus: 'idle',
+  setUserInfo: (newState: Omit<IUserState, 'setUserInfo'>) =>
     set(() => ({
       id: newState.id,
       mail: newState.mail,

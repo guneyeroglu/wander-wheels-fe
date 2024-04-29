@@ -16,7 +16,7 @@ const RouteComponent: FC = () => {
       }
     >
       <Header />
-      <main className='w-full max-w-screen-2xl p-4 m-auto text-center'>
+      <main className='w-full max-w-screen-2xl p-4 m-auto text-center max-md:px-2'>
         <Outlet />
       </main>
     </NextUIProvider>

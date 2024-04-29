@@ -26,12 +26,15 @@ const Header: FC = () => {
 
   return (
     <header className='border-b-1 border-solid border-neutral-200 sticky top-0 z-50 bg-neutral-900 h-16'>
-      <div className='max-w-screen-2xl h-full m-auto py-2 px-4 w-full flex justify-between items-center'>
+      <div className='max-w-screen-2xl h-full m-auto py-2 px-4 w-full flex justify-between items-center max-md:px-2'>
         <Link href='/' color='foreground' className='flex items-center justify-start gap-2'>
           <MainLogo className='w-8' />
-          <span className='text-2xl font-semibold'>Wander Wheels</span>
+          <span className='text-2xl text-center font-semibold max-[425px]:hidden max-xl:text-base'>
+            Wander Wheels
+          </span>
+          <span className='text-2xl text-center font-semibold min-[426px]:hidden'>WW</span>
         </Link>
-        <nav className='flex justify-between items-center gap-2'>
+        <nav className='flex justify-between items-center gap-2 max-md:gap-1'>
           <Dropdown>
             <DropdownTrigger>
               <Button isIconOnly>
@@ -55,13 +58,13 @@ const Header: FC = () => {
             <UserAvatar />
           ) : (
             <>
-              <Link href='/login' color='foreground' className='py-2 px-4'>
+              <Link href='/login' color='foreground' className='py-2 px-4 max-md:px-2'>
                 {t('common.login')}
               </Link>
               <Link
                 href='/sign-up'
                 color='foreground'
-                className='border-solid border-1 border-foreground-100 py-2 px-4 rounded-md'
+                className='border-solid border-1 border-foreground-100 py-2 px-4 rounded-md max-md:px-2'
               >
                 {t('common.signUp')}
               </Link>

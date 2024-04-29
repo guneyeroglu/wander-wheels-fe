@@ -114,8 +114,8 @@ const CarDetails: FC = () => {
           <span className='text-2xl'>{t('common.back')}</span>
         </Button>
       </div>
-      <div className='w-full h-full flex items-start justify-start gap-4'>
-        <div className='w-1/2'>
+      <div className='w-full h-full flex items-start justify-start gap-4 max-lg:flex-col max-lg:mb-12'>
+        <div className='w-1/2 max-lg:w-full'>
           <Card className='w-full h-full relative overflow-hidden'>
             <CardHeader>
               <div className='w-full flex items-center justify-between'>
@@ -178,36 +178,38 @@ const CarDetails: FC = () => {
               <h3 className='text-3xl font-bold text-neutral-200 mb-4'>{`${car?.model.brand.name} ${car?.model.name}`}</h3>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-2xl font-medium'>{t('car.year')}</span>
-                  <span className='text-2xl font-medium'>{car?.year}</span>
+                  <span className='text-2xl font-medium text-left'>{t('car.year')}</span>
+                  <span className='text-2xl font-medium text-right'>{car?.year}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-2xl font-medium'>{t('car.transmissionType')}</span>
-                  <span className='text-2xl font-medium'>{car?.transmission.name}</span>
+                  <span className='text-2xl font-medium text-left'>
+                    {t('car.transmissionType')}
+                  </span>
+                  <span className='text-2xl font-medium text-right'>{car?.transmission.name}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-2xl font-medium'>{t('car.fuelType')}</span>
-                  <span className='text-2xl font-medium'>{car?.fuel.name}</span>
+                  <span className='text-2xl font-medium text-left'>{t('car.fuelType')}</span>
+                  <span className='text-2xl font-medium text-right'>{car?.fuel.name}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-2xl font-medium'>{t('car.seat')}</span>
-                  <span className='text-2xl font-medium'>{car?.seat}</span>
+                  <span className='text-2xl font-medium text-left'>{t('car.seat')}</span>
+                  <span className='text-2xl font-medium text-right'>{car?.seat}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-2xl font-medium'>{t('car.color')}</span>
-                  <div className='flex items-center justify-center gap-2'>
+                  <span className='text-2xl font-medium text-left'>{t('car.color')}</span>
+                  <div className='flex items-center justify-end gap-2'>
                     <Circle
                       size={20}
                       weight='fill'
@@ -215,7 +217,7 @@ const CarDetails: FC = () => {
                       className='border-1.5 border-solid border-neutral-200 rounded-full'
                       style={{ backgroundColor: car?.color.code }}
                     />
-                    <span className='text-2xl font-medium'>{car?.color.name}</span>
+                    <span className='text-2xl font-medium text-right'>{car?.color.name}</span>
                   </div>
                 </div>
                 <Divider className='h-[1.5px]' />
@@ -223,9 +225,9 @@ const CarDetails: FC = () => {
             </CardFooter>
           </Card>
         </div>
-        <div className='w-1/2'>
+        <div className='w-1/2 max-lg:w-full'>
           <Card>
-            <CardHeader className='gap-2'>
+            <CardHeader className='gap-3 max-sm:flex-col'>
               <Input
                 name='city'
                 label={t('form.city')}
@@ -263,55 +265,60 @@ const CarDetails: FC = () => {
             <CardBody>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-xl font-medium'>{`${t('car.day').substring(0, 1).toUpperCase()}${t('car.day').slice(1)}`}</span>
-                  <span className='text-xl font-medium'>{day}</span>
+                  <span className='text-xl font-medium text-left'>{`${t('car.day').substring(0, 1).toUpperCase()}${t('car.day').slice(1)}`}</span>
+                  <span className='text-xl font-medium text-right'>{day}</span>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-xl font-medium'>{t('car.price')}</span>
-                  <div className='flex items-center justify-start'>
+                  <span className='text-xl font-medium text-left'>{t('car.price')}</span>
+                  <div className='flex items-center justify-end'>
                     <CurrencyDollar size={24} />
-                    <span className='text-xl font-medium'>{fixedTotalDayPrice}</span>
+                    <span className='text-xl font-medium text-right'>{fixedTotalDayPrice}</span>
                   </div>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-xl font-medium'>{t('car.taxes')}</span>
-                  <div className='flex items-center justify-start'>
+                  <span className='text-xl font-medium text-left'>{t('car.taxes')}</span>
+                  <div className='flex items-center justify-end'>
                     <CurrencyDollar size={24} />
-                    <span className='text-xl font-medium'>{fixedTaxes}</span>
+                    <span className='text-xl font-medium text-right'>{fixedTaxes}</span>
                   </div>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-xl font-medium'>{t('car.insurance')}</span>
-                  <div className='flex items-center justify-start'>
+                  <span className='text-xl font-medium text-left'>{t('car.insurance')}</span>
+                  <div className='flex items-center justify-end'>
                     <CurrencyDollar size={24} />
-                    <span className='text-xl font-medium'>{fixedInsurance}</span>
+                    <span className='text-xl font-medium text-right'>{fixedInsurance}</span>
                   </div>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
             </CardBody>
-            <CardFooter className='flex-col mt-4'>
+            <CardFooter className='flex-col'>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
-                  <span className='text-xl font-medium'>{t('car.totalPrice')}</span>
-                  <div className='flex items-center justify-start gap-2'>
+                  <span className='text-xl font-medium text-left'>{t('car.totalPrice')}</span>
+                  <div className='flex items-center justify-end gap-2'>
                     <CurrencyDollar size={24} />
-                    <span className='text-xl font-medium'>{fixedTotalPrice}</span>
+                    <span className='text-xl font-medium text-right'>{fixedTotalPrice}</span>
                   </div>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
-              <div className='w-full flex items-center justify-end'>
-                <Button size='lg' color='primary' onClick={handleSubmitForRent}>
+              <div className='w-full flex items-center justify-end z-50 max-lg:fixed max-lg:inset-0 max-lg:top-auto'>
+                <Button
+                  size='lg'
+                  color='primary'
+                  onClick={handleSubmitForRent}
+                  className='max-lg:w-full max-lg:rounded-none'
+                >
                   {t('car.rent')}
                 </Button>
               </div>

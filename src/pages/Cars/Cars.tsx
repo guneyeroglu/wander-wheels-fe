@@ -14,8 +14,9 @@ import {
   Slider,
   SliderValue,
 } from '@nextui-org/react';
-import { ArrowsCounterClockwise, Circle } from '@phosphor-icons/react';
+import { ArrowsCounterClockwise, Circle, X } from '@phosphor-icons/react';
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 
 import Car from '../../components/Car/Car';
 import NoData from '../../components/NoData/NoData';
@@ -38,6 +39,7 @@ const getLocalStorageCarFilter: ICarFilter = JSON.parse(localStorage.getItem('ca
 
 const Cars: FC = () => {
   const { t, i18n } = useTranslation();
+  const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const { cityId, startDate, endDate } = useLoaderData({ strict: false }) as IRentForm;
   const { data: pricesData } = GetPriceRange();
   const defaultPriceRange: number[] = [
@@ -76,7 +78,7 @@ const Cars: FC = () => {
     isRefetching: isRefetchingForCars,
     refetch: refetchForCars,
   } = GetAllCars({
-    ...getLocalStorageCarFilter,
+    ...carFilter,
     cityId,
     startDate,
     endDate,
@@ -146,6 +148,7 @@ const Cars: FC = () => {
 
   const handleSearch = (): void => {
     localStorage.setItem('carFilter', JSON.stringify(carFilter));
+    handleFilterClose();
     refetchForCars();
   };
 
@@ -220,6 +223,9 @@ const Cars: FC = () => {
     }
   };
 
+  const handleFilterOpen = (): void => setFilterOpen(true);
+  const handleFilterClose = (): void => setFilterOpen(false);
+
   useEffect(() => {
     refetchForCars();
     refetchForBrands();
@@ -252,17 +258,37 @@ const Cars: FC = () => {
         'items-stretch': (cars && cars?.length === 0) || !cars,
       })}
     >
-      <Card className='w-1/3 sticky top-[80px]' shadow='sm'>
+      <Card
+        className={clsx(
+          'w-1/3 sticky top-[80px] max-lg:fixed max-lg:inset-0 max-lg:z-[60] max-lg:rounded-tl-none max-lg:rounded-bl-none max-lg:w-1/2 max-md:w-full max-md:rounded-none',
+          {
+            'max-lg:translate-x-[-100%]': !filterOpen,
+            'max-lg:translate-x-0': filterOpen,
+          },
+        )}
+        shadow='sm'
+      >
         <CardHeader>
-          <div className='w-full flex items-center justify-between'>
-            <span className='text-xl'>{t('common.filters')}</span>
-            <Button variant='light' onClick={handleResetAllFilter}>
-              <ArrowsCounterClockwise />
-              <span>{t('common.resetAll')}</span>
+          <div className='w-full flex flex-col'>
+            <Button
+              className='hidden self-end mb-2 max-lg:inline-flex'
+              isIconOnly
+              variant='solid'
+              color={'danger'}
+              onClick={handleFilterClose}
+            >
+              <X color={'#e5e5e5'} size={16} />
             </Button>
+            <div className='w-full flex items-center justify-between'>
+              <span className='text-xl'>{t('common.filters')}</span>
+              <Button variant='light' onClick={handleResetAllFilter}>
+                <ArrowsCounterClockwise />
+                <span>{t('common.resetAll')}</span>
+              </Button>
+            </div>
           </div>
         </CardHeader>
-        <CardBody className='gap-4'>
+        <CardBody className='gap-4 grow-0'>
           <Select
             label={t('car.brand')}
             size='sm'
@@ -493,10 +519,33 @@ const Cars: FC = () => {
           </Button>
         </CardFooter>
       </Card>
-      <div className='w-2/3 flex flex-col'>
-        <div className='mb-4 text-left px-2'>
-          <span className='font-normal text-xl'>{`${t('car.searchResults')} `}</span>
-          <span className='font-semibold text-xl'>{`(${cars?.length ?? 0})`}</span>
+      <motion.div
+        className={clsx('bg-neutral-950/hover fixed inset-0 z-[59] lg:hidden', {
+          'pointer-events-none': !filterOpen,
+          'pointer-events-auto': filterOpen,
+        })}
+        onClick={handleFilterClose}
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: filterOpen ? 1 : 0,
+        }}
+        transition={{
+          bounce: false,
+          duration: 0.35,
+          ease: 'easeInOut',
+        }}
+      />
+      <div className='w-2/3 flex flex-col max-lg:w-full'>
+        <div className='w-full flex justify-between mb-4 px-2'>
+          <Button className='hidden max-lg:inline-flex' onClick={handleFilterOpen}>
+            {t('common.filters')}
+          </Button>
+          <div className='text-left self-center'>
+            <span className='font-normal text-xl'>{`${t('car.searchResults')} `}</span>
+            <span className='font-semibold text-xl'>{`(${cars?.length ?? 0})`}</span>
+          </div>
         </div>
         {cars && cars.length > 0 ? (
           <div className='flex flex-wrap items-stretch justify-start'>
