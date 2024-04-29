@@ -25,8 +25,8 @@ import { useSnackbarInfo, useUserInfo } from '../../store';
 
 const CarDetails: FC = () => {
   const { carAndCityId } = useParams({ strict: false }) as ICarById;
-  const { id } = useUserInfo();
   const { setSnackbar } = useSnackbarInfo();
+  const { id } = useUserInfo();
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const navigate = useNavigate();
@@ -84,13 +84,16 @@ const CarDetails: FC = () => {
   const handleImageIndexValue = (index: number) => setImageIndex(index);
 
   const handleSubmitForRent = (): void => {
-    if (!id) {
+    const token: string | null = localStorage.getItem('token');
+
+    if (!token) {
       return setSnackbar({
         open: true,
         title: t('common.noAccountNoRental'),
         state: 'warning',
       });
     }
+
     mutateForRental(
       {
         userId: id,
