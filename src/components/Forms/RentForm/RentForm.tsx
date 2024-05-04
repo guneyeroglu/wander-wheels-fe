@@ -15,7 +15,11 @@ import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
 const RentForm: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: citiesData, isFetching: isFetchingForCities } = GetAllCities();
+  const {
+    data: citiesData,
+    isFetching: isFetchingForCities,
+    isError: isErrorForCities,
+  } = GetAllCities();
   const cities: ICity[] | undefined = citiesData?.data;
   const today: Date = moment().toDate();
   const tomorrow: Date = moment(today).add(1, 'day').toDate();
@@ -95,8 +99,9 @@ const RentForm: FC = () => {
             classNames={{
               errorMessage: 'text-left',
             }}
+            selectedKeys={isErrorForCities ? [t('common.noData')] : undefined}
             isLoading={isFetchingForCities}
-            isDisabled={isFetchingForCities}
+            isDisabled={isFetchingForCities || isErrorForCities}
           >
             {cities ? (
               cities.map((city: ICity) => (
