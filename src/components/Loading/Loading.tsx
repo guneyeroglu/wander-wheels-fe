@@ -20,8 +20,8 @@ const Loading: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      {loading ? (
-        <div className='fixed inset-0 flex items-center justify-center'>
+      {loading && (
+        <div className='fixed inset-0 flex items-center justify-center z-[9999] bg-neutral-900'>
           <div
             className='absolute inset-0 bg-no-repeat bg-cover opacity-35 -z-10'
             style={{ backgroundImage: `url('${HomeCar}')` }}
@@ -34,9 +34,8 @@ const Loading: FC<PropsWithChildren> = ({ children }) => {
             className='bg-neutral-900/95 p-4 rounded-lg text-red-700'
           />
         </div>
-      ) : (
-        children
       )}
+      {children}
     </>
   );
 };
