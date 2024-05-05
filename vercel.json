@@ -1,24 +1,10 @@
 {
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/"
-    },
-    {
-      "source": "/car-details",
-      "destination": "/car-details"
-    },
-    {
-      "source": "/cars",
-      "destination": "/cars"
-    },
-    {
-      "source": "/login",
-      "destination": "/login"
-    },
-    {
-      "source": "/sign-up",
-      "destination": "/sign-up"
-    }
+    { "source": "/", "destination": "/" },
+    { "source": "/(.*)", "destination": "/" },
+    { "source": "/login", "destination": "/login" },
+    { "source": "/sign-up", "destination": "sign-up" },
+    { "source": "/cars", "destination": "/cars" },
+    { "source": "/car-details", "destination": "/car-details" }
   ]
 }
