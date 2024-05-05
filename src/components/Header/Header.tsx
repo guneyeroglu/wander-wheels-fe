@@ -58,11 +58,17 @@ const Header: FC = () => {
             <UserAvatar />
           ) : (
             <>
-              <Link href='/login' color='foreground' className='py-2 px-4 max-md:px-2'>
+              <Link
+                href='/login'
+                target='_self'
+                color='foreground'
+                className='py-2 px-4 max-md:px-2'
+              >
                 {t('common.login')}
               </Link>
               <Link
                 href='/sign-up'
+                target='_self'
                 color='foreground'
                 className='border-solid border-1 border-foreground-100 py-2 px-4 rounded-md max-md:px-2'
               >
