@@ -35,7 +35,7 @@ const CarDetails: FC = () => {
   );
   const {
     data: carData,
-    isFetching,
+    // isFetching,
     refetch,
   } = GetCarById({
     carAndCityId,
@@ -57,12 +57,12 @@ const CarDetails: FC = () => {
     refetch();
   }, [i18n.language, refetch]);
 
-  if (!isFetching) {
-    if (!car) {
-      goBack();
-      return;
-    }
-  }
+  // if (!isFetching) {
+  //   if (!car) {
+  //     goBack();
+  //     return;
+  //   }
+  // }
   const isNew: boolean = utils.isNew(car?.createdDate);
   const allImages: string[] = [
     car?.images.featuredImage ?? '',
