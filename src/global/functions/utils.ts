@@ -4,7 +4,11 @@ const isNumber = (num: any): boolean => {
   return typeof num === 'number' && !isNaN(num);
 };
 
-const isDate = (stringDate: string): boolean => {
+const isDate = (stringDate: Nullable<string>): boolean => {
+  if (!stringDate) {
+    return false;
+  }
+
   return !isNaN(Date.parse(stringDate)) && stringDate.includes('T');
 };
 

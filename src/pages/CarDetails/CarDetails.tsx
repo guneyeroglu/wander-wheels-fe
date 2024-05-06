@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useNavigate, useParams, useRouter } from '@tanstack/react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { CaretLeft, Circle, CurrencyDollar } from '@phosphor-icons/react';
 import {
@@ -16,7 +16,7 @@ import {
 import moment from 'moment';
 
 import { CreateRental, GetCarById } from '../../global/services/cars';
-import { ICar, ICarById } from '../../global/interfaces/services/cars';
+import { ICar } from '../../global/interfaces/services/cars';
 import { utils } from '../../global/functions';
 import { ICarFilter } from '../../global/interfaces';
 import { GetCityById } from '../../global/services/cities';
@@ -24,38 +24,42 @@ import { ICity } from '../../global/interfaces/services/cities';
 import { useSnackbarInfo, useUserInfo } from '../../store';
 
 const CarDetails: FC = () => {
-  const { carAndCityId } = useParams({ strict: false }) as ICarById;
+  const { carAndCityId } = useParams();
   const { setSnackbar } = useSnackbarInfo();
   const { id } = useUserInfo();
   const { t, i18n } = useTranslation();
-  const router = useRouter();
   const navigate = useNavigate();
-  const { cityId, startDate, endDate }: ICarFilter = JSON.parse(
-    localStorage.getItem('carFilter') ?? '{}',
-  );
+  const carFilter: Nullable<ICarFilter> = JSON.parse(localStorage.getItem('carFilter') ?? 'null');
   const {
     data: carData,
     isFetching,
     refetch,
+    isError,
   } = GetCarById({
-    carAndCityId,
+    carAndCityId: carAndCityId ?? '',
   });
   const car: Undefinedable<ICar> = carData?.data.car;
   const { data: cityData } = GetCityById({
-    cityId: cityId.toString(),
+    cityId: carFilter?.cityId ? carFilter.cityId.toString() : '',
   });
   const city: Undefinedable<ICity> = cityData?.data;
   const _cityName: string = city?.name ?? '';
-  const _startDate: string = moment(startDate).format('DD.MM.YYYY');
-  const _endDate: string = moment(endDate).format('DD.MM.YYYY');
+  const _startDate: string = moment(carFilter?.startDate).format('DD.MM.YYYY');
+  const _endDate: string = moment(carFilter?.endDate).format('DD.MM.YYYY');
   const [imageIndex, setImageIndex] = useState<number>(0);
   const { mutate: mutateForRental } = CreateRental();
 
-  const goBack = (): void => router.history.back();
+  const goBack = (): void => navigate('/cars');
 
   useEffect(() => {
     refetch();
   }, [i18n.language, refetch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate('/cars', { replace: true });
+    }
+  }, [isError, navigate]);
 
   if (!isFetching) {
     if (!car) {
@@ -72,7 +76,10 @@ const CarDetails: FC = () => {
 
   const dailyPrice: number = car?.dailyPrice ?? 0;
   const fixedDayPrice: string = dailyPrice.toFixed(2);
-  const day: number = utils.dayCount(moment(endDate).toDate(), moment(startDate).toDate());
+  const day: number = utils.dayCount(
+    moment(carFilter?.endDate).toDate(),
+    moment(carFilter?.startDate).toDate(),
+  );
   const totalDayPrice: number = dailyPrice * day;
   const fixedTotalDayPrice: string = totalDayPrice.toFixed(2);
   const taxes: number = totalDayPrice * 0.18; // 18% tax
@@ -98,13 +105,13 @@ const CarDetails: FC = () => {
     mutateForRental(
       {
         userId: id,
-        carAndCityId,
-        startDate: moment(startDate).add(1, 'day').toDate(),
-        endDate: moment(endDate).add(1, 'day').toDate(),
+        carAndCityId: carAndCityId ?? '',
+        startDate: moment(carFilter?.startDate).add(1, 'day').toDate(),
+        endDate: moment(carFilter?.endDate).add(1, 'day').toDate(),
       },
       {
         onSuccess: (): void => {
-          navigate({ to: '/' });
+          navigate('/');
         },
       },
     );

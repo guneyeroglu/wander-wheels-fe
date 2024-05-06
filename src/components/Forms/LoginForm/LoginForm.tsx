@@ -13,7 +13,7 @@ import {
   DropdownTrigger,
   Input,
 } from '@nextui-org/react';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate } from 'react-router';
 import { Eye, EyeSlash } from '@phosphor-icons/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate } from 'react-router';
 import { User } from '@phosphor-icons/react';
 
 import { useUserInfo } from '../../store';
@@ -23,9 +23,7 @@ const UserAvatar: FC = () => {
       },
     });
 
-    navigate({
-      to: '/',
-    });
+    navigate('/');
   };
 
   return (

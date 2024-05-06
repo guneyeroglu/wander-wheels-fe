@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLoaderData } from '@tanstack/react-router';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -20,7 +20,7 @@ import { motion } from 'framer-motion';
 
 import Car from '../../components/Car/Car';
 import NoData from '../../components/NoData/NoData';
-import { ICarFilter, IRentForm } from '../../global/interfaces';
+import { ICarFilter } from '../../global/interfaces';
 import { GetAllBrands } from '../../global/services/brands';
 import { IBrand } from '../../global/interfaces/services/brands';
 import { GetAllModels } from '../../global/services/models';
@@ -35,12 +35,24 @@ import { GetAllCars, GetPriceRange, GetYearRange } from '../../global/services/c
 import { ICarAndId } from '../../global/interfaces/services/cars';
 import { GetSeats } from '../../global/services/cars/getSeats';
 
-const getLocalStorageCarFilter: ICarFilter = JSON.parse(localStorage.getItem('carFilter') ?? '{}');
-
 const Cars: FC = () => {
   const { t, i18n } = useTranslation();
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
-  const { cityId, startDate, endDate } = useLoaderData({ strict: false }) as IRentForm;
+  const navigate = useNavigate();
+
+  const getLocalStorageCarFilter: Nullable<ICarFilter> = JSON.parse(
+    localStorage.getItem('carFilter') ?? 'null',
+  );
+  const cityId: number = getLocalStorageCarFilter?.cityId ?? 0;
+  const startDate: string = getLocalStorageCarFilter?.startDate ?? '';
+  const endDate: string = getLocalStorageCarFilter?.endDate ?? '';
+
+  useEffect(() => {
+    if (cityId === 0 || startDate === '' || endDate === '') {
+      navigate('/');
+    }
+  }, [cityId, startDate, endDate, navigate]);
+
   const { data: pricesData } = GetPriceRange();
   const defaultPriceRange: number[] = [
     pricesData?.data.minPrice ?? 0,
@@ -66,7 +78,7 @@ const Cars: FC = () => {
     endDate,
   };
   const [carFilter, setCarFilter] = useState<ICarFilter>({
-    ...getLocalStorageCarFilter,
+    ...(getLocalStorageCarFilter ?? defaultCarFilter),
     cityId,
     startDate,
     endDate,
@@ -94,11 +106,7 @@ const Cars: FC = () => {
     isRefetching: isRefetchingForBrands,
     isError: isErrorForBrands,
     refetch: refetchForBrands,
-  } = GetAllBrands({
-    options: {
-      enabled: false,
-    },
-  });
+  } = GetAllBrands();
   const brands: Undefinedable<IBrand[]> = brandsData?.data;
   const isLoadingForBrands: boolean = isFetchingForBrands || isRefetchingForBrands;
   const {
@@ -134,11 +142,7 @@ const Cars: FC = () => {
     isRefetching: isRefetchingForColors,
     isError: isErrorForColors,
     refetch: refetchForColors,
-  } = GetAllColors({
-    options: {
-      enabled: false,
-    },
-  });
+  } = GetAllColors();
   const colors: Undefinedable<IColor[]> = colorsData?.data;
   const isLoadingForColors: boolean = isFetchingForColors || isRefetchingForColors;
 
@@ -227,14 +231,12 @@ const Cars: FC = () => {
   const handleFilterClose = (): void => setFilterOpen(false);
 
   useEffect(() => {
-    refetchForCars();
     refetchForBrands();
     refetchForModels();
     refetchForColors();
     refetchForFuels();
     refetchForTransmissions();
   }, [
-    refetchForCars,
     refetchForBrands,
     refetchForModels,
     refetchForColors,
@@ -242,10 +244,6 @@ const Cars: FC = () => {
     refetchForTransmissions,
     i18n.language,
   ]);
-
-  useEffect(() => {
-    localStorage.setItem('carFilter', JSON.stringify(carFilter));
-  }, [carFilter]);
 
   useEffect(() => {
     refetchForCars();
@@ -303,7 +301,7 @@ const Cars: FC = () => {
             isLoading={isLoadingForBrands}
             isDisabled={isLoadingForBrands || isErrorForBrands}
           >
-            {brands && !isLoadingForBrands ? (
+            {brands && !!brands.length && !isLoadingForBrands ? (
               brands.map((brand: IBrand) => (
                 <SelectItem key={String(brand.id)} value={String(brand.id)}>
                   {brand.name}

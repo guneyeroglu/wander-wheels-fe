@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate } from 'react-router';
 import { Button, Card, Input, Select, SelectItem } from '@nextui-org/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -74,12 +74,8 @@ const RentForm: FC = () => {
     const _endDate: string = moment(new Date(data.endDate)).format();
 
     navigate({
-      to: '/cars',
-      search: {
-        cityId: _cityId,
-        startDate: _startDate,
-        endDate: _endDate,
-      },
+      pathname: '/cars-navigate',
+      search: `cityId=${_cityId}&startDate=${encodeURIComponent(_startDate)}&endDate=${encodeURIComponent(_endDate)}`,
     });
   };
 

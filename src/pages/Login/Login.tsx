@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@nextui-org/react';
-import { useNavigate } from '@tanstack/react-router';
 
 import { useUserInfo } from '../../store';
 import { LoginForm } from '../../components/Forms';
@@ -13,9 +13,7 @@ const Login: FC = () => {
 
   useEffect(() => {
     if (username) {
-      navigate({
-        to: '/',
-      });
+      navigate('/');
     }
   }, [username, navigate]);
 
@@ -24,7 +22,7 @@ const Login: FC = () => {
       <LoginForm />
       <div className='mt-4'>
         <span className='mr-2'>{t('common.noAccountYet')}</span>
-        <Link href='/sign-up' underline='always' color='foreground'>
+        <Link to='/sign-up' className='underline underline-offset-2'>
           {t('common.signUp')}
         </Link>
       </div>

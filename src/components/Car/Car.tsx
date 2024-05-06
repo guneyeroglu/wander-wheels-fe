@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Car as CarIcon, CurrencyDollar, GasPump, Circle, UsersThree } from '@phosphor-icons/react';
 import {
@@ -9,7 +10,6 @@ import {
   Chip,
   Divider,
   Image,
-  Link,
   Skeleton,
 } from '@nextui-org/react';
 
@@ -43,7 +43,7 @@ const Car: FC<IProps> = ({ id, car, isLoaded }) => {
 
   return (
     <div key={`${id}-${carId}`} className='p-2 w-1/2 h-full relative max-sm:w-full'>
-      <Link className='w-full h-full cursor-pointer hover:opacity-100' href={`/car-details/${id}`}>
+      <Link className='w-full h-full cursor-pointer hover:opacity-100' to={`/car-details/${id}`}>
         <Card
           isHoverable
           shadow='sm'

@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import { Link } from '@nextui-org/react';
 
 import { HomeCar } from '../../assets/images';
 import { RentForm } from '../../components/Forms';
@@ -37,16 +37,14 @@ const HomePage: FC = () => {
               components={{
                 link_1: (
                   <Link
-                    href='/login'
-                    className='font-bold text-xl max-xl:text-base'
-                    color='foreground'
+                    to='/login'
+                    className='font-bold text-xl max-xl:text-base hover:underline'
                   />
                 ),
                 link_2: (
                   <Link
-                    href='/sign-up'
-                    className='font-bold text-xl max-xl:text-base'
-                    color='foreground'
+                    to='/sign-up'
+                    className='font-bold text-xl max-xl:text-base hover:underline'
                   />
                 ),
               }}

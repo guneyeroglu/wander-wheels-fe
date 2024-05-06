@@ -1,9 +1,10 @@
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter } from 'react-router-dom';
 
 import { LanguageDetector, TokenDetector } from './components/Detectors';
 import Snackbar from './components/Snackbar/Snackbar';
-import Loading from './components/Loading/Loading';
+// import Loading from './components/Loading/Loading';
 import App from './App';
 
 import './assets/i18n';
@@ -17,12 +18,14 @@ if (!rootElement.innerHTML) {
 
   root.render(
     <QueryClientProvider client={queryClient}>
-      <LanguageDetector />
-      <TokenDetector />
-      <Loading>
+      <BrowserRouter>
+        <LanguageDetector />
+        <TokenDetector />
+        {/* <Loading> */}
         <App />
-      </Loading>
-      <Snackbar />
+        {/* </Loading> */}
+        <Snackbar />
+      </BrowserRouter>
     </QueryClientProvider>,
   );
 }
