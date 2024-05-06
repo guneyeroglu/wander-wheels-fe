@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { LanguageDetector, TokenDetector } from './components/Detectors';
 import Snackbar from './components/Snackbar/Snackbar';
-// import Loading from './components/Loading/Loading';
+import Loading from './components/Loading/Loading';
 import App from './App';
 
 import './assets/i18n';
@@ -21,9 +21,9 @@ if (!rootElement.innerHTML) {
       <BrowserRouter>
         <LanguageDetector />
         <TokenDetector />
-        {/* <Loading> */}
-        <App />
-        {/* </Loading> */}
+        <Loading>
+          <App />
+        </Loading>
         <Snackbar />
       </BrowserRouter>
     </QueryClientProvider>,
