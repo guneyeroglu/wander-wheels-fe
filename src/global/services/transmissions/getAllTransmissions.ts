@@ -14,7 +14,7 @@ export const GetAllTransmissions = (
   const { options } = props;
 
   const response = useFetch<ITransmission[]>({
-    queryKey: 'transmissions',
+    queryKey: ['transmissions'],
     url: '/transmissions',
     options,
   });

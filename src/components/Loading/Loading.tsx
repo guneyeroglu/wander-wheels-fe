@@ -11,7 +11,7 @@ const Loading: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     const loadingInterval = setInterval(() => {
       setLoading(false);
-    }, 2500);
+    }, 1500);
 
     return () => {
       clearInterval(loadingInterval);

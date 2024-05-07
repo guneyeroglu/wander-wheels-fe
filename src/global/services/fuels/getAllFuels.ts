@@ -14,7 +14,7 @@ export const GetAllFuels = (
   const { options } = props;
 
   const response = useFetch<IFuel[]>({
-    queryKey: 'fuels',
+    queryKey: ['fuels'],
     url: '/fuels',
     options,
   });

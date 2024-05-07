@@ -12,6 +12,7 @@ import {
   Divider,
   Image,
   Input,
+  Skeleton,
 } from '@nextui-org/react';
 import moment from 'moment';
 
@@ -33,19 +34,24 @@ const CarDetails: FC = () => {
   const {
     data: carData,
     isFetching,
+    isRefetching,
     refetch,
-    isError,
+    isError: isErrorForCarById,
   } = GetCarById({
     carAndCityId: carAndCityId ?? '',
   });
   const car: Undefinedable<ICar> = carData?.data.car;
-  const { data: cityData } = GetCityById({
+  const { data: cityData, isError: isErrorForCityById } = GetCityById({
     cityId: carFilter?.cityId ? carFilter.cityId.toString() : '',
+    options: {
+      enabled: !!carFilter?.cityId,
+    },
   });
   const city: Undefinedable<ICity> = cityData?.data;
   const _cityName: string = city?.name ?? '';
   const _startDate: string = moment(carFilter?.startDate).format('DD.MM.YYYY');
   const _endDate: string = moment(carFilter?.endDate).format('DD.MM.YYYY');
+  const isLoading: boolean = isFetching || isRefetching;
   const [imageIndex, setImageIndex] = useState<number>(0);
   const { mutate: mutateForRental } = CreateRental();
 
@@ -56,12 +62,20 @@ const CarDetails: FC = () => {
   }, [i18n.language, refetch]);
 
   useEffect(() => {
-    if (isError) {
+    if (isErrorForCarById || !carFilter?.cityId || !carFilter?.startDate || !carFilter?.endDate) {
       navigate('/cars', { replace: true });
     }
-  }, [isError, navigate]);
+  }, [
+    _cityName,
+    carFilter?.cityId,
+    carFilter?.endDate,
+    carFilter?.startDate,
+    isErrorForCarById,
+    isErrorForCityById,
+    navigate,
+  ]);
 
-  if (!isFetching) {
+  if (!isLoading) {
     if (!car) {
       goBack();
       return;
@@ -133,13 +147,15 @@ const CarDetails: FC = () => {
                 <div className='flex items-center justify-start gap-2 min-h-7'>
                   {isNew && <Chip color='warning'>{t('car.new')}</Chip>}
                 </div>
-                <div className='flex items-center justify-left '>
-                  <CurrencyDollar size={32} />
-                  <span className='text-3xl text-neutral-100'>
-                    {fixedDayPrice}
-                    <span className='text-2xl opacity-75'>/{t('car.day')}</span>
-                  </span>
-                </div>
+                <Skeleton isLoaded={!isLoading}>
+                  <div className='flex items-center justify-left'>
+                    <CurrencyDollar size={32} />
+                    <span className='text-3xl text-neutral-100'>
+                      {fixedDayPrice}
+                      <span className='text-2xl opacity-75'>/{t('car.day')}</span>
+                    </span>
+                  </div>
+                </Skeleton>
               </div>
             </CardHeader>
             <Divider />
@@ -155,6 +171,7 @@ const CarDetails: FC = () => {
                   classNames={{
                     wrapper: 'overflow-hidden w-full h-full rounded-large',
                   }}
+                  isLoading={isLoading}
                 />
               </div>
               <div className='overflow-scroll w-full h-20 flex items-center justify-start mt-4 gap-0'>
@@ -180,17 +197,24 @@ const CarDetails: FC = () => {
                       classNames={{
                         wrapper: 'overflow-hidden w-full h-full rounded-large',
                       }}
+                      isLoading={isLoading}
                     />
                   </Button>
                 ))}
               </div>
             </CardBody>
             <CardFooter className='flex flex-col items-start justify-center'>
-              <h3 className='text-3xl font-bold text-neutral-200 mb-4'>{`${car?.model.brand.name} ${car?.model.name}`}</h3>
+              <h3 className='text-3xl font-bold text-neutral-200 mb-4'>
+                <Skeleton isLoaded={!isLoading}>
+                  {`${car?.model.brand.name} ${car?.model.name}`}
+                </Skeleton>
+              </h3>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-2xl font-medium text-left'>{t('car.year')}</span>
-                  <span className='text-2xl font-medium text-right'>{car?.year}</span>
+                  <Skeleton isLoaded={!isLoading}>
+                    <span className='text-2xl font-medium text-right'>{car?.year}</span>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
@@ -199,37 +223,47 @@ const CarDetails: FC = () => {
                   <span className='text-2xl font-medium text-left'>
                     {t('car.transmissionType')}
                   </span>
-                  <span className='text-2xl font-medium text-right'>{car?.transmission.name}</span>
+                  <Skeleton isLoaded={!isLoading}>
+                    <span className='text-2xl font-medium text-right'>
+                      {car?.transmission.name}
+                    </span>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-2xl font-medium text-left'>{t('car.fuelType')}</span>
-                  <span className='text-2xl font-medium text-right'>{car?.fuel.name}</span>
+                  <Skeleton isLoaded={!isLoading}>
+                    <span className='text-2xl font-medium text-right'>{car?.fuel.name}</span>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-2xl font-medium text-left'>{t('car.seat')}</span>
-                  <span className='text-2xl font-medium text-right'>{car?.seat}</span>
+                  <Skeleton isLoaded={!isLoading}>
+                    <span className='text-2xl font-medium text-right'>{car?.seat}</span>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-2xl font-medium text-left'>{t('car.color')}</span>
-                  <div className='flex items-center justify-end gap-2'>
-                    <Circle
-                      size={20}
-                      weight='fill'
-                      fill={car?.color.code}
-                      className='border-1.5 border-solid border-neutral-200 rounded-full'
-                      style={{ backgroundColor: car?.color.code }}
-                    />
-                    <span className='text-2xl font-medium text-right'>{car?.color.name}</span>
-                  </div>
+                  <Skeleton isLoaded={!isLoading}>
+                    <div className='flex items-center justify-end gap-2'>
+                      <Circle
+                        size={20}
+                        weight='fill'
+                        fill={car?.color.code}
+                        className='border-1.5 border-solid border-neutral-200 rounded-full'
+                        style={{ backgroundColor: car?.color.code }}
+                      />
+                      <span className='text-2xl font-medium text-right'>{car?.color.name}</span>
+                    </div>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
@@ -277,37 +311,45 @@ const CarDetails: FC = () => {
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-xl font-medium text-left'>{`${t('car.day').substring(0, 1).toUpperCase()}${t('car.day').slice(1)}`}</span>
-                  <span className='text-xl font-medium text-right'>{day}</span>
+                  <Skeleton isLoaded={!isLoading}>
+                    <span className='text-xl font-medium text-right'>{day}</span>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-xl font-medium text-left'>{t('car.price')}</span>
-                  <div className='flex items-center justify-end'>
-                    <CurrencyDollar size={24} />
-                    <span className='text-xl font-medium text-right'>{fixedTotalDayPrice}</span>
-                  </div>
+                  <Skeleton isLoaded={!isLoading}>
+                    <div className='flex items-center justify-end'>
+                      <CurrencyDollar size={24} />
+                      <span className='text-xl font-medium text-right'>{fixedTotalDayPrice}</span>
+                    </div>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-xl font-medium text-left'>{t('car.taxes')}</span>
-                  <div className='flex items-center justify-end'>
-                    <CurrencyDollar size={24} />
-                    <span className='text-xl font-medium text-right'>{fixedTaxes}</span>
-                  </div>
+                  <Skeleton isLoaded={!isLoading}>
+                    <div className='flex items-center justify-end'>
+                      <CurrencyDollar size={24} />
+                      <span className='text-xl font-medium text-right'>{fixedTaxes}</span>
+                    </div>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-xl font-medium text-left'>{t('car.insurance')}</span>
-                  <div className='flex items-center justify-end'>
-                    <CurrencyDollar size={24} />
-                    <span className='text-xl font-medium text-right'>{fixedInsurance}</span>
-                  </div>
+                  <Skeleton isLoaded={!isLoading}>
+                    <div className='flex items-center justify-end'>
+                      <CurrencyDollar size={24} />
+                      <span className='text-xl font-medium text-right'>{fixedInsurance}</span>
+                    </div>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
@@ -316,10 +358,12 @@ const CarDetails: FC = () => {
               <div className='w-full py-2 mb-2'>
                 <div className='w-full flex items-center justify-between mb-2'>
                   <span className='text-xl font-medium text-left'>{t('car.totalPrice')}</span>
-                  <div className='flex items-center justify-end gap-2'>
-                    <CurrencyDollar size={24} />
-                    <span className='text-xl font-medium text-right'>{fixedTotalPrice}</span>
-                  </div>
+                  <Skeleton isLoaded={!isLoading}>
+                    <div className='flex items-center justify-end gap-2'>
+                      <CurrencyDollar size={24} />
+                      <span className='text-xl font-medium text-right'>{fixedTotalPrice}</span>
+                    </div>
+                  </Skeleton>
                 </div>
                 <Divider className='h-[1.5px]' />
               </div>
@@ -329,6 +373,7 @@ const CarDetails: FC = () => {
                   color='primary'
                   onClick={handleSubmitForRent}
                   className='max-lg:w-full max-lg:rounded-none'
+                  disabled={isLoading}
                 >
                   {t('car.rent')}
                 </Button>

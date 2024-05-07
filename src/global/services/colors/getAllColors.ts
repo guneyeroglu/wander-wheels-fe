@@ -14,7 +14,7 @@ export const GetAllColors = (
   const { options } = props;
 
   const response = useFetch<IColor[]>({
-    queryKey: 'colors',
+    queryKey: ['colors'],
     url: '/colors',
     options,
   });

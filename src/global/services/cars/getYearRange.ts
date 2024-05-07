@@ -13,7 +13,7 @@ export const GetYearRange = (
 ): UseQueryResult<IGetResponse<IYears>, IError> => {
   const { options } = props;
   const response = useFetch<IYears>({
-    queryKey: 'yearRange',
+    queryKey: ['yearRange'],
     url: '/year-range',
     method: 'GET',
     options,

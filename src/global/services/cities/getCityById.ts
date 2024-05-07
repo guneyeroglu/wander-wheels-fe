@@ -11,7 +11,7 @@ interface IProps extends ICityId {
 export const GetCityById = (props: IProps): UseQueryResult<IGetResponse<ICity>, IError> => {
   const { cityId, options } = props;
   const response = useFetch<ICity>({
-    queryKey: 'cityById',
+    queryKey: ['city', Number(cityId)],
     url: `/cities/${cityId}`,
     method: 'GET',
     options,

@@ -6,7 +6,7 @@ import { ICity } from '../../interfaces/services/cities';
 
 export const GetAllCities = (): UseQueryResult<IGetResponse<ICity[]>, IError> => {
   const response = useFetch<ICity[]>({
-    queryKey: 'cities',
+    queryKey: ['cities'],
     url: '/cities',
   });
 

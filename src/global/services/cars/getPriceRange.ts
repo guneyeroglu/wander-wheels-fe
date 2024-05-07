@@ -13,7 +13,7 @@ export const GetPriceRange = (
 ): UseQueryResult<IGetResponse<IPrices>, IError> => {
   const { options } = props;
   const response = useFetch<IPrices>({
-    queryKey: 'priceRange',
+    queryKey: ['priceRange'],
     url: '/price-range',
     method: 'GET',
     options,

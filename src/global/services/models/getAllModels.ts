@@ -14,7 +14,7 @@ export const GetAllModels = (
   const { options } = props;
 
   const response = useFetch<IModel[]>({
-    queryKey: 'models',
+    queryKey: ['models'],
     url: '/models',
     options,
   });

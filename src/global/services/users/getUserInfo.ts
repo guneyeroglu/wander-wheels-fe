@@ -15,7 +15,7 @@ export const GetUserInfo = (
   const { options } = props;
 
   const response = useFetch<IUser, ILogin>({
-    queryKey: 'userInfo',
+    queryKey: ['userInfo'],
     url: '/user-info',
     method: 'GET',
     options: {

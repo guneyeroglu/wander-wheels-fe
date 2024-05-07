@@ -11,7 +11,7 @@ interface IProps extends ICarById {
 export const GetCarById = (props: IProps): UseQueryResult<IGetResponse<ICarAndId>, IError> => {
   const { carAndCityId, options } = props;
   const response = useFetch<ICarAndId, ICarFilter>({
-    queryKey: 'carById',
+    queryKey: ['car', Number(carAndCityId)],
     url: `/cars/${carAndCityId}`,
     method: 'GET',
     options,

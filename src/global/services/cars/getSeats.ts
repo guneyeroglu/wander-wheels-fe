@@ -13,7 +13,7 @@ export const GetSeats = (
 ): UseQueryResult<IGetResponse<ISeats>, IError> => {
   const { options } = props;
   const response = useFetch<ISeats>({
-    queryKey: 'seats',
+    queryKey: ['seats'],
     url: '/seats',
     method: 'GET',
     options,

@@ -13,7 +13,7 @@ export const Login = (props: IProps): UseQueryResult<IGetResponse<ILogin>, IErro
   const { options, ...rest } = props;
 
   const response = useFetch<ILogin, Data>({
-    queryKey: 'login',
+    queryKey: ['login'],
     url: '/login',
     data: {
       ...rest,

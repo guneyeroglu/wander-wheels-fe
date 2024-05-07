@@ -5,7 +5,7 @@ import { IError, IGetResponse } from '../interfaces';
 
 interface IProps<T> {
   method?: 'GET' | 'POST';
-  queryKey: string;
+  queryKey: [string] | [string, number];
   url: string;
   data?: T;
   options?: any;
@@ -25,7 +25,7 @@ export const useFetch = <T, F = unknown>(
   };
 
   const queryStates = useQuery<IGetResponse<T>, IError>({
-    queryKey: [queryKey],
+    queryKey,
     queryFn: fetchData,
     retry: 0,
     ...options,

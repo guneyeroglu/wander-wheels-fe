@@ -14,7 +14,7 @@ export const GetAllBrands = (
   const { options } = props;
 
   const response = useFetch<IBrand[]>({
-    queryKey: 'brands',
+    queryKey: ['brands'],
     url: '/brands',
     options,
   });
