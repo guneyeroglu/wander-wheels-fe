@@ -13,7 +13,7 @@ const HomePage: FC = () => {
   return (
     <>
       <div
-        className='absolute inset-0 bg-no-repeat h-[100dvh] bg-cover opacity-35 -z-10'
+        className='fixed inset-0 bg-no-repeat bg-cover opacity-35 -z-10'
         style={{ backgroundImage: `url('${HomeCar}')` }}
       ></div>
       <div className='w-full py-4 gap-4'>
