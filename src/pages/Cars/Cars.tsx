@@ -20,6 +20,7 @@ import { motion } from 'framer-motion';
 
 import Car from '../../components/Car/Car';
 import NoData from '../../components/NoData/NoData';
+import SkeletonCars from '../../components/SkeletonCars/SkeletonCars';
 import { ICarFilter } from '../../global/interfaces';
 import { GetAllBrands } from '../../global/services/brands';
 import { IBrand } from '../../global/interfaces/services/brands';
@@ -545,11 +546,11 @@ const Cars: FC = () => {
             <span className='font-semibold text-xl'>{`(${cars?.length ?? 0})`}</span>
           </div>
         </div>
-        {cars && cars.length > 0 ? (
+        {isLoadingForCars ? (
+          <SkeletonCars />
+        ) : cars && cars.length > 0 ? (
           <div className='flex flex-wrap items-stretch justify-start'>
-            {cars?.map((car: ICarAndId) => (
-              <Car key={car.id} id={car.id} car={car.car} isLoaded={!isLoadingForCars} />
-            ))}
+            {cars?.map((car: ICarAndId) => <Car key={car.id} id={car.id} car={car.car} />)}
           </div>
         ) : (
           <NoData text={t('common.noData')} />
