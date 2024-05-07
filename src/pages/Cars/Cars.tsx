@@ -237,12 +237,14 @@ const Cars: FC = () => {
     refetchForColors();
     refetchForFuels();
     refetchForTransmissions();
+    refetchForCars();
   }, [
     refetchForBrands,
     refetchForModels,
     refetchForColors,
     refetchForFuels,
     refetchForTransmissions,
+    refetchForCars,
     i18n.language,
   ]);
 
