@@ -174,7 +174,7 @@ const CarDetails: FC = () => {
                   isLoading={isLoading}
                 />
               </div>
-              <div className='overflow-scroll w-full h-20 flex items-center justify-start mt-4 gap-0'>
+              <div className='overflow-scroll w-full h-24 flex items-center justify-start mt-4 pb-4 gap-0'>
                 {allImages.map((image: string, index: number) => (
                   <Button
                     key={`${image}-${index}`}
@@ -203,7 +203,7 @@ const CarDetails: FC = () => {
                 ))}
               </div>
             </CardBody>
-            <CardFooter className='flex flex-col items-start justify-center'>
+            <CardFooter className='pt-0 flex flex-col items-start justify-center'>
               <h3 className='text-3xl font-bold text-neutral-200 mb-4'>
                 <Skeleton isLoaded={!isLoading}>
                   {`${car?.model.brand.name} ${car?.model.name}`}
