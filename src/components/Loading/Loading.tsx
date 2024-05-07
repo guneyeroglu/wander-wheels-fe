@@ -23,7 +23,7 @@ const Loading: FC<PropsWithChildren> = ({ children }) => {
       {loading && (
         <div className='fixed inset-0 flex items-center justify-center z-[9999] bg-neutral-900'>
           <div
-            className='absolute inset-0 bg-no-repeat bg-cover opacity-35 -z-10'
+            className='absolute inset-0 bg-no-repeat bg-[length:100dvw_100dvh] opacity-35 -z-10'
             style={{ backgroundImage: `url('${HomeCar}')` }}
           />
           <Spinner

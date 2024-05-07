@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 
 import { LanguageDetector, TokenDetector } from './components/Detectors';
-// import Snackbar from './components/Snackbar/Snackbar';
+import Snackbar from './components/Snackbar/Snackbar';
 import Loading from './components/Loading/Loading';
 import App from './App';
 
@@ -24,7 +24,7 @@ if (!rootElement.innerHTML) {
         <Loading>
           <App />
         </Loading>
-        {/* <Snackbar /> */}
+        <Snackbar />
       </BrowserRouter>
     </QueryClientProvider>,
   );

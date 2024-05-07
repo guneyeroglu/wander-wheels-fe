@@ -36,7 +36,7 @@ const UserAvatar: FC = () => {
           icon={<User size={24} />}
         />
       </DropdownTrigger>
-      <DropdownMenu aria-label='avatar menu' disabledKeys={['profile']}>
+      <DropdownMenu aria-label='avatar menu' disabledKeys={['profile']} closeOnSelect={false}>
         <DropdownItem key={'profile'} color='default'>
           {username}
         </DropdownItem>

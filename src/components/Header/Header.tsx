@@ -39,13 +39,11 @@ const Header: FC = () => {
               aria-label='language menu'
               selectionMode='single'
               selectedKeys={[i18n.language]}
+              onAction={e => handleLanguage(e as keyof typeof LANGUAGES)}
+              closeOnSelect={false}
             >
-              <DropdownItem key={LANGUAGES.tr_TR} onClick={() => handleLanguage(LANGUAGES.tr_TR)}>
-                {t('common.turkish')}
-              </DropdownItem>
-              <DropdownItem key={LANGUAGES.en_EN} onClick={() => handleLanguage(LANGUAGES.en_EN)}>
-                {t('common.english')}
-              </DropdownItem>
+              <DropdownItem key={LANGUAGES.tr_TR}>{t('common.turkish')}</DropdownItem>
+              <DropdownItem key={LANGUAGES.en_EN}>{t('common.english')}</DropdownItem>
             </DropdownMenu>
           </Dropdown>
           {username ? (
