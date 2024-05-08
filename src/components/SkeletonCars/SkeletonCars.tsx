@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 const SkeletonCars: FC = () => {
   const { t } = useTranslation();
-  const mockCars: number[] = [0, 1];
+  const mockCars: number[] = [0, 1, 2, 3];
   const isLoaded: boolean = false;
 
   return (

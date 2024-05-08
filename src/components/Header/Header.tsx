@@ -40,7 +40,7 @@ const Header: FC = () => {
               selectionMode='single'
               selectedKeys={[i18n.language]}
               onAction={e => handleLanguage(e as keyof typeof LANGUAGES)}
-              closeOnSelect={false}
+              closeOnSelect={true}
             >
               <DropdownItem key={LANGUAGES.tr_TR}>{t('common.turkish')}</DropdownItem>
               <DropdownItem key={LANGUAGES.en_EN}>{t('common.english')}</DropdownItem>

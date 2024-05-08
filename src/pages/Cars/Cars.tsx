@@ -151,6 +151,12 @@ const Cars: FC = () => {
     setCarFilter(defaultCarFilter);
   };
 
+  const windowScrollToTop = (): void =>
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+
   const handleSearch = (): void => {
     localStorage.setItem('carFilter', JSON.stringify(carFilter));
     handleFilterClose();
@@ -251,6 +257,13 @@ const Cars: FC = () => {
   useEffect(() => {
     refetchForCars();
   }, [cityId, startDate, endDate, refetchForCars]);
+
+  useEffect(() => {
+    console.log('first');
+    if (isFetchingForCars || isRefetchingForCars) {
+      windowScrollToTop();
+    }
+  }, [isFetchingForCars, isRefetchingForCars]);
 
   return (
     <div
