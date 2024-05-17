@@ -17,6 +17,8 @@ export interface ICar {
   fuel: IFuel;
   year: number;
   dailyPrice: number;
+  discountStatus: boolean;
+  discountedDailyPrice: Nullable<number>;
   images: {
     featuredImage: string;
     otherImages: string[];

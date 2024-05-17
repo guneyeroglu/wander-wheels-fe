@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { CaretLeft, Circle, CurrencyDollar } from '@phosphor-icons/react';
+import { CaretLeft, Circle } from '@phosphor-icons/react';
 import {
   Button,
   Card,
@@ -88,7 +88,7 @@ const CarDetails: FC = () => {
     ...(car?.images.otherImages ?? ['']),
   ];
 
-  const dailyPrice: number = car?.dailyPrice ?? 0;
+  const dailyPrice: number = car?.discountedDailyPrice ?? 0;
   const fixedDayPrice: string = dailyPrice.toFixed(2);
   const day: number = utils.dayCount(
     moment(carFilter?.endDate).toDate(),
@@ -149,9 +149,8 @@ const CarDetails: FC = () => {
                 </div>
                 <Skeleton isLoaded={!isLoading}>
                   <div className='flex items-center justify-left'>
-                    <CurrencyDollar size={32} />
                     <span className='text-3xl text-neutral-100'>
-                      {fixedDayPrice}
+                      &#36; {fixedDayPrice}
                       <span className='text-2xl opacity-75'>/{t('car.day')}</span>
                     </span>
                   </div>
@@ -322,8 +321,9 @@ const CarDetails: FC = () => {
                   <span className='text-xl font-medium text-left'>{t('car.price')}</span>
                   <Skeleton isLoaded={!isLoading}>
                     <div className='flex items-center justify-end'>
-                      <CurrencyDollar size={24} />
-                      <span className='text-xl font-medium text-right'>{fixedTotalDayPrice}</span>
+                      <span className='text-xl font-medium text-right'>
+                        &#36; {fixedTotalDayPrice}
+                      </span>
                     </div>
                   </Skeleton>
                 </div>
@@ -334,8 +334,7 @@ const CarDetails: FC = () => {
                   <span className='text-xl font-medium text-left'>{t('car.taxes')}</span>
                   <Skeleton isLoaded={!isLoading}>
                     <div className='flex items-center justify-end'>
-                      <CurrencyDollar size={24} />
-                      <span className='text-xl font-medium text-right'>{fixedTaxes}</span>
+                      <span className='text-xl font-medium text-right'>&#36; {fixedTaxes}</span>
                     </div>
                   </Skeleton>
                 </div>
@@ -346,8 +345,7 @@ const CarDetails: FC = () => {
                   <span className='text-xl font-medium text-left'>{t('car.insurance')}</span>
                   <Skeleton isLoaded={!isLoading}>
                     <div className='flex items-center justify-end'>
-                      <CurrencyDollar size={24} />
-                      <span className='text-xl font-medium text-right'>{fixedInsurance}</span>
+                      <span className='text-xl font-medium text-right'>&#36; {fixedInsurance}</span>
                     </div>
                   </Skeleton>
                 </div>
@@ -360,8 +358,9 @@ const CarDetails: FC = () => {
                   <span className='text-xl font-medium text-left'>{t('car.totalPrice')}</span>
                   <Skeleton isLoaded={!isLoading}>
                     <div className='flex items-center justify-end gap-2'>
-                      <CurrencyDollar size={24} />
-                      <span className='text-xl font-medium text-right'>{fixedTotalPrice}</span>
+                      <span className='text-xl font-medium text-right'>
+                        &#36; {fixedTotalPrice}
+                      </span>
                     </div>
                   </Skeleton>
                 </div>

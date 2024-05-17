@@ -20,8 +20,6 @@ const Discount: FC = () => {
   const handleModalOpen = (): void => setOpen(true);
   const handleModalClose = (): void => setOpen(false);
 
-  console.log(diffDay);
-
   useEffect(() => {
     if (diffDay >= 3) {
       handleModalOpen();

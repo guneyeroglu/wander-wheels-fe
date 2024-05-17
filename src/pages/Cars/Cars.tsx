@@ -262,7 +262,6 @@ const Cars: FC = () => {
   }, [cityId, startDate, endDate, refetchForCars]);
 
   useEffect(() => {
-    console.log('first');
     if (isFetchingForCars || isRefetchingForCars) {
       windowScrollToTop();
     }
