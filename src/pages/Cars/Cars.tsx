@@ -166,13 +166,16 @@ const Cars: FC = () => {
   const handleBrandValue = (e: ChangeEvent<HTMLSelectElement>): void => {
     setCarFilter((prevFilter: ICarFilter) => ({
       ...prevFilter,
-      brandId: Number(e.target.value),
+      brandId: e.target.value ? Number(e.target.value) : null,
       modelId: null,
     }));
   };
 
   const handleModelValue = (e: ChangeEvent<HTMLSelectElement>): void => {
-    setCarFilter((prevFilter: ICarFilter) => ({ ...prevFilter, modelId: Number(e.target.value) }));
+    setCarFilter((prevFilter: ICarFilter) => ({
+      ...prevFilter,
+      modelId: e.target.value ? Number(e.target.value) : null,
+    }));
   };
 
   const handlePriceRangeValue = (e: number | number[]): void => {
