@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { LanguageDetector, TokenDetector } from './components/Detectors';
 import Snackbar from './components/Snackbar/Snackbar';
 import Loading from './components/Loading/Loading';
+import Discount from './components/Discount/Discount';
 import App from './App';
 
 import './assets/i18n';
@@ -21,6 +22,7 @@ if (!rootElement.innerHTML) {
       <BrowserRouter>
         <LanguageDetector />
         <TokenDetector />
+        <Discount />
         <Loading>
           <App />
         </Loading>

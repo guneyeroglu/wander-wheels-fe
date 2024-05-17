@@ -16,7 +16,10 @@
       "back": "Back",
       "noData": "No Data",
       "noAccountNoRental": "Please login to rent a car.",
-      "loadingWanderWheels": "Wander Wheels loading..."
+      "loadingWanderWheels": "Wander Wheels loading...",
+      "discountTitle": "We Heard You!",
+      "discountDescription": "As we welcome summer, our cars with a 20% discount are waiting for you. It's time to hit the road!",
+      "discountCloseText": "Start Exploring"
     },
     "form": {
       "username": "Username",
