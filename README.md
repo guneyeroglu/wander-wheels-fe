@@ -1,30 +1,76 @@
-# React + TypeScript + Vite
+# [Wander Wheels](https://wander-wheels.vercel.app)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="2056" alt="home" src="https://github.com/guneyeroglu/wander-wheels-fe/assets/93340900/4e856bea-7e03-4b8f-9d9c-eb53b5a08775">
 
-Currently, two official plugins are available:
+#
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## CONTENT and DATA
 
-## Expanding the ESLint configuration
+Hi! In this project that I've developed, I designed a website about Rick and Morty. It has responsive design, so you can open and review this website on any device you want. I used this [API](https://rickandmortyapi.com/) for data.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+#
 
-- Configure the top-level `parserOptions` property like this:
+## PAGES 
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+It is a website consisting of 5 pages. 
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+#### - Home Page
+#### - Login Page
+#### - Sign Up Page
+#### - Car List Page
+#### - Rent Page
+
+#
+
+### Some Screenshots
+
+###### Login
+
+<img width="2056" alt="login" src="https://github.com/guneyeroglu/wander-wheels-fe/assets/93340900/96e2fee0-b4ed-462b-960d-aeb1df03677b">
+
+###### Sign Up
+
+<img width="2056" alt="sign-up" src="https://github.com/guneyeroglu/wander-wheels-fe/assets/93340900/5a4ad225-56f8-4d0a-ba4a-a7cde87f53c2">
+
+###### Cars #1
+
+<img width="2056" alt="cars" src="https://github.com/guneyeroglu/wander-wheels-fe/assets/93340900/9962282b-1ad1-4118-a10b-d4e416c5c02b">
+
+###### Cars #2
+
+<img width="2056" alt="filter-cars" src="https://github.com/guneyeroglu/wander-wheels-fe/assets/93340900/b4369859-751f-40bb-b1c1-6cfd3eebbba1">
+
+###### Rent
+
+<img width="2056" alt="rent" src="https://github.com/guneyeroglu/wander-wheels-fe/assets/93340900/b716ef52-4665-49d7-91e0-239d98a8047f">
+
+# 
+
+## DEVELOPMENT
+
+Here are some of the tools I use
+
+#### - Axios and react-query for fetch
+#### - React Hooks for data & state management (zustand)
+#### - Tailwind for styling
+#### - i18next & react-i18next for multi-language (EN | TR)
+#### - NextUI Library for some React Components
+#### - Framer-motion for animations
+
+#
+
+## DEPLOYMENT
+
+### - Vercel
+
+I preferred Vercel for the deployment phase. You can access it via this [link](https://wander-wheels.vercel.app).
+
+### - Localhost
+
+If you want to run this site in your local, you can clone the project. After that, you can simply follow the steps below in your terminal.
+
+### `npm install`
+
+### `npm run dev`
+
+When you get the notification which shows that the terminal is running successfully, the browser will most likely open automatically the website. But if it doesn't, you can go to the [http://localhost:3000](http://localhost:3000).
