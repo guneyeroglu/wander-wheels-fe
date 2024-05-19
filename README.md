@@ -6,7 +6,7 @@
 
 ## CONTENT and DATA
 
-Hi! In this project that I've developed, I designed a website about Rick and Morty. It has responsive design, so you can open and review this website on any device you want. I used this [API](https://rickandmortyapi.com/) for data.
+Hi! In this project that I've developed, I designed a rental cars application called Wander Wheels. The application is fully responsive, ensuring a seamless experience across all devices. Additionally, I developed Back-End myself, so all the [APIs](https://github.com/guneyeroglu/wander-wheels-be) are custom-built and tailored specifically for this project.
 
 #
 
