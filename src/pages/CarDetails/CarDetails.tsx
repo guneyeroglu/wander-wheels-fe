@@ -173,7 +173,7 @@ const CarDetails: FC = () => {
                   isLoading={isLoading}
                 />
               </div>
-              <div className='overflow-scroll w-full h-24 flex items-center justify-start mt-4 pb-4 gap-0'>
+              <div className='overflow-x-scroll w-full h-24 flex items-center justify-start mt-4 pb-4 gap-0'>
                 {allImages.map((image: string, index: number) => (
                   <Button
                     key={`${image}-${index}`}

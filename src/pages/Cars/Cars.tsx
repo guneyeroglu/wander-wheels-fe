@@ -276,7 +276,7 @@ const Cars: FC = () => {
     >
       <Card
         className={clsx(
-          'w-1/3 sticky top-[80px] max-h-[calc(100vh_-_1rem_-_64px_-_10px_-_1rem)] h-full max-lg:fixed max-lg:inset-0 max-lg:z-[60] max-lg:rounded-tl-none max-lg:rounded-bl-none max-lg:w-1/2 max-md:w-full max-md:rounded-none',
+          'w-1/3 sticky top-[80px] max-h-[calc(100vh_-_1rem_-_64px_-_10px_-_1rem)] h-full max-lg:fixed max-lg:inset-0 max-lg:z-[60] max-lg:rounded-tl-none max-lg:rounded-bl-none max-lg:w-1/2 max-md:w-full max-md:rounded-none max-lg:max-h-full',
           {
             'max-lg:translate-x-[-100%]': !filterOpen,
             'max-lg:translate-x-0': filterOpen,
