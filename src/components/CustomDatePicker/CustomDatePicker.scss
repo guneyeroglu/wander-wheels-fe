@@ -1,7 +1,6 @@
 .react-datepicker {
-  background-color: #262626;
-  border-color: #e5e5e5;
-  border-width: 2px;
+  background-color: #171717;
+  border: 0px solid transparent;
 
   &-wrapper {
     width: 100%;
@@ -34,9 +33,8 @@
   }
 
   &__header {
-    background-color: #262626;
-    border-bottom-width: 2px;
-    border-bottom-color: #e5e5e5;
+    background-color: #18181b;
+    border: 0px solid transparent;
   }
 
   &__current-month,
